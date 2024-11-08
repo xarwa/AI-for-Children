@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Level 3</title>  
+    <title>Level 4</title>  
     <style>
         body, html {
             margin: 0;
@@ -32,7 +32,6 @@
             bottom: 5vh; /* Aligns the robot image near the bottom of the page */
             left: 20vw; /* Places the robot image from the left edge */
             z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
-           
         }
 
         #player {
@@ -146,8 +145,11 @@
         </div>
     </div>
 
-
- 
+    <!-- Forest Sound (plays once) -->
+    <audio id="forest-sound">
+        <source src="forest sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -157,9 +159,10 @@
     <!-- Script for Typing Effect and Text Changes -->
     <script>
         var initialText = "Welcome! You have made it to planet WanderWood! In this mysterious world, secrets hide among the trees, waiting to be uncovered. Here, you will explore, discover, and learn how AI finds hidden connections all on its own, with unsupervised machine learning! The journey continues, lets dive in!";
-        var secondText = "Each step in the tree asks a question (like ‘Does the animal have whiskers?’), and based on the answer, it moves to the next step until it makes a final decision (for example, ‘It’s a cat!’). It’s like playing 20 Questions, where each question helps the computer get closer to the right answer.";
-        var thirdText= "A decision tree helps you make choices by guiding you through a series of questions, each leading to different outcomes based on your preferences. In this scenario, you'll answer simple questions about how you want to spend your weekend.";
-        var fourthText = "Depending on your answers, the decision tree will narrow down the best activities for you—whether you want to be active or relax, spend time indoors or outdoors. It’s an easy and fun way to explore your options and find the perfect way to enjoy your weekend!";
+        var secondText = "Recall from level 3, unsupervised learning is like the computer being a detective! It gets a bunch of information with no answers and has to find patterns. For example, if you give it pictures of animals, it might group the cats and dogs together by what they look like.";
+        var thirdText = "Imagine you are sorting jelly beans. Let us say you have a big pile of jelly beans, but you do not know their flavors. They come in many colors, and there is no one to tell you which color belongs to which flavor. Now, imagine you want to organize them somehow. This is where unsupervised learning comes in!";
+        var fourthText = "In unsupervised machine learning, computers do the same thing—they are given a lot of information (or data), but they do not have any labels or instructions about what it all means. Their job is to look for patterns and try to make sense of the information on their own.";
+        var fifthText = "How Does It Work? Just like you might start grouping your jelly beans by color (because that’s a visible pattern), a computer tries to group information that looks similar or has something in common. This process of finding groups is called clustering.";
         var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
         var index = 0; // Start from the first character
         var currentText = initialText; // Variable to store current text
@@ -183,44 +186,56 @@
             if (clickCount == 0) {
                 currentText = initialText; // Go back to the initial text
             } else if (clickCount == 1) {
-                currentText = secondText; // Go back to second text
+                currentText = secondText; // Second text
             } else if (clickCount == 2) {
-                currentText = thirdText; // Go back to third text
-            } 
+                currentText = thirdText; // Third text
+            } else if (clickCount == 3) {
+                currentText = fourthText; // Fourth text
+            } else if (clickCount == 4) {
+                currentText = fifthText; // Fifth text
+            }
 
-            typeText(); // Start typing the previous text
+            typeText(); // Re-run typing effect for new text
         }
     }
-    
-        // Start the typing effect after the page loads
+
+    // Function to handle right arrow clicks (move forward)
+    // Start the typing effect after the page loads
         window.onload = function() {
-            typeText();
-            
-        };
-    
-        function changeText() {
-            clickCount++; // Increment the click counter
-            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
-            index = 0; // Reset index
-    
-            if (clickCount == 1) {
-                currentText = secondText; // Change text to second message
-            } else if (clickCount == 2) {
-                currentText = thirdText; 
-            } else if (clickCount == 3) {
-                currentText = fourthText; 
-            } else if (clickCount == 4) {
-                // Redirect to the next level page
-            window.location.href = "Decision Tree example.html";
-            return; // Stop further text changes
-            } 
-    
-            typeText(); // Start typing the new text
+            typeText(); // Start typing as soon as the page is loaded
         }
 
-    
-       
+        // Function to handle right arrow clicks (move forward)
+        function changeText() {
+            if (clickCount === 0) {
+                currentText = secondText;
+                clickCount++;
+            } else if (clickCount === 1) {
+                currentText = thirdText;
+                clickCount++;
+            } else if (clickCount === 2) {
+                currentText = fourthText;
+                clickCount++;
+            } else if (clickCount === 3) {
+                currentText = fifthText;
+                clickCount++;
+            }
+            document.getElementById("typing-text").innerHTML = "";
+            index = 0;
+            typeText();
+        }
+
+
+
+        function playSound() {
+            // Play sound only after a user interaction (to avoid autoplay restrictions)
+            document.getElementById("forest-sound").play();
+        }
+
+        window.addEventListener("load", function() {
+            // Trigger sound play after any user interaction like mouse click
+            document.body.addEventListener("click", playSound, {once: true});
+        });
     </script>
-    
 </body>
-</html>  
+</html>

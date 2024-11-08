@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Level 3</title>
+<style>
+    body {
+        font-family: 'Zen Dots', sans-serif;
+        text-align: center;
+        background-color: #f0f8ff;
+    }
+    h1 {
+        color: #333;
+    }
+    .game-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5vh;
+    }
+    #robot1 {
+        width: 12vw;
+        position: absolute;
+        bottom: 5vh;
+        right: 12vw;
+        z-index: 1;
+        }
+    .robot {
+        font-size: 2.4vw;
+        margin-bottom: 1vh;
+    }
+    .fruit-image {
+    width: 13vw;
+    height: 13vw;
+    margin: 2vh;
+    margin-top: 5vh; /* Adjust this value to move the images down */
+    cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<h1>Robot's Turn to Classify Fruits!</h1>
+<div class="game-container">
+    <div class="robot" id="robot">Let's start classifying the fruits!</div>
+    <img id="current-fruit" class="fruit-image" src="" alt="Fruit to classify">  
+</div>
+<img id="robot1" src="Level 3 robot rotated 2.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+<script>
+    const misclassifications = JSON.parse(localStorage.getItem('misclassifications')) || {};
+    const robotClassifications = {
+        1: "Apple",
+        2: "Orange",
+        3: "Banana",
+        4: "Strawberry"
+    };
+
+    const fruitImages = [
+        {src: "apple8.png", tag: 1},
+        {src: "apple9.png", tag: 1},
+        {src: "apple10.png", tag: 1},
+        {src: "orange 8.png", tag: 2},
+        {src: "orange 9.png", tag: 2},
+        {src: "orange 10.png", tag: 2},
+        {src: "banana 8.png", tag: 3},
+        {src: "banana 9.png", tag: 3},
+        {src: "banana 10.png", tag: 3},
+        {src: "strawberry8.png", tag: 4},
+        {src: "strawberry9.png", tag: 4},
+        {src: "strawberry10.png", tag: 4}
+    ];
+
+    let currentFruitIndex = 0;
+    const robotResults = document.getElementById("robot");
+    const currentFruit = document.getElementById("current-fruit");
+
+    function displayNextFruit() {
+        if (currentFruitIndex < fruitImages.length) {
+            const fruit = fruitImages[currentFruitIndex];
+            currentFruit.src = fruit.src;
+            currentFruit.setAttribute("data-tag", fruit.tag);
+            robotResults.innerText = "What is this fruit?";
+        } else {
+            robotResults.innerText = "Classification done!";
+            currentFruit.style.display = "none";
+        }
+    }
+
+    function classifyFruit() {
+        const fruitTag = currentFruit.getAttribute("data-tag");
+        let classification = robotClassifications[fruitTag];
+
+        // Determine if the robot misclassifies based on user’s misclassification data
+        if (misclassifications[fruitTag]) {
+            classification = "unknown"; // Robot misclassifies if the user did
+        }
+
+        robotResults.innerText = `${classification}`;
+        currentFruitIndex++;
+        setTimeout(displayNextFruit, 1500); // Show next fruit after 1.5s
+    }
+
+    currentFruit.addEventListener("click", classifyFruit);
+
+    // Start game
+    displayNextFruit();
+</script>
+
+
+</body>
+</html>

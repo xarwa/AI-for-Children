@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Level 2</title>
+    <title>Level 3</title>
 
     <style>
         body, html {
@@ -46,6 +46,21 @@
             top: 0;
             left: 0;
             z-index: 2;
+        }
+
+        #right {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            left: 190vh;
+            cursor: pointer;
+            display: none; /* Start as hidden */
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        #right:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
         }
 
         #green-box-darker {
@@ -94,19 +109,19 @@
             z-index: 4;
             cursor: pointer;
         }
-         /* Snowflakes */
-         .snowflake {
+        /* Snowflake styles */
+        .snowflake {
             position: absolute;
             top: -10px;
-            background: rgb(255, 255, 255);
+            background: white;
             border-radius: 50%;
             opacity: 0.8;
-            pointer-events: none; /* Don't let snowflakes block clicks */
+            pointer-events: none;
             animation: fall linear infinite;
         }
         @keyframes fall {
             to {
-                transform: translateY(100vh); /* Move from top to bottom of the screen */
+                transform: translateY(100vh);
             }
         }
         
@@ -118,6 +133,7 @@
     <img id="player" src="Player(Rotated).png">
     <img id="monster" src="Monster.png">
     <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="goToNextLevel()">
     
     <!-- Green Box with Content inside -->
     <div id="green-box-darker">
@@ -145,6 +161,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 
     <script>
+        // Snowflake effect script
+        const snowflakeCount = 10;
+        function createSnowflakes() {
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                const size = Math.random() * 8 + 2 + 'px';
+                const positionX = Math.random() * window.innerWidth + 'px';
+                const duration = Math.random() * 3 + 2 + 's';
+                const delay = Math.random() * 5 + 's';
+                snowflake.style.width = size;
+                snowflake.style.height = size;
+                snowflake.style.left = positionX;
+                snowflake.style.animationDuration = duration;
+                snowflake.style.animationDelay = delay;
+                document.body.appendChild(snowflake);
+            }
+        }
+        createSnowflakes();
 
      let questions = {
             easy: [
@@ -268,7 +303,12 @@
 
         // Hide the submit button when the final score is displayed
         document.getElementById('submit-button').style.display = 'none';
+        document.getElementById('right').style.display = 'block'; // Show the right arrow
     }
+
+    function goToNextLevel() {
+            window.location.href = "Level 3 test 7.html"; // Redirect to Level 3 test
+        }
 
 
     window.onload = function () {

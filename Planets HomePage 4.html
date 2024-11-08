@@ -22,9 +22,9 @@
             position: absolute;
             top: 0;
             left: 0;
-            height: 8vh; /* Adjusted height */
+            height: 8vh;
             width: 100vw;
-            z-index: 2; /* Ensure it’s above other elements */
+            z-index: 2;
         }
         #planet1 {
             position: absolute;
@@ -32,11 +32,11 @@
             left: 5%;
             height: 25vh;
             width: 25vh;
-            z-index: 1; /* Ensures it appears above the background */
-            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+            z-index: 1;
+            transition: transform 0.3s ease;
         }
         #planet1:hover {
-            animation: rotate 2s linear infinite; /* Rotates the planet continuously on hover */
+            animation: rotate 2s linear infinite;
         }
         @keyframes rotate {
             from {
@@ -48,15 +48,15 @@
         }
         #planet2 {
             position: absolute;
-            top: 60vh;   /* Matches 540px */
-            left: 20.44vw; /* Matches 354px */
-            height: 25vh; /* Matches 344px */
-            width: 25vw; /* Matches 675px */
-            z-index: 1; /* Ensures it appears above the connection image */
-            transition: transform 0.5s ease-in-out; /* Smooth transition */
+            top: 60vh;
+            left: 20.44vw;
+            height: 25vh;
+            width: 25vw;
+            z-index: 1;
+            transition: transform 0.5s ease-in-out;
         }
         #planet2:hover {
-            animation: calmHeartbeat 2s ease-in-out infinite; /* Heartbeat animation on hover */
+            animation: calmHeartbeat 2s ease-in-out infinite;
         }
         @keyframes calmHeartbeat {
             0%, 100% {
@@ -78,42 +78,54 @@
             left: 45%;
             height: 30vh;
             width: 25vh;
-            z-index: 1; /* Ensures it appears above the background */
+            z-index: 1;
             transition: transform 0.3s ease-in-out;
         }
         #planet3:hover {
-            animation: shiver 0.3s ease-in-out infinite; /* Shiver animation on hover */
+            animation: shiver 0.3s ease-in-out infinite;
         }
         @keyframes shiver {
             0%, 100% {
-                transform: translateX(0); /* Start and end at the original position */
+                transform: translateX(0);
             }
             25% {
-                transform: translateX(-5px); /* Move left slightly */
+                transform: translateX(-5px);
             }
             75% {
-                transform: translateX(5px); /* Move right slightly */
+                transform: translateX(5px);
             }
         }
         #Rocket {
             position: absolute;
-            top: 58vh; /* Positioning above planet 2 */
-            left: 63vw; /* Adjust left position to center over planet 2 */
+            top: 58vh;
+            left: 63vw;
             height: 12.3vh;
             width: 9.8vh;
-            z-index: 2; /* Ensures it appears above the background */
-            transition: transform 0.5s ease-in-out; /* Smooth transition */
+            z-index: 2;
+            transition: transform 0.5s ease-in-out;
         }
         #planet3:hover ~ #Rocket {
-            animation: calmHeartbeat 2s ease-in-out infinite; /* Apply heartbeat animation when hovering over planet 3 */
+            animation: calmHeartbeat 2s ease-in-out infinite;
         }
         #planet4 {
             position: absolute;
-            top: 60vh;   /* Matches 540px */
-            left: 62vw; /* Matches 354px */
-            
-            width: 15vw; /* Matches 675px */
-            z-index: 1; /* Ensures it appears above the connection image */
+            top: 60vh;
+            left: 62vw;
+            width: 15vw;
+            z-index: 1;
+            transition: transform 0.2s ease;
+        }
+        /* Continuous bounce animation for planet4 */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        #planet4:hover {
+            animation: bounce 0.5s ease infinite;
         }
         #planet5 {
             position: absolute;
@@ -121,7 +133,7 @@
             left: 80%;
             height: 25vh;
             width: 25vh;
-            z-index: 1; /* Ensures it appears above the background */
+            z-index: 1;
         }
         #connection {
             position: absolute;
@@ -129,7 +141,7 @@
             left: 15%;
             height: 50vh;
             width: 70vw;
-            z-index: 0; /* Ensures it appears behind the planets */
+            z-index: 0;
         }
     </style>
 </head>
@@ -140,19 +152,37 @@
         <img id="planet1" src="Planet-1.png">
     </a>
     <img id="connection" src="Connections.png">
-    <a href="Level 2 test.html"> <!-- Link for planet 2 -->
+    <a href="Level 2 test.html">
        <img id="planet2" src="Planet 2 new.png">
     </a>
-    
-    <!-- Rocket with heartbeat animation moved near planet 3 -->
     <img id="Rocket" src="Rocket.png"> 
-    
-    <!-- Make planet 3 clickable and direct to Level 3 -->
-    <a href="Level 3 test.html"> <!-- Link for planet 3 -->
+    <a href="Level 3 test.html">
        <img id="planet3" src="planet 3 new.png">
     </a>
-    
-    <img id="planet4" src="planet 4 new.png">
+    <!-- Link for planet 4 to Level 4 test -->
+    <a href="Level 4 test.html">
+       <img id="planet4" src="planet 4 new.png">
+    </a>
     <img id="planet5" src="Planet-5.png">
+
+    <!-- Bounce sound -->
+    <audio id="bounce-sound" preload="auto">
+        <source src="bounce sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- JavaScript to play sound on hover -->
+    <script>
+        // Select planet4 element
+        var planet4 = document.getElementById("planet4");
+
+        // Get the bounce sound element
+        var bounceSound = document.getElementById("bounce-sound");
+
+        // Play the bounce sound when hovering over planet4
+        planet4.addEventListener("mouseenter", function() {
+            bounceSound.play();
+        });
+    </script>
 </body>      
 </html>
