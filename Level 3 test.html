@@ -171,7 +171,7 @@
     
     <!-- Speech Bubble -->
     <div id="speech-bubble">
-        <img src="purple speech bubble lighter 3.png" style="width: 100%; height: 100%;">
+        <img src="purple speech bubble.png" style="width: 100%; height: 100%;">
         <div id="speech-bubble-text">
             <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
         </div>
@@ -197,25 +197,24 @@
 
     <!-- Script for Typing Effect and Text Changes -->
     <script>
-        var initialText = "Hello again, brave adventurer! You've come a long way, but the journey is far from over. Prepare yourself, for new challenges and mysteries await!";
-        var secondText = "You’ve arrived in Glacia, where only the strongest can survive. Steel yourself, adventurer your greatest test begins here!";
-        var finalText = "You're about to dive into a vital area of Artificial Intelligence: Machine Learning. Let's explore how machines gain intelligence by analyzing data and making predictions!";
-        var newFinalText = "Machine learning is a cool part of AI, where computers become super smart by learning from examples! It's like teaching a robot to recognize animals, play games, or make decisions on its own!";
-        var nextText = "You’ve already learned that self-driving cars and virtual assistance are an application of AI in Level 1. Now, let’s explore even more exciting applications of AI, especially in the world of Machine Learning!";
+        var initialText = "Hello again, brave adventurer! You have come a long way, but the journey is far from over. Prepare yourself, for new challenges and mysteries await!";
+        var secondText = "You have arrived in Glacia, where only the strongest can survive. Steel yourself, adventurer your greatest test begins here!";
+        var finalText = "You are about to dive into a vital area of Artificial Intelligence: Machine Learning. Let's explore how machines gain intelligence by analyzing data and making predictions!";
+        var newFinalText = "Machine learning is a cool part of AI, where computers become super smart by learning from examples! It is like teaching a robot to recognize animals, play games, or make decisions on its own!";
+        var nextText = "You have already learned that self-driving cars and virtual assistance are an application of AI in Level 1. Now, let’s explore even more exciting applications of AI, especially in the world of Machine Learning!";
         var finalSpeechText = "Video Game Opponents: In video games, machine learning helps create smart opponents that learn how to challenge players, making games more fun and unpredictable!";
         var updatedSpeechText = "Movie and Music Suggestions: Streaming services like Netflix or Spotify use machine learning to recommend new movies or songs based on what you like to watch or listen to.";
         var machineLearningTypesText = "There are four main types of machine learning:"; // Keep this text as required
-        var supervisedLearningText = "Supervised Learning: For example, if you're teaching the computer to recognize cats and dogs, you show it lots of pictures of both and tell it which is which. The computer learns from these examples and gets better at guessing on its own."; // New supervised learning text
+        var supervisedLearningText = "Supervised Learning: For example, if youn are teaching the computer to recognize cats and dogs, you show it lots of pictures of both and tell it which is which. The computer learns from these examples and gets better at guessing on its own."; // New supervised learning text
         var unsupervisedLearningText = "Unsupervised learning is like the computer being a detective! It gets a bunch of information with no answers and has to find patterns. For example, if you give it pictures of animals, it might group the cats and dogs together by what they look like."; // New unsupervised learning text
         var semisupervisedLearningText = "Semi-Supervised Learning: It is like a mix of both Supervised and Unsupervised Learning. The computer learns from the few labeled examples and tries to guess the rest by finding patterns, kind of like solving a puzzle with some clues."; // New semisupervised learning text
-        var reinforcementLearningText = "Reinforcement Learning: This is like training a pet with rewards! The computer learns by trying different things and getting rewards (or punishments) based on whether it does well. It's like a robot learning to play a game by earning points for doing the right moves."; // New reinforcement learning text
+        var reinforcementLearningText = "Reinforcement Learning: This is like training a pet with rewards! The computer learns by trying different things and getting rewards (or punishments) based on whether it does well. It is like a robot learning to play a game by earning points for doing the right moves."; // New reinforcement learning text
         var machineLearningSummaryText = "These types help computers learn in different ways, just like how kids learn in school, by exploring, or by practicing through trial and error!"; // New machine learning summary text
         var classificationText = "This level focuses on Supervised Learning. Classification is a type of supervised learning, where the computer learns to sort things into groups. For example, it learns to put cat pictures in the 'cat' group and dog pictures in the 'dog' group, then guesses the group for new pictures."; // New machine learning summary text
         var conceptsText = "Before we dive in detail into Supervised learning algorithms, there are some machine learning concepts you need to be familiar with: "; 
-        var datasetText = "A dataset is a collection of information that the computer studies. It’s like a big set of flashcards for the computer! Each flashcard has information that help the computer learn. The dataset is what the model uses to practice and improve, just like how you might study to get better at a game or subject. "; 
-        var trainingDatasetText = "Training dataset is like the practice materials you use to learn a new skill. It contains lots of examples of how the computer studies to learn how to make decisions. For instance, if you're teaching the computer to recognize animals,"; 
-        var trainingDataset2Text = "the training dataset would have many pictures of different animals labeled with their names (like ‘cat’, ‘dog’, ‘elephant’). The computer looks at these examples to understand what each animal looks like and learns the patterns needed to identify them."; 
-        var testingDatasetText = "A testing dataset is like a quiz for the computer. After training on the training dataset, you give it new examples it hasn’t seen before, this is the testing dataset.";
+        var datasetText = "A dataset is a collection of information that the computer studies. It is like a big set of flashcards for the computer! Each flashcard has information that help the computer learn. The dataset is what the model uses to practice and improve, just like how you might study to get better at a subject.";
+        var trainingDataset2Text = "the training dataset would have many pictures of different animals labeled with their names, like ‘cat’, ‘dog’, ‘elephant’. The computer looks at these examples to understand what each animal looks like and learns the patterns needed to identify them."; 
+        var testingDatasetText = "A testing dataset is like a quiz for the computer. After training on the training dataset, you give it new examples it has not seen before, this is the testing dataset.";
         var testingDataset2Text = "For example, you might show it a new picture of an animal and see if it can correctly identify what animal it is. This helps you check if the computer has learned well and can make good guesses on its own!";
         var modelText = "A machine learning model is like the brain of the computer that learns to make decisions. After studying examples, it creates rules to solve problems. For instance, if it learns what makes a cat different from a dog, it can tell whether a new picture shows a cat or dog.";
         var problemText = "Think of the model like a smart recipe the computer follows after it has learned how to make the dish! Here are some simple steps to solve a machine learning problem: ";

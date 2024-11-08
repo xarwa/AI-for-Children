@@ -141,7 +141,7 @@
    
     <!-- Speech Bubble -->
     <div id="speech-bubble">
-        <img src="purple speech bubble lighter 3.png" style="width: 100%; height: 100%;">
+        <img src="purple speech bubble.png" style="width: 100%; height: 100%;">
         <div id="speech-bubble-text">
             <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
         </div>
@@ -196,11 +196,11 @@
  
     <!-- Script for Typing Effect and Text Changes -->
     <script>
-        var initialText = "Let’s walk through an example of using a decision tree for a classification problem: predicting whether a person will enjoy a specific activity based on weather conditions and personal preferences. Here’s how we could structure it:";
+        var initialText = "Let’s walk through an example of using a decision tree for a classification problem: predicting whether a person will enjoy a specific activity based on weather conditions and personal preferences. Here is how we could structure it:";
         var secondText = "We have data from various people about their preferred activities in different weather conditions. The goal is to predict whether someone will choose to 'Go Outside' or 'Stay Inside' based on the following features: ";
         var thirdText = "Weather (Sunny, Rainy, Cloudy), Temperature (Hot, Mild, Cool), Windy (Yes, No). Click on the next arrow to see the data sample table!";
         var fourthText = "Here are the steps of building the decision tree: Root Node: Start by analyzing which feature (Weather, Temperature, or Windy) best separates the 'Go Outside' outcomes. Let's say 'Weather' gives the best separation. ";
-        var fifthText = "Splitting on Weather: If Weather = Sunny, further split based on whether it’s Windy. If Weather = Rainy, split based on Temperature. If Weather = Cloudy, go to a leaf node since most people go outside when it’s cloudy in this dataset.";
+        var fifthText = "Splitting on Weather: If Weather = Sunny, further split based on whether it’s Windy. If Weather = Rainy, split based on Temperature. If Weather = Cloudy, go to a leaf node since most people go outside when it is cloudy in this dataset.";
         var sixthText = "Subsequent Splits: For Sunny: If Windy = Yes, predict 'Go Outside'. If Windy = No, predict 'Stay Inside'. For Rainy: If Temperature = Cool, predict 'Stay Inside'. If Temperature = Mild, predict 'Stay Inside'. Now take a look of the resulting decision tree!";
         var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
         var index = 0; // Start from the first character
