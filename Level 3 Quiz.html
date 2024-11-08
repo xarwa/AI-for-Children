@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 2</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #robot, #player, #alien {
+            z-index: 1;
+            position: absolute;
+        }
+        #robot {
+            width: 10vw;
+            bottom: 5vh;
+            left: 20vw;
+        }
+        #player {
+            width: 12vw;
+            bottom: 10vh;
+            left: 9vw;
+        }
+        #monster {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        #green-box-darker {
+            width: 35vw;
+            height: 45vh;
+            position: absolute;
+            bottom: 40vh;
+            right: 22vw;
+            z-index: 3;
+        }
+        #green-box-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 1.2vw;
+            color: rgb(24, 15, 11);
+            font-family: 'Zen Dots', sans-serif;
+            z-index: 4;
+            width: 92%;
+            box-sizing: border-box;
+        }
+        #message {
+            font-size: 1.5vw;
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+            position: absolute;
+            bottom: 2%; /* Placed under the submit button */
+            left: 55%; /* Align with submit button */
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+        label {
+            font-size: 1.1vw;
+        }
+        input[type="radio"] {
+            margin: 0 5px;
+        }
+        #submit-button {
+            width: 9vw;
+            position: absolute;
+            bottom: 30%;
+            left: 57%;
+            z-index: 4;
+            cursor: pointer;
+        }
+         /* Snowflakes */
+         .snowflake {
+            position: absolute;
+            top: -10px;
+            background: rgb(255, 255, 255);
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none; /* Don't let snowflakes block clicks */
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh); /* Move from top to bottom of the screen */
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <img id="background" src="Level 3 Background.png">
+    <img id="robot" src="level 3 robot red mug.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="monster" src="Monster.png">
+    <img id="task-bar" src="Task bar.png">
+    
+    <!-- Green Box with Content inside -->
+    <div id="green-box-darker">
+        <img src="Purple box.png" style="width:100%; height:100%;">
+        <div id="green-box-content">
+            <p id="question-text">Loading first question...</p>
+            <div id="options"></div>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <img id="submit-button" src="Purple submit button.png" onclick="checkAnswer()">
+
+    <!-- Audio files for correct and wrong answers -->
+    <audio id="correct-sound">
+        <source src="claps.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="buzzer.mp3" type="audio/mpeg">
+    </audio>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <script>
+
+     let questions = {
+            easy: [
+                { q: "What is machine learning?", options: ["Teaching machines to cook", "Machines learning from examples to make smart decisions", "Robots playing games all the time", "Making machines follow exact instructions"], answer: 1 },
+                { q: "Which of these is an application of machine learning?", options: ["Calculating square roots", "Making movie recommendations on Netflix", "Basic arithmetic operations", "Reading only text documents"], answer: 1 },
+                { q: "What does a training dataset help the computer do?", options: ["Fix errors in programs", "Practice and improve on a task", "Build websites", "Learn to walk"], answer: 1 },
+                { q: "What is the main goal of machine learning? ", options: ["To teach machines to dance", "To help machines learn from data and make predictions", "To make machines run faster", "To design creative graphics"], answer: 1 },
+                { q: "What does a 'dataset' mean in machine learning?", options: ["A list of computer games", "A collection of information the computer studies", "A place where animals are kept", "A type of computer "], answer: 1 },
+                { q: "In a decision tree, each step asks a:", options: ["Prediction", "Question", "Joke", "Calculation"], answer: 1 },
+                { q: "In streaming platforms, machine learning can be used to:", options: ["Recommend shows or songs based on what you like", "Increase the volume of the sound", "Change the video quality", "Charge extra fees"], answer: 0 },
+                { q: "When a machine learning model identifies items by labels like 'cat' or 'dog', it’s performing a:", options: ["Classification task", "Regression task", "Prediction task", "Sorting task"], answer: 0 },
+                { q: "In supervised learning, what does the computer learn from?", options: ["Mistakes it makes", "Unlabeled data", "Labeled examples", "Nothing, it figures out everything by itself"], answer: 2 },
+                { q: "What is a machine learning model?", options: ["A programming language", "A hardware component", "A game", "A brain of the computer that makes decisions"], answer: 3 }
+                // Add more easy questions here
+            ],
+            medium: [
+                { q: "What kind of predictions can a Decision Tree help make?", options: ["Only yes or no answers", "Predicting complex text responses", "Predicting specific activities based on conditions", "Only predicting animal types"], answer: 2 },
+                { q: "What type of data does a model practice with before being tested?", options: ["Testing dataset", "Training dataset", "Example dataset", "Prediction dataset"], answer: 1 }
+                // Add more medium questions here
+            ],
+            hard: [
+                { q: "In supervised learning, a training dataset is like:", options: ["A math problem", "Practice materials to learn a new skill", "A video game", "An encyclopaedia"], answer: 1 },
+                { q: "A 'classification' problem in supervised learning can be compared to:", options: ["Grouping objects based on shared traits", "Solving an equation", "Creating random guesses", "Drawing pictures"], answer: 0 },
+                { q: "What type of Machine Learning could be used for recommending movies or songs?", options: ["Classification", "Supervised Learning", "Unsupervised Learning", "Reinforcement Learning"], answer: 0 },
+                { q: "In a decision tree, what is the purpose of the root node?", options: ["To decide if the tree should be used", "To identify the main feature that separates outcomes", "To predict outcomes directly", "To create new features for the model"], answer: 1 },
+                { q: "Which Machine Learning type best applies to grouping unlabeled data into patterns?", options: ["Supervised Learning", "Unsupervised Learning", "Semi-Supervised Learning", "Reinforcement Learning"], answer: 1 },
+                { q: "How does supervised learning use labeled data in the training dataset?", options: ["By ignoring labels and focusing only on patterns", "By using labels to guide learning and predict categories", "By making random guesses to improve its decisions", "By creating new categories based on similar labels"], answer: 1 },
+                { q: "In a decision tree, each branch represents:", options: ["A possible choice based on an answer", "The final answer to a problem", "The best guess made by the computer", "An unrelated topic"], answer: 0 },
+                { q: "Why is labeled data important for supervised learning?", options: ["It provides examples that teach the model what answers should look like", "It tells the computer when to stop learning", "It makes the data larger", "It helps the computer learn faster"], answer: 0 },
+                { q: "A decision tree works best when you have:", options: ["A variety of outcomes to sort", "A small dataset", "Questions without any answers", "Answers only for dogs and cats"], answer: 0 }
+                // Add more hard questions here
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+    let score = 0;
+    let totalQuestions = 10;
+    let currentDifficulty = 'medium'; // Start with a medium question
+
+     // Start the typing effect after the page loads
+     window.onload = function() {
+            typeText();
+            createSnowflakes(); // Start snowflakes after the page loads
+        };
+
+    function getRandomQuestion(difficulty) {
+        let questionSet = questions[difficulty];
+        let randomIndex = Math.floor(Math.random() * questionSet.length);
+        return questionSet[randomIndex];
+    }
+
+    function loadQuestion() {
+        let question = getRandomQuestion(currentDifficulty);
+        document.getElementById('question-text').innerHTML = question.q;
+        
+        let optionsHTML = '';
+        question.options.forEach((option, index) => {
+            optionsHTML += `<label><input type="radio" name="answer" value="${index}"> ${option}</label><br>`;
+        });
+        document.getElementById('options').innerHTML = optionsHTML;
+        
+        // Clear any previous message when a new question is loaded
+        document.getElementById('message').innerHTML = "";
+        currentQuestion = question;
+    }
+
+    function checkAnswer() {
+        var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+        var messageDiv = document.getElementById('message');
+        var correctSound = document.getElementById('correct-sound');
+        var wrongSound = document.getElementById('wrong-sound');
+
+        if (!selectedAnswer) {
+            messageDiv.innerHTML = "Please select an answer!";
+            return;
+        }
+
+        if (parseInt(selectedAnswer.value) === currentQuestion.answer) {
+            score++;
+            messageDiv.innerHTML = "Good job, your answer is correct!";
+            messageDiv.style.color = "green";
+            correctSound.play();  // Play the correct answer sound
+
+            // Set difficulty and proceed to next question
+            if (currentDifficulty === 'hard' || currentQuestionIndex >= totalQuestions - 1) {
+                currentDifficulty = 'hard';
+            } else {
+                currentDifficulty = 'hard';
+            }
+        } else {
+            messageDiv.innerHTML = "Sorry, your answer is wrong!";
+            messageDiv.style.color = "red";
+            wrongSound.play();  // Play the wrong answer sound
+
+            currentDifficulty = 'easy'; // Adjust difficulty
+        }
+        currentQuestionIndex++;
+
+        setTimeout(() => {
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();  // Load the next question after a delay
+            } else {
+                displayFinalScore();  // Show the final score if no more questions
+            }
+        }, 2000); // Adjust delay to 2 seconds before loading the next question
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < totalQuestions) {
+            document.getElementById('message').innerHTML = "Please answer before proceeding.";
+        } else {
+            displayFinalScore();
+        }
+    }
+
+        // Replace the old displayFinalScore function with this updated one
+    function displayFinalScore() {
+        document.getElementById('question-text').innerHTML = `You answered ${score} out of ${totalQuestions} questions correctly!`;
+        document.getElementById('options').innerHTML = "";
+        document.getElementById('message').innerHTML = "";
+
+        // Hide the submit button when the final score is displayed
+        document.getElementById('submit-button').style.display = 'none';
+    }
+
+
+    window.onload = function () {
+        loadQuestion();
+    }
+
+    // Function to create falling snowflakes
+    function createSnowflakes() {
+            var snowflakeCount = 30; // Number of snowflakes to create
+            for (var i = 0; i < snowflakeCount; i++) {
+                var snowflake = document.createElement("div");
+                snowflake.className = "snowflake";
+                snowflake.style.width = Math.random() * 10 + 5 + "px"; // Random width between 5px and 15px
+                snowflake.style.height = snowflake.style.width; // Keep it circular
+                snowflake.style.left = Math.random() * window.innerWidth + "px"; // Random position across the width
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + "s"; // Random fall duration
+                snowflake.style.opacity = Math.random(); // Random opacity
+                document.body.appendChild(snowflake); // Add to the body
+            }
+        }
+
+    
+    
+    
+    
+    </script>
+</body>
+</html>

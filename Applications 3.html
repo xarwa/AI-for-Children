@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 1</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #floor {
+            width: 100vw; /* Ensures the floor image spans the width of the page */
+            position: absolute;
+            bottom: 0; /* Aligns the floor image to the bottom of the viewport */
+            left: 0;
+            z-index: 0; /* Stays on top of the background but behind other elements */
+            object-fit: cover; /* Ensures the image covers the width without distortion */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #scientist {
+            width: 15vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 10vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #disease-diagnosis {
+            width: 65vw; /* Adjust the width as needed */
+            position: absolute;
+            top: 50%; /* Adjust the vertical position as needed */
+            left: 5vw; /* Adjust the left position to place it towards the left */
+            transform: translateY(-50%); /* Center vertically based on top */
+            z-index: 1; /* Ensure it appears above the floor but below the task bar */
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Wallpaper.png">
+    <img id="floor" src="Floor.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="scientist" src="Scientist(Rotated).png">
+    <img id="disease-diagnosis" src="Disease Diagnosis.png">
+    
+    <!-- Right arrow, directs to Applications 4.html -->
+    <a href="Applications 4.html"><img id="right" src="right.png"></a>
+    
+    <!-- Left arrow, directs back to index.html -->
+    <a href="index.html"><img id="left" src="left.png"></a>
+</body>      
+</html>

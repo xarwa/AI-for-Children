@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 1</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #floor {
+            width: 100vw; /* Ensures the floor image spans the width of the page */
+            position: absolute;
+            bottom: 0; /* Aligns the floor image to the bottom of the viewport */
+            left: 0;
+            z-index: 0; /* Stays on top of the background but behind other elements */
+            object-fit: cover; /* Ensures the image covers the width without distortion */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #lamp {
+            width: 20vw; /* Keeps the lamp image at the same size */
+            position: absolute;
+            top: 20px; /* Moves the lamp down slightly to make space for the task bar */
+            left: 50%; /* Starts positioning from the center of the viewport */
+            transform: translateX(-50%); /* Centers the lamp horizontally */
+            z-index: 1; /* Ensures the lamp is below the task bar but above the background */
+        }
+        #table {
+            width: 70vw; /* Increased the width of the table image */
+            position: absolute;
+            top: 50%; /* Centers the table image vertically */
+            left: 50%; /* Centers the table image horizontally */
+            transform: translate(-50%, -50%); /* Ensures the table is perfectly centered */
+            z-index: 1; /* Ensures the table appears above the floor but below the task bar */
+        }
+        #desktop {
+            width: 20vw; /* Adjust the size of the desktop image */
+            position: absolute;
+            top: 38%; /* Position it vertically to align with the yellow part */
+            left: 23%; /* Keeps it towards the left side, within the yellow part of the table */
+            z-index: 2; /* Places the desktop above the table */
+        }
+        #scientist {
+            width: 15vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 10vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #right {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            left: 190vh;
+            z-index: 1;
+        }
+        #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            left: 9vh;
+            z-index: 1;
+        }
+        #blue-box-darker {
+            width: 27vw; /* Adjust the box size */
+            height: 38vh; /* Set height to fit content */
+            position: absolute;
+            bottom: 44vh; /* Positioned near the scientist */
+            right: 25vw; /* Positioned it beside the scientist */
+            z-index: 3; /* Ensure it appears above other elements */
+        }
+        #blue-box-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the content within the blue box */
+            text-align: center; /* Center-aligns the text */
+            font-size: 1.2vw; /* Adjust font size as needed */
+            color: rgba(25, 66, 57, 1); /* Sets the text color */
+            font-family: 'Arial', sans-serif; /* Adjust font as needed */
+            z-index: 4; /* Ensure it appears above other elements */
+            width: 80%; /* Adjust width to fit within the blue box */
+            box-sizing: border-box;
+        }
+        #message {
+            font-size: 1.5vw; 
+            color: red; 
+            text-align: center; 
+            margin-top: 20px;
+        }
+        label {
+            font-size: 1.1vw; /* Adjust the size of radio button labels */
+        }
+        input[type="radio"] {
+            margin: 0 5px; /* Adjust margin between radio buttons */
+        }
+        #submit-button {
+            width: 9vw; /* Adjust size as needed */
+            position: absolute;
+            bottom: 35%; /* Adjust position relative to the box */
+            left: 57%; /* Position within the yellow part of the table */
+            z-index: 4; /* Ensure it appears above other elements */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Wallpaper.png">
+    <img id="floor" src="Floor.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="lamp" src="Lamp.png">
+    <img id="table" src="Table.png">
+    <img id="desktop" src="Desktop.png">
+    <img id="scientist" src="Scientist(Rotated).png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    
+    <!-- Right and Left Arrows -->
+    <a href=""><img id="right" src="right.png"></a>
+    <a href="level 1 test.html"><img id="right" src="right.png"></a>
+    <a href="index.html"><img id="left" src="left.png"></a>
+    
+    <!-- Blue Box Darker with Content inside -->
+    <div id="blue-box-darker">
+        <img src="Blue Box Darker.png" style="width:100%; height:100%;">
+        <div id="blue-box-content">
+            <p>AI stands for Automated Intelligence.</p>
+            <label><input type="radio" name="answer" value="true"> True</label><br>
+            <label><input type="radio" name="answer" value="false"> False</label>
+        </div>
+        <div id="message"></div>
+    </div>
+    
+    <!-- Submit Button -->
+    <img id="submit-button" src="submit button darker.png" onclick="checkAnswer()">
+
+    <script>
+        function checkAnswer() {
+            // Get the selected answer
+            var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+            var messageDiv = document.getElementById('message');
+            
+            // If no answer is selected
+            if (!selectedAnswer) {
+                messageDiv.innerHTML = "Please select an answer!";
+                return;
+            }
+
+            // Check the selected answer
+            if (selectedAnswer.value === "false") {
+                messageDiv.innerHTML = "Good job, your answer is correct!";
+                messageDiv.style.color = "green"; // Change message color to green for correct answer
+                setTimeout(function() {
+                    window.location.href = "Quiz 2.html"; // Redirect after 2 seconds
+                }, 2000);
+            } else {
+                messageDiv.innerHTML = "Sorry, your answer is wrong, please try again!";
+                messageDiv.style.color = "red"; // Change message color to red for incorrect answer
+
+            }
+        }
+    </script>
+</body>      
+</html>

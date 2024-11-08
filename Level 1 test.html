@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 1</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #floor {
+            width: 100vw; /* Ensures the floor image spans the width of the page */
+            position: absolute;
+            bottom: 0; /* Aligns the floor image to the bottom of the viewport */
+            left: 0;
+            z-index: 0; /* Stays on top of the background but behind other elements */
+            object-fit: cover; /* Ensures the image covers the width without distortion */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #lamp {
+            width: 20vw; /* Keeps the lamp image at the same size */
+            position: absolute;
+            top: 20px; /* Moves the lamp down slightly to make space for the task bar */
+            left: 50%; /* Starts positioning from the center of the viewport */
+            transform: translateX(-50%); /* Centers the lamp horizontally */
+            z-index: 1; /* Ensures the lamp is below the task bar but above the background */
+        }
+        #table {
+            width: 70vw; /* Increased the width of the table image */
+            position: absolute;
+            top: 50%; /* Centers the table image vertically */
+            left: 50%; /* Centers the table image horizontally */
+            transform: translate(-50%, -50%); /* Ensures the table is perfectly centered */
+            z-index: 1; /* Ensures the table appears above the floor but below the task bar */
+        }
+        #desktop {
+            width: 20vw; /* Adjust the size of the desktop image */
+            position: absolute;
+            top: 38%; /* Position it vertically to align with the yellow part */
+            left: 23%; /* Keeps it towards the left side, within the yellow part of the table */
+            z-index: 2; /* Places the desktop above the table */
+        }
+        #scientist {
+            width: 15vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 10vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 30vw; /* Increased the size of the speech bubble */
+            position: absolute;
+            bottom: 45vh; /* Position it near the bottom */
+            right: 25vw; /* Position it to the right of the page, towards the scientist */
+            z-index: 3; /* Ensure it appears above other elements */
+            transform: translateX(10%); /* Optional: adjust for visual appeal */
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%; /* Adjust to lift the text closer to the top of the bubble */
+            left: 5%; /* Adjust to position the text inside the bubble */
+            width: 85%; /* Ensure the text stays within the bubble */
+            height: 60%; /* Adjust height to fit the text */
+            color: rgba(25, 66, 57, 1); /* Set text color */
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4; /* Ensure the text is above everything else */
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Wallpaper.png">
+    <img id="floor" src="Floor.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="lamp" src="Lamp.png">
+    <img id="table" src="Table.png">
+    <img id="desktop" src="Desktop.png">
+    <img id="scientist" src="Scientist(Rotated).png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <a href="#" onclick="changeText()"><img id="right" src="right.png"></a>
+    <a href="#" onclick="changeTextOnLeftClick()"><img id="left" src="left.png"></a>
+    <div id="speech-bubble">
+        <img src="Speech Bubble (Rotated).png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Use this span for typing effect -->
+        </div>
+    </div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+    <script>
+        var initialText = "Hello explorer! Today we have a special mission for you. I recently heard that you’re interested in learning about artificial intelligence! You’re just the right person for this amazing space mission then!";
+        var firstChangeText = "All you have to do, is take this robot I’ve created to different planets and learn about AI! I already had a map of the planets installed into your rocket. Also, I haven’t named the robot, so feel free to pick a name for him!";
+        var secondChangeText = "Before you start your journey, let me give you an introduction to Artificial Intelligence!<br> Many brilliant scientists have come up with different meanings for AI. For example:";
+        var thirdChangeText = "In 1955, John McCarthy defined the term Artificial Intelligence as “The science and engineering of making intelligent machines”. John McCarthy is known as one of the founding fathers of AI.";
+        var fourthChangeText = "Eugene Charniak and Drew McDermott said that AI is “The study of faculties through the use of computational methods” in 1985 in their book “Introduction to Artificial Intelligence.”";
+        var fifthChangeText = "Another meaning of AI is “the art of creating machines that perform functions that require intelligence when performed by people,” said by Raymond Kurzweil in 1990.";
+        var sixthChangeText = "Elaine Rich and Kevin Knight mentioned in their book ‘Artificial intelligence (second edition)’ that AI is “the study of how to make computers do things at which, at the moment, people are better.” in the year 1991.";
+        var seventhChangeText = "It is important to know different perspectives on the meaning of Artificial Intelligence. AI is growing and improving by each passing day. People have been studying its wonders for years!";
+        var eighthChangeText = "Here comes my turn in defining AI: AI is like human babies; when they are born, they know nothing. They must perceive the world and interact with it to learn. Just like we provide AI with data for them to understand and function.";
+        var ninthChangeText = "We use AI in lots of ways! It helps us to do things like play games, interact with our devices, and even help doctors with diagnosing patients. Here comes the main applications of AI.";
+        
+        var texts = [firstChangeText, secondChangeText, thirdChangeText, fourthChangeText, fifthChangeText, sixthChangeText, seventhChangeText, eighthChangeText, ninthChangeText];
+        var textIndex = 0; // Index to track the current text
+        var typingInterval; // Variable to store the typing interval
+
+        // Typing effect function
+        function typeText(text, element) {
+            element.innerHTML = ""; // Clear previous text
+            let index = 0;
+            clearInterval(typingInterval); // Clear any existing interval
+            typingInterval = setInterval(() => {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 50); // Adjust speed as necessary
+        }
+
+        // Function to initialize the text
+        function init() {
+            const typingElement = document.getElementById("typing-text");
+            typeText(initialText, typingElement);
+        }
+
+        // Change text on right click
+        function changeText() {
+            if (textIndex < texts.length) {
+                const typingElement = document.getElementById("typing-text");
+                // Immediately clear the current text and type the next text
+                clearInterval(typingInterval); // Clear the current typing interval
+                typingElement.innerHTML = ""; // Clear the current text
+                typeText(texts[textIndex], typingElement);
+                textIndex++;
+                
+                // Redirect after the ninth text
+                if (textIndex === texts.length) {
+                    setTimeout(() => {
+                        window.location.href = 'Applications 1.html'; // Redirects after displaying the ninth text
+                    }, 500); // Delay before redirection
+                }
+            }
+        }
+
+        // Change text on left click
+        function changeTextOnLeftClick() {
+            if (textIndex > 0) {
+                textIndex--;
+                const typingElement = document.getElementById("typing-text");
+                // Immediately clear the current text and type the previous text
+                clearInterval(typingInterval); // Clear the current typing interval
+                typingElement.innerHTML = ""; // Clear the current text
+                typeText(texts[textIndex - 1], typingElement);
+            }
+        }
+
+        // Initialize the text when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>

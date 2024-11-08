@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2</title>
+
+    <style>
+        /* Basic body styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+            font-family: 'Zen Dots', sans-serif; /* Zen Dots font */
+        }
+
+        /* Background and character positioning */
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        #robot, #player, #alien, #task-bar {
+            position: absolute;
+            z-index: 1;
+        }
+
+        #robot {
+            width: 10vw;
+            bottom: 5vh;
+            left: 20vw;
+        }
+
+        #player {
+            width: 12vw;
+            bottom: 10vh;
+            left: 9vw;
+        }
+
+        #alien {
+            width: 15vw;
+            bottom: 5vh;
+            right: 5vw;
+        }
+
+        #task-bar {
+            width: 100vw;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        /* Button arrows */
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        #right {
+            left: 190vh;
+        }
+
+        #left {
+            left: 9vh;
+        }
+
+        #right:hover, #left:hover {
+            transform: scale(1.2);
+        }
+
+        /* Node styles for the Best-First Search */
+        .node {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: grey; /* Initial grey color for unvisited nodes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            border: 2px solid gray;
+            position: absolute;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+            font-family: 'Zen Dots', sans-serif;
+        }
+
+        .node.visited {
+            background-color: lightblue;
+            color: black;
+        }
+
+        .node.start-visited {
+            background-color: rgb(87, 214, 87); /* Color for the starting node S when visited */
+            color: black;
+        }
+
+        .node.goal {
+            background-color: rgb(219, 76, 88); /* Different color for goal state */
+            color: black;
+        }
+
+        /* Node positions over the background */
+        #S { top: 20vh; left: 40vw; }
+        #A { top: 35vh; left: 30vw; }
+        #B { top: 35vh; left: 50vw; }
+        #C { top: 50vh; left: 25vw; }
+        #D { top: 50vh; left: 35vw; } /* Goal node D */
+        #E { top: 50vh; left: 45vw; }
+        #F { top: 50vh; left: 55vw; }
+        #H { top: 65vh; left: 30vw; }
+        #I { top: 65vh; left: 50vw; }
+        #G { top: 65vh; left: 60vw; }
+
+        /* Start button and visited nodes log */
+        #start-container {
+            position: absolute;
+            bottom: 5vh; /* Lower the start button and visited nodes box */
+            left: 50vw;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        #start {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-family: 'Zen Dots', sans-serif;
+        }
+
+        #visited-nodes {
+            margin-top: 10px;
+            padding: 10px;
+            border: 2px solid gray;
+            background-color: white;
+            width: 300px;
+            min-height: 50px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Lines connecting the nodes */
+        .line {
+            position: absolute;
+            width: 2px;
+            background-color: black;
+            z-index: 0;
+        }
+
+        /* Table styles */
+        #node-table {
+            position: absolute;
+            top: 15vh;
+            right: 20vw; /* Moved next to the right arrow */
+            z-index: 2;
+            border-collapse: collapse;
+            width: 15vw;
+            font-family: 'Zen Dots', sans-serif;
+            font-size: 1vw;
+            border: 3px solid black; /* Outer border */
+            background-color: #f2f2f2
+        }
+
+        #node-table th, #node-table td {
+            border: 1px solid black; /* Inner borders for the cells */
+            padding: 8px;
+            text-align: center;
+        }
+
+        #node-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background and elements -->
+    <img id="background" src="Level 2 Background.png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="alien" src="Alien.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="redirectToTest()"> <!-- Added onclick event for right arrow -->
+    <img id="left" src="left.png">
+
+    <!-- Best First Search Game -->
+    <div id="game-container">
+        <!-- Nodes with heuristic values -->
+        <div class="node" id="S">S <br> h=12</div>
+        <div class="node" id="A">A <br> h=4</div>
+        <div class="node" id="B">B <br> h=7</div>
+        <div class="node" id="C">C <br> h=3</div>
+        <div class="node" id="D">D <br> h=8</div> <!-- Goal node -->
+        <div class="node" id="E">E <br> h=2</div>
+        <div class="node" id="F">F <br> h=4</div>
+        <div class="node" id="H">H <br> h=9</div> <!-- Exclude from visited nodes but still visible -->
+        <div class="node" id="I">I <br> h=13</div> <!-- Exclude from visited nodes but still visible -->
+        <div class="node" id="G">G <br> h=0</div>
+
+        <!-- Start button and visited nodes log -->
+        <div id="start-container">
+            <button id="start">Start Best-First Search</button>
+            <div id="visited-nodes">Visited Nodes: </div>
+        </div>
+
+        <!-- Table for Parent-Children Nodes -->
+        <table id="node-table">
+            <thead>
+                <tr>
+                    <th>Parent Node</th>
+                    <th>Children Nodes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>S</td>
+                    <td>A, B</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>C, D</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>E, F</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>None</td> <!-- D has no children as it's the goal node -->
+                </tr>
+                <tr>
+                    <td>E</td>
+                    <td>I, G</td>
+                </tr>
+                <tr>
+                    <td>H</td>
+                    <td>None</td> <!-- H has no children and is excluded -->
+                </tr>
+                <tr>
+                    <td>I</td>
+                    <td>None</td> <!-- I has no children and is excluded -->
+                </tr>
+                <tr>
+                    <td>G</td>
+                    <td>None</td> <!-- G is the final goal node -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Heuristic values for each node
+        const heuristic = {
+            S: 12,
+            A: 4,
+            B: 7,
+            C: 3,
+            D: 8, // Goal node
+            E: 2,
+            F: 4,
+            G: 0,
+            H: 9, // Not added to visited nodes
+            I: 13 // Not added to visited nodes
+        };
+
+        // Define node connections (graph)
+        const graph = {
+            S: ['A', 'B'],
+            A: ['C', 'D'],
+            B: ['E', 'F'],
+            D: [], // Game stops after visiting D
+            E: ['I', 'G'],
+        };
+
+        // Function to run the Best-First Search
+        function bestFirstSearch() {
+            let queue = ['S'];
+            const visitedNodes = [];
+            const visitedNodesContainer = document.getElementById('visited-nodes');
+            visitedNodesContainer.innerHTML = 'Visited Nodes: '; // Clear previous visits
+
+            function visitNode() {
+                if (queue.length === 0) return; // Stop when no more nodes
+
+                // Sort queue based on heuristic value
+                queue.sort((a, b) => heuristic[a] - heuristic[b]);
+
+                // Get the next node with the lowest heuristic value
+                const currentNode = queue.shift();
+                visitedNodes.push(currentNode);
+
+                // Update the UI
+                const nodeElement = document.getElementById(currentNode);
+                if (currentNode === 'S') {
+                    nodeElement.classList.add('start-visited'); // Change color of start node
+                } else if (currentNode === 'D') {
+                    nodeElement.classList.add('goal'); // Highlight the goal node (D)
+                    visitedNodesContainer.innerHTML += currentNode + ' ';
+                    return; // Stop the game when D is reached
+                } else {
+                    nodeElement.classList.add('visited');
+                }
+
+                visitedNodesContainer.innerHTML += currentNode + ' ';
+
+                // Add connected nodes to the queue
+                if (graph[currentNode]) {
+                    queue = queue.concat(graph[currentNode].filter(n => !visitedNodes.includes(n)));
+                }
+
+                // Delay the next step
+                setTimeout(visitNode, 1000);
+            }
+
+            // Start visiting nodes
+            visitNode();
+        }
+
+        // Start search on button click
+        document.getElementById('start').addEventListener('click', bestFirstSearch);
+
+        // Redirect function for the right arrow
+        function redirectToTest() {
+            window.location.href = "Level 2 test 4.html"; // Redirect to the specified page
+        }
+    </script>
+
+</body>
+</html>
+
+               

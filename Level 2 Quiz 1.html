@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 2</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #robot, #player, #alien {
+            z-index: 1;
+            position: absolute;
+        }
+        #robot {
+            width: 10vw;
+            bottom: 5vh;
+            left: 20vw;
+        }
+        #player {
+            width: 12vw;
+            bottom: 10vh;
+            left: 9vw;
+        }
+        #alien {
+            width: 15vw;
+            bottom: 5vh;
+            right: 10vw;
+        }
+        #task-bar {
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2);
+        }
+        #green-box-darker {
+            width: 35vw;
+            height: 45vh;
+            position: absolute;
+            bottom: 40vh;
+            right: 22vw;
+            z-index: 3;
+        }
+        #green-box-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 1.2vw;
+            color: rgb(24, 15, 11);
+            font-family: 'Zen Dots', sans-serif;
+            z-index: 4;
+            width: 92%;
+            box-sizing: border-box;
+        }
+        #message {
+            font-size: 1.5vw;
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+            position: absolute;
+            bottom: 2%; /* Placed under the submit button */
+            left: 55%; /* Align with submit button */
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+        label {
+            font-size: 1.1vw;
+        }
+        input[type="radio"] {
+            margin: 0 5px;
+        }
+        #submit-button {
+            width: 9vw;
+            position: absolute;
+            bottom: 30%;
+            left: 57%;
+            z-index: 4;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Level 2 Background.png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="alien" src="Alien.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="nextQuestion()">
+    <img id="left" src="left.png">
+    
+    <!-- Green Box with Content inside -->
+    <div id="green-box-darker">
+        <img src="Green Box Darker.png" style="width:100%; height:100%;">
+        <div id="green-box-content">
+            <p id="question-text">Loading first question...</p>
+            <div id="options"></div>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <img id="submit-button" src="Green Submit Button.png" onclick="checkAnswer()">
+
+    <!-- Audio files for correct and wrong answers -->
+    <audio id="correct-sound">
+        <source src="claps.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="buzzer.mp3" type="audio/mpeg">
+    </audio>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <script>
+     let questions = {
+            easy: [
+                { q: "What is an algorithm?", options: ["A recipe that tells a computer exactly what steps to follow", "A type of computer program", "A tool to measure speed", "A computer hardware component"], answer: 0 },
+                { q: "Which type of search algorithm checks every possibility?", options: ["Heuristic Search", "Blind Search", "Selective Search", "Optimized Search"], answer: 1 },
+                { q: "Which of the following best describes a search algorithm?", options: ["A method to store data in a computer", "A method to find a hidden object", "A game of Hide and Seek with a computer ", "A technique to delete files from a computer"], answer: 2 },
+                { q: "In the context of BFS, what does BFS stand for?", options: ["Binary-Factor Search", "Best-Find Search", "Breadth-First Search", "Blind-Factor Search"], answer: 2 },
+                { q: "How does a blind search differ from a heuristic search?", options: ["Blind search uses clues, heuristic does not", "Blind search checks every spot, heuristic uses clues", "Blind search is faster than heuristic search", "Both are exactly the same"], answer: 1 },
+                { q: "Which of the following best describes breadth-first search?", options: ["Checks all nearby paths before moving farther away", "Follows the best clues to find the solution quickly", "Skips random paths", "Starts at the end and works backward"], answer: 0 },
+                { q: "Why is an algorithm compared to a recipe?", options: ["Because it creates food", "Because it’s written in a book", "Because it gives step-by-step instructions", "Because it’s a list of ingredients"], answer: 2 },
+                { q: "What is the main purpose of the Breadth-First Search algorithm?", options: ["To find the longest path", "To explore all options level by level", "To ignore irrelevant paths", "To guess the solution "], answer: 1 },
+                { q: "Which of these is an application of Best-First Search?", options: ["GPS Navigation", "Solving puzzles like Rubik's cube", "Social media posting", "Internet browsing"], answer: 1 },
+                { q: "What is the purpose of using search algorithms like BFS and Best-First Search?", options: ["To find a solution or hidden object efficiently", "To store data securely", "To create animations", "To delete unnecessary files"], answer: 0 }
+                // Add more easy questions here
+            ],
+            medium: [
+                { q: "What does a blind search algorithm do?", options: ["It skips some steps to find the solution faster ", "It checks every spot one by one until it finds the solution", "It uses hints to find the solution ", "It only looks at the most likely spots"], answer: 1 },
+                { q: "Which of the following is an application of the BFS algorithm?", options: ["GPS Navigation systems", "Word processing", "File compression", "Image editing"], answer: 0 }
+                // Add more medium questions here
+            ],
+            hard: [
+                { q: "What kind of search algorithm is Best-First Search?", options: ["Blind Search", "Heuristic Search", "Random Search", "Exhaustive Search"], answer: 1 },
+                { q: "In which scenario would you use a blind search algorithm?", options: ["When you have clues about the solution", "When you need to check all options without any clues", "When the problem is very simple", "When you want the fastest possible solution"], answer: 1 },
+                { q: "Which of the following is NOT an application of Best-First Search?", options: ["Robotics", "Puzzle solving", "Network Security", "Video editing"], answer: 3 },
+                { q: "Which of these algorithms is likely to find the shortest path in a large maze? ", options: ["Depth-First Search", "Best-First Search", "Breadth-First Search (BFS)", "Random Search"], answer: 2 },
+                { q: "What does the 'First' in Breadth-First Search refer to? ", options: ["The first solution found", "The first level of paths explored", "The first algorithm developed", "The first step of the algorithm "], answer: 1 },
+                { q: "Which of the following is a real-world application where heuristic search is more effective than blind search? ", options: ["Finding all possible routes in a small maze", "Solving a complex puzzle like a Rubik's cube.", "Searching for a specific word in a text document", "Checking all connected devices in a small network"], answer: 1 },
+                { q: "What is a potential drawback of using heuristic search algorithms like Best-First Search? ", options: ["They always find the shortest path", "They might miss the optimal solution if the clues are misleading", "They take longer than blind searches", "They do not work without random guessing"], answer: 1 },
+                { q: "In what situation would BFS be preferred over Best-First Search?", options: ["When the search space is small", "When the shortest path must be found without any heuristics", "When there are clear clues or heuristics", "When the search space is large and complex"], answer: 1 },
+                { q: "Which algorithm would you use to guarantee finding the shortest path in an unweighted maze?", options: ["Depth-First Search", "Breadth-First Search", "Best-First Search", "Random Search"], answer: 1 }
+                // Add more hard questions here
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+    let score = 0;
+    let totalQuestions = 10;
+    let currentDifficulty = 'medium'; // Start with a medium question
+
+    function getRandomQuestion(difficulty) {
+        let questionSet = questions[difficulty];
+        let randomIndex = Math.floor(Math.random() * questionSet.length);
+        return questionSet[randomIndex];
+    }
+
+    function loadQuestion() {
+        let question = getRandomQuestion(currentDifficulty);
+        document.getElementById('question-text').innerHTML = question.q;
+        
+        let optionsHTML = '';
+        question.options.forEach((option, index) => {
+            optionsHTML += `<label><input type="radio" name="answer" value="${index}"> ${option}</label><br>`;
+        });
+        document.getElementById('options').innerHTML = optionsHTML;
+        
+        // Clear any previous message when a new question is loaded
+        document.getElementById('message').innerHTML = "";
+        currentQuestion = question;
+    }
+
+    function checkAnswer() {
+        var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+        var messageDiv = document.getElementById('message');
+        var correctSound = document.getElementById('correct-sound');
+        var wrongSound = document.getElementById('wrong-sound');
+
+        if (!selectedAnswer) {
+            messageDiv.innerHTML = "Please select an answer!";
+            return;
+        }
+
+        if (parseInt(selectedAnswer.value) === currentQuestion.answer) {
+            score++;
+            messageDiv.innerHTML = "Good job, your answer is correct!";
+            messageDiv.style.color = "green";
+            correctSound.play();  // Play the correct answer sound
+
+            // Set difficulty and proceed to next question
+            if (currentDifficulty === 'hard' || currentQuestionIndex >= totalQuestions - 1) {
+                currentDifficulty = 'hard';
+            } else {
+                currentDifficulty = 'hard';
+            }
+        } else {
+            messageDiv.innerHTML = "Sorry, your answer is wrong!";
+            messageDiv.style.color = "red";
+            wrongSound.play();  // Play the wrong answer sound
+
+            currentDifficulty = 'easy'; // Adjust difficulty
+        }
+        currentQuestionIndex++;
+
+        setTimeout(() => {
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();  // Load the next question after a delay
+            } else {
+                displayFinalScore();  // Show the final score if no more questions
+            }
+        }, 2000); // Adjust delay to 2 seconds before loading the next question
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < totalQuestions) {
+            document.getElementById('message').innerHTML = "Please answer before proceeding.";
+        } else {
+            displayFinalScore();
+        }
+    }
+
+        // Replace the old displayFinalScore function with this updated one
+    function displayFinalScore() {
+        document.getElementById('question-text').innerHTML = `You answered ${score} out of ${totalQuestions} questions correctly!`;
+        document.getElementById('options').innerHTML = "";
+        document.getElementById('message').innerHTML = "";
+
+        // Hide the submit button when the final score is displayed
+        document.getElementById('submit-button').style.display = 'none';
+    }
+
+
+    window.onload = function () {
+        loadQuestion();
+    }
+    </script>
+</body>
+</html>

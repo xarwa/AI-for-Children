@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 3</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #monster {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+            
+        }
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+
+        /* Model Steps Image */
+        #model-steps {
+            width: 35vw;
+            position: absolute;
+            bottom: 20vh;
+            right: 30vw;
+            z-index: 3;
+            display: block; /* Make sure the model steps image is visible */
+            border-radius: 15px; /* Add curved edges to the image */
+        }
+
+        /* Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: rgb(255, 255, 255);
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none; /* Don't let snowflakes block clicks */
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh); /* Move from top to bottom of the screen */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background and Images -->
+    <img id="background" src="Level 3 Background.png">
+    <img id="robot" src="level 3 robot red mug.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="monster" src="Monster.png">
+    <img id="task-bar" src="Task bar.png">
+    <a href="Level 3 test 3.html"><img id="right" src="right.png">
+    <img id="left" src="left.png">
+
+    <!-- Model Steps Image -->
+    <img id="model-steps" src="steps of model 3.png"> <!-- Replace speech bubble with model steps image -->
+
+    <!-- Snowflakes -->
+    <script>
+        // Function to create snowflakes
+        function createSnowflakes() {
+            var snowflakeCount = 50; // Number of snowflakes to generate
+            var fallDuration = 10; // Fall duration in seconds
+    
+            for (var i = 0; i < snowflakeCount; i++) {
+                var snowflake = document.createElement("div");
+                snowflake.classList.add("snowflake");
+    
+                // Randomize size, position, and delay
+                var size = Math.random() * 10 + 5; // Random size between 5px and 15px
+                var positionX = Math.random() * window.innerWidth; // Random horizontal position
+                var delay = Math.random() * fallDuration; // Random delay
+    
+                // Set snowflake styles
+                snowflake.style.width = size + "px";
+                snowflake.style.height = size + "px";
+                snowflake.style.left = positionX + "px";
+                snowflake.style.animationDuration = fallDuration + "s";
+                snowflake.style.animationDelay = delay + "s";
+    
+                // Append snowflake to the body
+                document.body.appendChild(snowflake);
+            }
+        }
+
+        // Start snowflakes after the page loads
+        window.onload = function() {
+            createSnowflakes();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #monster {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+ 
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        .node {
+            position: absolute;
+            width: 10vw;
+            height: 7vh;
+            background-color: #00796b;
+            color: white;
+            text-align: center;
+            line-height: 7vh;
+            border-radius: 3.5vw;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .node:hover {
+            background-color: #004d40;
+        }
+        /* Root node */
+        #root-node {
+            top: 20vh;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        /* First level */
+        #weather-sunny {
+            top: 35vh;
+            left: 25vw;
+        }
+        #weather-rainy {
+            top: 35vh;
+            left: 50vw;
+        }
+        #weather-cloudy {
+            top: 35vh;
+            left: 75vw;
+        }
+        /* Second level for outdoors */
+        #sunny-windy{
+            top: 50vh;
+            left: 15vw;
+        }
+        #outdoors-soccer {
+            top: 50vh;
+            left: 35vw;
+        }
+        /* Second level for indoors */
+        #indoors-game {
+            top: 50vh;
+            left: 65vw;
+        }
+        #indoors-drawing {
+            top: 50vh;
+            left: 85vw;
+        }
+        #windy-yes{
+            top: 75vh;
+            left: 3vw;
+        }
+        #windy-no{
+            top: 75vh;
+            left: 18vw;
+        }
+       
+        .hidden {
+            display: none;
+        }
+        .result {
+            font-size: 3vh;
+            color: #d32f2f;
+            text-align: center;
+            position: absolute;
+            bottom: 15vh;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #restart-button {
+            display: none;
+            padding: 1vh 3vw;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 1.5vw;
+            cursor: pointer;
+            position: absolute;
+            bottom: 5vh;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Zen Dots', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Level 3 Background.png">
+    <img id="robot" src="level 3 robot red mug.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="monster" src="Monster.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png">
+    <img id="left" src="left.png">
+    <div class="tree-container">
+        <div class="node" id="root-node" onclick="choose('Weather', this)">Weather</div>
+        <div class="node hidden" id="weather-sunny" onclick="choose('Sunny', this)">Sunny</div>
+        <div class="node hidden" id="weather-rainy" onclick="choose('Rainy', this)">Rainy</div>
+        <div class="node hidden" id="weather-cloudy" onclick="choose('Cloudy', this)">Cloudy</div>
+        <div class="node hidden" id="sunny-windy" onclick="choose('Windy', this)">Windy</div>
+        <div class="node hidden" id="windy-yes" onclick="choose('Yes', this)">Yes</div>
+        <div class="node hidden" id="windy-no" onclick="choose('No', this)">No</div>
+        <div class="node hidden" id="Yes" onclick="showResult('Go Outside', this)">Play Soccer</div>
+        <div class="node hidden" id="indoors-game" onclick="showResult('Go Inside', this)">Video Game</div>
+        <div class="node hidden" id="indoors-drawing" onclick="showResult('Draw something creative!', this)">Drawing</div>
+        <div class="result" id="result"></div>
+        <button id="restart-button" onclick="restart()">Restart</button>
+    </div>
+    <script>
+        function choose(option, node) {
+            if (option === 'Weather') {
+                document.getElementById('weather-sunny').classList.remove('hidden');
+                document.getElementById('weather-rainy').classList.remove('hidden');
+                document.getElementById('weather-cloudy').classList.remove('hidden');
+            } else if (option === 'Sunny') {
+                document.getElementById('sunny-windy').classList.remove('hidden');
+            } else if (option === 'Windy') {
+                document.getElementById('windy-yes').classList.remove('hidden');
+                document.getElementById('windy-no').classList.remove('hidden');
+            }
+        }
+
+        function showResult(activity, node) {
+            document.getElementById('result').innerHTML = activity;
+            document.getElementById('restart-button').style.display = 'block';
+        }
+
+        function restart() {
+            document.querySelectorAll('.node').forEach(node => {
+                node.classList.add('hidden');
+            });
+            document.getElementById('root-node').classList.remove('hidden');
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('restart-button').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

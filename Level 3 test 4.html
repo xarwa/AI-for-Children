@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 3</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #monster {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+ 
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(14, 21, 59);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+ 
+        /* Data Table */
+        #data-table {
+            width: 40vw; /* Set a width for the table */
+            font-family: 'Zen Dots', sans-serif;
+            position: absolute;
+            bottom: 45vh; /* Position to align below the speech bubble */
+            right: 18vw; /* Align with the original position of the speech bubble */
+            border-collapse: collapse;
+            z-index: 3; /* Ensure it's above the background */
+            display: none; /* Initially hidden */
+           
+        }
+        #data-table th, #data-table td {
+            border: 3px solid black; /* Outer border */
+            padding: 10px;
+            text-align: center;
+            background-color: #faf0e6;
+        }
+        #data-table th {
+            background-color: #d9b99b;
+        }
+         
+        /* Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: rgb(255, 255, 255);
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none; /* Don't let snowflakes block clicks */
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh); /* Move from top to bottom of the screen */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background and Images -->
+    <img id="background" src="Level 3 Background.png">
+    <img id="robot" src="level 3 robot red mug.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="monster" src="Monster.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="left" src="left.png" onclick="previousText()"> <!-- Adding onclick event to the left arrow -->
+   
+    <!-- Speech Bubble -->
+    <div id="speech-bubble">
+        <img src="purple speech bubble lighter 3.png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+ 
+     
+ 
+    <!-- Data Table -->
+    <table id="data-table">
+        <tr>
+            <th>Weather</th>
+            <th>Temperature</th>
+            <th>Windy</th>
+            <th>Go Outside</th>
+        </tr>
+        <tr>
+            <td>Sunny</td>
+            <td>Hot</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Rainy</td>
+            <td>Cool</td>
+            <td>Yes</td>
+            <td>No</td>
+        </tr>
+        <tr>
+            <td>Sunny</td>
+            <td>Mild</td>
+            <td>Yes</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Cloudy</td>
+            <td>Cool</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Rainy</td>
+            <td>Mild</td>
+            <td>No</td>
+            <td>No</td>
+        </tr>
+    </table>
+ 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+ 
+    <!-- Script for Typing Effect and Text Changes -->
+    <script>
+        var initialText = "Let’s walk through an example of using a decision tree for a classification problem: predicting whether a person will enjoy a specific activity based on weather conditions and personal preferences. Here’s how we could structure it:";
+        var secondText = "We have data from various people about their preferred activities in different weather conditions. The goal is to predict whether someone will choose to 'Go Outside' or 'Stay Inside' based on the following features: ";
+        var thirdText = "Weather (Sunny, Rainy, Cloudy), Temperature (Hot, Mild, Cool), Windy (Yes, No). Click on the next arrow to see the data sample table!";
+        var fourthText = "Here are the steps of building the decision tree: Root Node: Start by analyzing which feature (Weather, Temperature, or Windy) best separates the 'Go Outside' outcomes. Let's say 'Weather' gives the best separation. ";
+        var fifthText = "Splitting on Weather: If Weather = Sunny, further split based on whether it’s Windy. If Weather = Rainy, split based on Temperature. If Weather = Cloudy, go to a leaf node since most people go outside when it’s cloudy in this dataset.";
+        var sixthText = "Subsequent Splits: For Sunny: If Windy = Yes, predict 'Go Outside'. If Windy = No, predict 'Stay Inside'. For Rainy: If Temperature = Cool, predict 'Stay Inside'. If Temperature = Mild, predict 'Stay Inside'. Now take a look of the resulting decision tree!";
+        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+        var index = 0; // Start from the first character
+        var currentText = initialText; // Variable to store current text
+        var clickCount = 0; // Variable to track the number of clicks
+   
+        function typeText() {
+            if (index < currentText.length) {
+                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+ 
+        // Function to handle left arrow clicks (move backward)
+        function previousText() {
+            if (clickCount > 0) {
+                clickCount--; // Decrement the click counter
+                document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+                index = 0; // Reset index
+ 
+                if (clickCount == 0) {
+                    currentText = initialText; // Go back to the initial text
+                } else if (clickCount == 1) {
+                    currentText = secondText; // Go back to second text
+                } else if (clickCount == 2) {
+                    currentText = thirdText; // Go back to third text
+                }
+ 
+                typeText(); // Start typing the previous text
+            }
+        }
+   
+        // Start the typing effect after the page loads
+        window.onload = function() {
+            typeText();
+            createSnowflakes(); // Start snowflakes after the page loads
+        };
+ 
+        // Function to handle right arrow clicks (move forward)
+        function changeText() {
+            clickCount++; // Increment the click counter
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            index = 0; // Reset index
+ 
+            if (clickCount == 1) {
+                currentText = secondText; // Change to second text
+            } else if (clickCount == 2) {
+                currentText = thirdText; // Change to third text
+            } else if (clickCount == 3){
+                document.getElementById("data-table").style.display = "block"; // Show the data table
+                document.getElementById("speech-bubble").style.display = "none"; // Hide the speech bubble
+            } else if (clickCount == 4){
+                document.getElementById("data-table").style.display = "none"; // Show the data table
+                document.getElementById("speech-bubble").style.display = "block"; // Hide the speech bubble
+                currentText = fourthText;
+            } else if (clickCount == 5) {
+                currentText = fifthText;
+            } else if (clickCount == 6) {
+                currentText = sixthText;
+            } else if (clickCount == 7){
+                // Redirect to the next level page
+            window.location.href = "Level 3 test 5.html";
+            return; // Stop further text changes
+            }
+ 
+            typeText(); // Start typing the next text
+        }
+ 
+        // Function to create falling snowflakes
+        function createSnowflakes() {
+            var snowflakeCount = 30; // Number of snowflakes to create
+            for (var i = 0; i < snowflakeCount; i++) {
+                var snowflake = document.createElement("div");
+                snowflake.className = "snowflake";
+                snowflake.style.width = Math.random() * 10 + 5 + "px"; // Random width between 5px and 15px
+                snowflake.style.height = snowflake.style.width; // Keep it circular
+                snowflake.style.left = Math.random() * window.innerWidth + "px"; // Random position across the width
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + "s"; // Random fall duration
+                snowflake.style.opacity = Math.random(); // Random opacity
+                document.body.appendChild(snowflake); // Add to the body
+            }
+        }
+    </script>
+</body>
+</html>

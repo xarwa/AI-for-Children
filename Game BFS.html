@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breadth First Search Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    #tree {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .level {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .node {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: lightgray;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 10px;
+      border: 2px solid gray;
+    }
+
+    .active {
+      background-color: lightblue;
+      border-color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="tree">
+    <div class="node" id="A">A</div>
+    <div class="level">
+      <div class="node" id="B">B</div>
+      <div class="node" id="C">C</div>
+    </div>
+    <div class="level">
+      <div class="node" id="D">D</div>
+      <div class="node" id="E">E</div>
+      <div class="node" id="F">F</div>
+      <div class="node" id="G">G</div>
+    </div>
+    <div class="level">
+      <div class="node" id="H">H</div>
+      <div class="node" id="I">I</div>
+      <div class="node" id="J">J</div>
+      <div class="node" id="K">K</div>
+      <div class="node" id="L">L</div>
+      <div class="node" id="M">M</div>
+      <div class="node" id="N">N</div>
+      <div class="node" id="O">O</div>
+    </div>
+  </div>
+
+  <button id="start">Start BFS</button>
+
+  <script>
+    // Nodes and edges (children of each node)
+    const tree = {
+      A: ['B', 'C'],
+      B: ['D', 'E'],
+      C: ['F', 'G'],
+      D: ['H', 'I'],
+      E: ['J', 'K'],
+      F: ['L', 'M'],
+      G: ['N', 'O'],
+      H: [], I: [], J: [], K: [], L: [], M: [], N: [], O: []
+    };
+
+    // Breadth First Search function
+    function bfs() {
+      const queue = ['A']; // Start from the root node
+      let index = 0;
+      
+      const interval = setInterval(() => {
+        if (index >= queue.length) {
+          clearInterval(interval);
+          return;
+        }
+        
+        const currentNode = queue[index];
+        document.getElementById(currentNode).classList.add('active'); // Highlight node
+        
+        // Add child nodes to the queue
+        queue.push(...tree[currentNode]);
+        
+        index++;
+      }, 1000); // Interval of 1 second between each step
+    }
+
+    // Start BFS on button click
+    document.getElementById('start').addEventListener('click', bfs);
+  </script>
+</body>
+</html>

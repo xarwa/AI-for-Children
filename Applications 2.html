@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 1</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #floor {
+            width: 100vw; /* Ensures the floor image spans the width of the page */
+            position: absolute;
+            bottom: 0; /* Aligns the floor image to the bottom of the viewport */
+            left: 0;
+            z-index: 0; /* Stays on top of the background but behind other elements */
+            object-fit: cover; /* Ensures the image covers the width without distortion */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #lamp {
+            width: 20vw; /* Keeps the lamp image at the same size */
+            position: absolute;
+            top: 20px; /* Moves the lamp down slightly to make space for the task bar */
+            left: 50%; /* Starts positioning from the center of the viewport */
+            transform: translateX(-50%); /* Centers the lamp horizontally */
+            z-index: 1; /* Ensures the lamp is below the task bar but above the background */
+        }
+        #table {
+            width: 70vw; /* Increased the width of the table image */
+            position: absolute;
+            top: 50%; /* Centers the table image vertically */
+            left: 50%; /* Centers the table image horizontally */
+            transform: translate(-50%, -50%); /* Ensures the table is perfectly centered */
+            z-index: 1; /* Ensures the table appears above the floor but below the task bar */
+        }
+        #desktop {
+            width: 20vw; /* Adjust the size of the desktop image */
+            position: absolute;
+            top: 38%; /* Position it vertically to align with the yellow part */
+            left: 23%; /* Keeps it towards the left side, within the yellow part of the table */
+            z-index: 2; /* Places the desktop above the table */
+        }
+        #scientist {
+            width: 15vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 10vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #right {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            left: 190vh;
+            z-index: 1;
+        }
+        #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            left: 9vh;
+            z-index: 1;
+        }
+        #virtual-assistance {
+            width: 15vw; /* Adjusted size for better positioning */
+            position: absolute;
+            bottom: 43vh; /* Position it above the text */
+            right: 27vw; /* Position it to the right of the page */
+            z-index: 3; /* Ensure it appears above other elements */
+            border-radius: 2vw; /* Curves the edges of the image using viewport width units */
+        }
+        #text-below {
+            position: absolute;
+            bottom: 38vh; /* Adjust to place the text below the image */
+            right: 22vw; /* Aligns the text with the image */
+            z-index: 4; /* Ensure it appears above other elements */
+            color: rgba(25, 66, 57, 1); /* Set text color */
+            font-size: 2vw; /* Adjust font size */
+            text-align: center; /* Center the text */
+            width: 23vw; /* Same width as the image for alignment */
+            font-family: 'Arial', sans-serif; /* Font family for the text */
+            font-weight: bold; /* Make text bold */
+            white-space: nowrap; /* Prevents text from wrapping */
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Wallpaper.png">
+    <img id="floor" src="Floor.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="lamp" src="Lamp.png">
+    <img id="table" src="Table.png">
+    <img id="desktop" src="Desktop.png">
+    <img id="scientist" src="Scientist(Rotated).png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <a href="Applications 2 text.html"><img id="right" src="right.png"></a>
+    <a href="index.html"><img id="left" src="left.png"></a>
+    <img id="virtual-assistance" src="Virtual Assistance.png">
+    <div id="text-below">Virtual Assistance</div>
+</body>      
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 2</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #robot {
+            width: 10vw;
+            position: absolute;
+            bottom: 5vh;
+            left: 20vw;
+            z-index: 1;
+        }
+        #player {
+            width: 12vw;
+            position: absolute;
+            bottom: 10vh;
+            left: 9vw;
+            z-index: 1;
+        }
+        #alien {
+            width: 15vw;
+            position: absolute;
+            bottom: 5vh;
+            right: 10vw;
+            z-index: 1;
+        }
+        #task-bar {
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(24, 15, 11);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+
+        /* Rubik's Cube styling */
+        #rubiks-cube {
+            width: 12vw;
+            position: absolute;
+            bottom: 50vh;
+            left: 27vw;
+            z-index: 2;
+            border-radius: 15px; /* Rounded corners for Rubik's Cube */
+            animation: bounce 2s infinite; /* Apply bounce animation */
+        }
+
+        /* Keyframes for bounce animation */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0); /* Original position */
+            }
+            40% {
+                transform: translateY(-20px); /* Move up */
+            }
+            60% {
+                transform: translateY(-10px); /* Slightly move down */
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <img id="background" src="Level 2 Background.png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="alien" src="Alien.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="left" src="left.png">
+    <img id="speech-bubble" src="Green Speech bubble.png">
+
+    <!-- Rubik's Cube and its label -->
+    <img id="rubiks-cube" src="Rubiks Cube.png" alt="Rubik's Cube">
+    
+    <div id="speech-bubble">
+        <img src="Green Speech bubble.png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <script>
+        var initialText = "Where can we see Best-First Search in action? Here are some examples:\nPuzzle Solving (like the Rubik's Cube): It helps find the quickest way to solve tricky puzzles.";
+        var roboticsText = "Robotics: Robots use it to figure out the best moves to complete tasks efficiently!";
+        var adventureText = "Alright, explorers! Before we dive into a fun example to see how the Best-First Search algorithm works, let’s get familiar with some key terms first. Ready for the adventure?";
+        var heuristicText = "The Heuristic Value (h(n)) is like a clue that helps the computer figure out how close it is to the goal. The smaller the number, the closer it is, so the computer can choose the best direction to reach the finish line faster!";
+        var solveText = "Now, please go ahead and solve the example. Please keep in mind that Node 'S' is the initial state and Node 'D' is the goal state. Each node has a heuristic value h(n).";
+
+        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+        var index = 0; // Start from the first character
+        var currentText = initialText; // Variable to store current text
+        var rubiksCubeDisplayed = true; // Variable to track if Rubik's Cube is displayed
+
+        function typeText() {
+            if (index < currentText.length) {
+                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+
+        // Start the typing effect after the page loads
+        window.onload = function() {
+            typeText();
+        };
+
+        function changeText() {
+            if (currentText === initialText) {
+                currentText = roboticsText; // Change to the robotics text
+                removeRubiksCube(); // Remove the Rubik's Cube when the text changes
+            } else if (currentText === roboticsText) {
+                currentText = adventureText; // Change to the adventure text
+            } else if (currentText === adventureText) {
+                currentText = heuristicText; // Change to the heuristic explanation text
+            } else if (currentText === heuristicText) {
+                currentText = solveText; // Change to the solve instruction text
+            } else if (currentText === solveText) {
+                window.location.href = "Best-First Search example.html"; // Redirect to the new page
+            }
+            index = 0; // Reset index for new text
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            typeText(); // Start typing the new text
+        }
+
+        // Function to remove the Rubik's Cube image
+        function removeRubiksCube() {
+            if (rubiksCubeDisplayed) {
+                var rubiksCube = document.getElementById("rubiks-cube");
+                rubiksCube.parentNode.removeChild(rubiksCube); // Remove the image from the DOM
+                rubiksCubeDisplayed = false;
+            }
+        }
+    </script>
+
+</body>
+</html>

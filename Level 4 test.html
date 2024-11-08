@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 3</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #Bear {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 13vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+           
+        }
+
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(14, 21, 59);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+
+        /* Supervised Learning Image */
+    #supervised-image {
+
+        width: 25vw;
+        position: absolute;
+        bottom: 16vh; /* Adjust based on the speech bubble positioning */
+        right: 27vw; /* Position to the left of the speech bubble */
+        border-radius: 15px; /* Rounded edges for the image */
+        display: none; /* Hide by default */
+        border: 3px solid black; /* Add a 3px solid black border */
+    }
+
+    #unsupervised-image {
+
+        width: 32vw;
+        position: absolute;
+        bottom: 23vh; /* Adjust based on the speech bubble positioning */
+        right: 23vw; /* Position to the left of the speech bubble */
+        border-radius: 15px; /* Rounded edges for the image */
+        display: none; /* Hide by default */
+        border: 3px solid black; /* Add a 3px solid black border */
+    }
+    #dataset {
+
+        width: 32vw;
+        position: absolute;
+        bottom: 12vh; /* Adjust based on the speech bubble positioning */
+        right: 23vw; /* Position to the left of the speech bubble */
+        border-radius: 15px; /* Rounded edges for the image */
+        display: none; /* Hide by default */
+        border: 3px solid black; /* Add a 3px solid black border */
+}
+
+
+        
+    </style>
+</head>
+<body>
+    <!-- Background and Images -->
+    <img id="background" src="Level 4 Background.png">
+    <img id="robot" src="Level 4 Robot new.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="Bear" src="Bear.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="left" src="left.png" onclick="previousText()"> <!-- Adding onclick event to the left arrow -->
+    
+    <!-- Speech Bubble -->
+    <div id="speech-bubble">
+        <img src="Pink speech bubble final.png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+
+
+ 
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <!-- Script for Typing Effect and Text Changes -->
+    <script>
+        var initialText = "Welcome! You have made it to planet WanderWood! In this mysterious world, secrets hide among the trees, waiting to be uncovered. Here, you will explore, discover, and learn how AI finds hidden connections all on its own, with unsupervised machine learning! The journey continues, lets dive in!";
+        var secondText = "Each step in the tree asks a question (like ‘Does the animal have whiskers?’), and based on the answer, it moves to the next step until it makes a final decision (for example, ‘It’s a cat!’). It’s like playing 20 Questions, where each question helps the computer get closer to the right answer.";
+        var thirdText= "A decision tree helps you make choices by guiding you through a series of questions, each leading to different outcomes based on your preferences. In this scenario, you'll answer simple questions about how you want to spend your weekend.";
+        var fourthText = "Depending on your answers, the decision tree will narrow down the best activities for you—whether you want to be active or relax, spend time indoors or outdoors. It’s an easy and fun way to explore your options and find the perfect way to enjoy your weekend!";
+        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+        var index = 0; // Start from the first character
+        var currentText = initialText; // Variable to store current text
+        var clickCount = 0; // Variable to track the number of clicks
+    
+        function typeText() {
+            if (index < currentText.length) {
+                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+
+    // Function to handle left arrow clicks (move backward)
+    function previousText() {
+        if (clickCount > 0) {
+            clickCount--; // Decrement the click counter
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            index = 0; // Reset index
+
+            if (clickCount == 0) {
+                currentText = initialText; // Go back to the initial text
+            } else if (clickCount == 1) {
+                currentText = secondText; // Go back to second text
+            } else if (clickCount == 2) {
+                currentText = thirdText; // Go back to third text
+            } 
+
+            typeText(); // Start typing the previous text
+        }
+    }
+    
+        // Start the typing effect after the page loads
+        window.onload = function() {
+            typeText();
+            
+        };
+    
+        function changeText() {
+            clickCount++; // Increment the click counter
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            index = 0; // Reset index
+    
+            if (clickCount == 1) {
+                currentText = secondText; // Change text to second message
+            } else if (clickCount == 2) {
+                currentText = thirdText; 
+            } else if (clickCount == 3) {
+                currentText = fourthText; 
+            } else if (clickCount == 4) {
+                // Redirect to the next level page
+            window.location.href = "Decision Tree example.html";
+            return; // Stop further text changes
+            } 
+    
+            typeText(); // Start typing the new text
+        }
+
+    
+       
+    </script>
+    
+</body>
+</html>  

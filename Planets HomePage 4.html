@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planets HomePage</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #task-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 8vh; /* Adjusted height */
+            width: 100vw;
+            z-index: 2; /* Ensure it’s above other elements */
+        }
+        #planet1 {
+            position: absolute;
+            top: 25%;
+            left: 5%;
+            height: 25vh;
+            width: 25vh;
+            z-index: 1; /* Ensures it appears above the background */
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #planet1:hover {
+            animation: rotate 2s linear infinite; /* Rotates the planet continuously on hover */
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        #planet2 {
+            position: absolute;
+            top: 60vh;   /* Matches 540px */
+            left: 20.44vw; /* Matches 354px */
+            height: 25vh; /* Matches 344px */
+            width: 25vw; /* Matches 675px */
+            z-index: 1; /* Ensures it appears above the connection image */
+            transition: transform 0.5s ease-in-out; /* Smooth transition */
+        }
+        #planet2:hover {
+            animation: calmHeartbeat 2s ease-in-out infinite; /* Heartbeat animation on hover */
+        }
+        @keyframes calmHeartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.05);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+            75% {
+                transform: scale(1.03);
+            }
+        }
+        #planet3 {
+            position: absolute;
+            top: 15%;
+            left: 45%;
+            height: 30vh;
+            width: 25vh;
+            z-index: 1; /* Ensures it appears above the background */
+            transition: transform 0.3s ease-in-out;
+        }
+        #planet3:hover {
+            animation: shiver 0.3s ease-in-out infinite; /* Shiver animation on hover */
+        }
+        @keyframes shiver {
+            0%, 100% {
+                transform: translateX(0); /* Start and end at the original position */
+            }
+            25% {
+                transform: translateX(-5px); /* Move left slightly */
+            }
+            75% {
+                transform: translateX(5px); /* Move right slightly */
+            }
+        }
+        #Rocket {
+            position: absolute;
+            top: 58vh; /* Positioning above planet 2 */
+            left: 63vw; /* Adjust left position to center over planet 2 */
+            height: 12.3vh;
+            width: 9.8vh;
+            z-index: 2; /* Ensures it appears above the background */
+            transition: transform 0.5s ease-in-out; /* Smooth transition */
+        }
+        #planet3:hover ~ #Rocket {
+            animation: calmHeartbeat 2s ease-in-out infinite; /* Apply heartbeat animation when hovering over planet 3 */
+        }
+        #planet4 {
+            position: absolute;
+            top: 60vh;   /* Matches 540px */
+            left: 62vw; /* Matches 354px */
+            
+            width: 15vw; /* Matches 675px */
+            z-index: 1; /* Ensures it appears above the connection image */
+        }
+        #planet5 {
+            position: absolute;
+            top: 15%;
+            left: 80%;
+            height: 25vh;
+            width: 25vh;
+            z-index: 1; /* Ensures it appears above the background */
+        }
+        #connection {
+            position: absolute;
+            top: 27%;
+            left: 15%;
+            height: 50vh;
+            width: 70vw;
+            z-index: 0; /* Ensures it appears behind the planets */
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Background.png">
+    <img id="task-bar" src="Task bar.png">
+    <a href="Level 1 test.html">
+        <img id="planet1" src="Planet-1.png">
+    </a>
+    <img id="connection" src="Connections.png">
+    <a href="Level 2 test.html"> <!-- Link for planet 2 -->
+       <img id="planet2" src="Planet 2 new.png">
+    </a>
+    
+    <!-- Rocket with heartbeat animation moved near planet 3 -->
+    <img id="Rocket" src="Rocket.png"> 
+    
+    <!-- Make planet 3 clickable and direct to Level 3 -->
+    <a href="Level 3 test.html"> <!-- Link for planet 3 -->
+       <img id="planet3" src="planet 3 new.png">
+    </a>
+    
+    <img id="planet4" src="planet 4 new.png">
+    <img id="planet5" src="Planet-5.png">
+</body>      
+</html>

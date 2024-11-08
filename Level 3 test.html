@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 3</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #monster {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+            animation: shiver 0.1s infinite alternate; /* Apply shivering animation */
+        }
+        @keyframes shiver {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+            100% { transform: translateY(2px); }
+        }
+        #robot-red-mug {
+            width: 10vw; /* Same size as the robot image */
+            position: absolute;
+            bottom: 5vh;
+            left: 20vw;
+            z-index: 1;
+            display: none; /* Hidden by default */
+        }
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(14, 21, 59);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+
+        /* Supervised Learning Image */
+    #supervised-image {
+
+        width: 25vw;
+        position: absolute;
+        bottom: 16vh; /* Adjust based on the speech bubble positioning */
+        right: 27vw; /* Position to the left of the speech bubble */
+        border-radius: 15px; /* Rounded edges for the image */
+        display: none; /* Hide by default */
+        border: 3px solid black; /* Add a 3px solid black border */
+    }
+
+    #unsupervised-image {
+
+        width: 32vw;
+        position: absolute;
+        bottom: 23vh; /* Adjust based on the speech bubble positioning */
+        right: 23vw; /* Position to the left of the speech bubble */
+        border-radius: 15px; /* Rounded edges for the image */
+        display: none; /* Hide by default */
+        border: 3px solid black; /* Add a 3px solid black border */
+    }
+    #dataset {
+
+        width: 32vw;
+        position: absolute;
+        bottom: 12vh; /* Adjust based on the speech bubble positioning */
+        right: 23vw; /* Position to the left of the speech bubble */
+        border-radius: 15px; /* Rounded edges for the image */
+        display: none; /* Hide by default */
+        border: 3px solid black; /* Add a 3px solid black border */
+    
+    }
+    #supervised-image:hover, #unsupervised-image:hover,#dataset:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+
+
+        /* Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: rgb(255, 255, 255);
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none; /* Don't let snowflakes block clicks */
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh); /* Move from top to bottom of the screen */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background and Images -->
+    <img id="background" src="Level 3 Background.png">
+    <img id="robot" src="level 3 robot.png">
+    <img id="robot-red-mug" src="level 3 robot red mug.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="monster" src="Monster.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="left" src="left.png">
+    
+    <!-- Speech Bubble -->
+    <div id="speech-bubble">
+        <img src="purple speech bubble lighter 3.png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+
+    <audio id="snow-sound" preload="auto">
+        <source src="snow.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+  
+
+    <!-- Supervised Learning Image -->
+    <img id="supervised-image" src="supervised learning.png">
+    <img id="unsupervised-image" src="unsupervised learning.png">
+    <img id="dataset" src="dataset.png">
+
+ 
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <!-- Script for Typing Effect and Text Changes -->
+    <script>
+        var initialText = "Hello again, brave adventurer! You've come a long way, but the journey is far from over. Prepare yourself, for new challenges and mysteries await!";
+        var secondText = "You’ve arrived in Glacia, where only the strongest can survive. Steel yourself, adventurer your greatest test begins here!";
+        var finalText = "You're about to dive into a vital area of Artificial Intelligence: Machine Learning. Let's explore how machines gain intelligence by analyzing data and making predictions!";
+        var newFinalText = "Machine learning is a cool part of AI, where computers become super smart by learning from examples! It's like teaching a robot to recognize animals, play games, or make decisions on its own!";
+        var nextText = "You’ve already learned that self-driving cars and virtual assistance are an application of AI in Level 1. Now, let’s explore even more exciting applications of AI, especially in the world of Machine Learning!";
+        var finalSpeechText = "Video Game Opponents: In video games, machine learning helps create smart opponents that learn how to challenge players, making games more fun and unpredictable!";
+        var updatedSpeechText = "Movie and Music Suggestions: Streaming services like Netflix or Spotify use machine learning to recommend new movies or songs based on what you like to watch or listen to.";
+        var machineLearningTypesText = "There are four main types of machine learning:"; // Keep this text as required
+        var supervisedLearningText = "Supervised Learning: For example, if you're teaching the computer to recognize cats and dogs, you show it lots of pictures of both and tell it which is which. The computer learns from these examples and gets better at guessing on its own."; // New supervised learning text
+        var unsupervisedLearningText = "Unsupervised learning is like the computer being a detective! It gets a bunch of information with no answers and has to find patterns. For example, if you give it pictures of animals, it might group the cats and dogs together by what they look like."; // New unsupervised learning text
+        var semisupervisedLearningText = "Semi-Supervised Learning: It is like a mix of both Supervised and Unsupervised Learning. The computer learns from the few labeled examples and tries to guess the rest by finding patterns, kind of like solving a puzzle with some clues."; // New semisupervised learning text
+        var reinforcementLearningText = "Reinforcement Learning: This is like training a pet with rewards! The computer learns by trying different things and getting rewards (or punishments) based on whether it does well. It's like a robot learning to play a game by earning points for doing the right moves."; // New reinforcement learning text
+        var machineLearningSummaryText = "These types help computers learn in different ways, just like how kids learn in school, by exploring, or by practicing through trial and error!"; // New machine learning summary text
+        var classificationText = "This level focuses on Supervised Learning. Classification is a type of supervised learning, where the computer learns to sort things into groups. For example, it learns to put cat pictures in the 'cat' group and dog pictures in the 'dog' group, then guesses the group for new pictures."; // New machine learning summary text
+        var conceptsText = "Before we dive in detail into Supervised learning algorithms, there are some machine learning concepts you need to be familiar with: "; 
+        var datasetText = "A dataset is a collection of information that the computer studies. It’s like a big set of flashcards for the computer! Each flashcard has information that help the computer learn. The dataset is what the model uses to practice and improve, just like how you might study to get better at a game or subject. "; 
+        var trainingDatasetText = "Training dataset is like the practice materials you use to learn a new skill. It contains lots of examples of how the computer studies to learn how to make decisions. For instance, if you're teaching the computer to recognize animals,"; 
+        var trainingDataset2Text = "the training dataset would have many pictures of different animals labeled with their names (like ‘cat’, ‘dog’, ‘elephant’). The computer looks at these examples to understand what each animal looks like and learns the patterns needed to identify them."; 
+        var testingDatasetText = "A testing dataset is like a quiz for the computer. After training on the training dataset, you give it new examples it hasn’t seen before, this is the testing dataset.";
+        var testingDataset2Text = "For example, you might show it a new picture of an animal and see if it can correctly identify what animal it is. This helps you check if the computer has learned well and can make good guesses on its own!";
+        var modelText = "A machine learning model is like the brain of the computer that learns to make decisions. After studying examples, it creates rules to solve problems. For instance, if it learns what makes a cat different from a dog, it can tell whether a new picture shows a cat or dog.";
+        var problemText = "Think of the model like a smart recipe the computer follows after it has learned how to make the dish! Here are some simple steps to solve a machine learning problem: ";
+        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+        var index = 0; // Start from the first character
+        var currentText = initialText; // Variable to store current text
+        var clickCount = 0; // Variable to track the number of clicks
+    
+        function typeText() {
+            if (index < currentText.length) {
+                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+    
+        // Start the typing effect after the page loads
+        window.onload = function() {
+            typeText();
+            createSnowflakes(); // Start snowflakes after the page loads
+            var snowSound = document.getElementById("snow-sound");
+            snowSound.play();
+            // Stop the sound after 15 seconds
+            setTimeout(function() {
+                snowSound.pause();
+                snowSound.currentTime = 0; // Reset to the beginning
+            }, 15000); // 15 seconds in milliseconds
+        };
+    
+        function changeText() {
+            clickCount++; // Increment the click counter
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            index = 0; // Reset index
+    
+            if (clickCount == 1) {
+                currentText = secondText; // Change text to second message
+            } else if (clickCount == 2) {
+                currentText = finalText; // Change text to final message
+            } else if (clickCount == 3) {
+                currentText = newFinalText; // Change text to new final message
+            } else if (clickCount == 4) {
+                currentText = nextText; // Change text to the next message for the speech bubble
+                // Replace the Level 3 robot image with the red mug image
+                document.getElementById("robot").style.display = "none"; // Hide the old robot
+                document.getElementById("robot-red-mug").style.display = "block"; // Show the new robot (red mug)
+            } else if (clickCount == 5) {
+                currentText = finalSpeechText; // Change text to the movie suggestions text
+            } else if (clickCount == 6) {
+                currentText = updatedSpeechText; // Keep the text about types of machine learning
+            } else if (clickCount == 7) {
+                currentText = machineLearningTypesText; // Change text to supervised learning example
+            } else if (clickCount == 8) {
+                currentText = supervisedLearningText; // Change text to supervised learning example
+                document.getElementById("supervised-image").style.display = "block"; // Show the supervised learning image
+            } else if (clickCount == 9) {
+                currentText = unsupervisedLearningText; // Change text to unsupervised learning example
+                document.getElementById("supervised-image").style.display = "none"; // Hide the supervised learning image
+                document.getElementById("unsupervised-image").style.display = "block"; // Show the unsupervised learning image
+            } else if (clickCount == 10) {
+                currentText = semisupervisedLearningText; // Change text to unsupervised learning example
+                document.getElementById("unsupervised-image").style.display = "none"; // Hide the unsupervised learning image
+                
+            } else if (clickCount == 11) {
+                currentText = reinforcementLearningText; // Change text to reinforcement learning example   
+            } else if (clickCount == 12) {
+                currentText = machineLearningSummaryText; // Change text to machine learning summary example   
+            } else if (clickCount == 13) {
+                currentText = classificationText; // Change text to classification example   
+            } else if (clickCount == 14) {
+                currentText = conceptsText;   
+            } else if (clickCount == 15) {
+                currentText = datasetText;
+                document.getElementById("dataset").style.display = "block";   
+            } else if (clickCount == 16) {
+                currentText = trainingDatasetText;
+                document.getElementById("dataset").style.display = "none";   
+            } else if (clickCount == 17) {
+                currentText = trainingDataset2Text;   
+            } else if (clickCount == 18) {
+                currentText = testingDatasetText;   
+            } else if (clickCount == 19) {
+                currentText = testingDataset2Text;   
+            } else if (clickCount == 20) {
+                currentText = modelText;   
+            } else if (clickCount == 21) {
+                currentText = problemText;   
+            } else if (clickCount == 22) {
+            // Redirect to the next level page
+            window.location.href = "Level 3 test 2.html";
+            return; // Stop further text changes
+            }
+    
+            typeText(); // Start typing the new text
+        }
+    
+        // Function to create snowflakes
+        function createSnowflakes() {
+            var snowflakeCount = 50; // Number of snowflakes to generate
+            var fallDuration = 10; // Fall duration in seconds
+    
+            for (var i = 0; i < snowflakeCount; i++) {
+                var snowflake = document.createElement("div");
+                snowflake.classList.add("snowflake");
+    
+                // Randomize size, position, and delay
+                var size = Math.random() * 10 + 5; // Random size between 5px and 15px
+                var positionX = Math.random() * window.innerWidth; // Random horizontal position
+                var delay = Math.random() * fallDuration; // Random delay
+    
+                // Set snowflake styles
+                snowflake.style.width = size + "px";
+                snowflake.style.height = size + "px";
+                snowflake.style.left = positionX + "px";
+                snowflake.style.animationDuration = fallDuration + "s";
+                snowflake.style.animationDelay = delay + "s";
+    
+                // Append snowflake to the body
+                document.body.appendChild(snowflake);
+            }
+        }
+    </script>
+    
+</body>
+</html>  

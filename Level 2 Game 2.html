@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 2</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Zen Dots', sans-serif;
+            color: white;
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .gem {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+        }
+        #A {
+            top: 10%;
+            left: 45%;
+        }
+        #B, #C {
+            top: 30%;
+        }
+        #B {
+            left: 30%;
+        }
+        #C {
+            left: 60%;
+        }
+        #D, #E, #F, #G {
+            top: 50%;
+        }
+        #D {
+            left: 20%;
+        }
+        #E {
+            left: 40%;
+        }
+        #F {
+            left: 60%;
+        }
+        #G {
+            left: 80%;
+        }
+        #start-container {
+            position: absolute;
+            top: 75vh;
+            left: 40vw;
+            z-index: 2;
+        }
+        #start {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #timer {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            font-size: 24px;
+            color: white;
+            z-index: 2;
+        }
+        #message {
+            position: absolute;
+            top: 10%;
+            left: 40%;
+            font-size: 24px;
+            color: white;
+            z-index: 2;
+        }
+ 
+            /* Add this shake animation */
+    @keyframes shake {
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+ 
+    .shake {
+        animation: shake 0.5s;
+        animation-iteration-count: 1;
+    }
+ 
+    </style>
+</head>
+<body>
+    <img id="background" src="Cave Background.png">
+ 
+    <!-- Gem nodes -->
+    <img id="A" class="gem" src="Bright Blue Gem.png">
+    <img id="B" class="gem" src="Grey Gem.png">
+    <img id="C" class="gem" src="Grey Gem.png">
+    <img id="D" class="gem" src="Grey Gem.png">
+    <img id="E" class="gem" src="Grey Gem.png">
+    <img id="F" class="gem" src="Grey Gem.png">
+    <img id="G" class="gem" src="Grey Gem.png">
+ 
+    <!-- Start Button and Timer -->
+    <div id="start-container">
+        <button id="start">Start Game</button>
+    </div>
+    <div id="timer">Time: 3:00</div>
+    <div id="message"></div>
+ 
+<script>
+    const tree = {
+        A: ['B', 'C'],
+        B: ['D', 'E'],
+        C: ['F', 'G']
+    };
+ 
+    let currentNode = 'A';
+    let visited = new Set(); // Keep track of visited nodes
+    let timer = 180;
+    let interval;
+    let gameActive = false;
+    let bfsQueue = ['A']; // Queue to enforce BFS order
+    let index = 0;
+ 
+    // Images for each gem
+    const gemImages = {
+        A: 'Bright Blue Gem.png',
+        B: 'Pink Gem.png',
+        C: 'Purple Gem.png',
+        D: 'Dark Blue Gem.png',
+        E: 'Purple Gem.png',
+        F: 'Green Gem.png', // Green gem will be revealed on correct click
+    };
+ 
+    function updateTimer() {
+        const minutes = Math.floor(timer / 60);
+        const seconds = timer % 60;
+        document.getElementById('timer').innerText = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+ 
+    // Start the game
+    function startGame() {
+        clearInterval(interval); // Ensure previous timer is cleared
+        index = 0; // Reset index to start BFS from the beginning
+        currentNode = 'A';
+        bfsQueue = ['A']; // Reset BFS queue
+        visited.clear();
+        visited.add('A'); // Start with node A
+        timer = 180;
+        gameActive = true;
+        document.getElementById('message').innerText = '';
+        document.getElementById('A').src = gemImages['A']; // Ensure node A is shown as blue
+ 
+        // Reset grey images for all other gems
+        /*for (let node of ['B', 'C', 'D', 'E', 'F', 'G']) { */
+        for (let node of ['B', 'C', 'D', 'E', 'F']) {
+            document.getElementById(node).src = 'Grey Gem.png';
+        }
+ 
+        updateTimer();
+        interval = setInterval(() => {
+            if (timer > 0) {
+                timer--;
+                updateTimer();
+            } else {
+                gameOver(); // Timeout case
+            }
+        }, 1000);
+    }
+ 
+    // End the game with a loss
+    function gameOver(wrongNodeId = null) {
+        clearInterval(interval);
+        document.getElementById('message').innerText = 'Game Over! Try Again.';
+        gameActive = false;
+ 
+        if (wrongNodeId) {
+            const wrongGem = document.getElementById(wrongNodeId);
+            wrongGem.classList.add('shake');
+            setTimeout(() => {
+                wrongGem.classList.remove('shake');
+            }, 500);
+        }
+    }
+ 
+    // End the game with a win
+    function winGame() {
+        clearInterval(interval);
+        document.getElementById('message').innerText = 'Congratulations, you found the green gem!';
+        gameActive = false;
+    }
+ 
+    // Reveal gem colors upon clicking correct nodes
+    function revealGem(nodeId) {
+        document.getElementById(nodeId).src = gemImages[nodeId];
+    }
+ 
+    // Handle node clicks
+    function nodeClick(nodeId) {
+        if (!gameActive) return;
+ 
+        // Check if the node is the correct next BFS node
+        if (bfsQueue[index] === nodeId) {
+            revealGem(nodeId); // Reveal the gem's color
+            visited.add(nodeId);
+            index++; // Move to the next node in BFS order
+ 
+            // Enqueue children nodes of the current node for BFS
+            if (tree[nodeId]) {
+                bfsQueue.push(...tree[nodeId]);
+            }
+ 
+            // Check for win condition (green gem at node 'F')
+            if (nodeId === 'F') {
+                winGame();
+            }
+        } else {
+            // If an incorrect node is clicked
+            gameOver(nodeId);
+        }
+    }
+ 
+    // Event listener for starting the game
+    document.getElementById('start').addEventListener('click', startGame);
+ 
+    // Set up click events for each gem node following BFS behavior
+    document.getElementById('A').addEventListener('click', () => nodeClick('A'));
+    document.getElementById('B').addEventListener('click', () => nodeClick('B'));
+    document.getElementById('C').addEventListener('click', () => nodeClick('C'));
+    document.getElementById('D').addEventListener('click', () => nodeClick('D'));
+    document.getElementById('E').addEventListener('click', () => nodeClick('E'));
+    document.getElementById('F').addEventListener('click', () => nodeClick('F'));
+   /* document.getElementById('G').addEventListener('click', () => nodeClick('G')); */
+</script>
+</body>
+</html>

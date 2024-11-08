@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 1</title>  
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #floor {
+            width: 100vw; /* Ensures the floor image spans the width of the page */
+            position: absolute;
+            bottom: 0; /* Aligns the floor image to the bottom of the viewport */
+            left: 0;
+            z-index: 0; /* Stays on top of the background but behind other elements */
+            object-fit: cover; /* Ensures the image covers the width without distortion */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #lamp {
+            width: 20vw; /* Keeps the lamp image at the same size */
+            position: absolute;
+            top: 20px; /* Moves the lamp down slightly to make space for the task bar */
+            left: 50%; /* Starts positioning from the center of the viewport */
+            transform: translateX(-50%); /* Centers the lamp horizontally */
+            z-index: 1; /* Ensures the lamp is below the task bar but above the background */
+        }
+        #table {
+            width: 70vw; /* Increased the width of the table image */
+            position: absolute;
+            top: 50%; /* Centers the table image vertically */
+            left: 50%; /* Centers the table image horizontally */
+            transform: translate(-50%, -50%); /* Ensures the table is perfectly centered */
+            z-index: 1; /* Ensures the table appears above the floor but below the task bar */
+        }
+        #desktop {
+            width: 20vw; /* Adjust the size of the desktop image */
+            position: absolute;
+            top: 38%; /* Position it vertically to align with the yellow part */
+            left: 23%; /* Keeps it towards the left side, within the yellow part of the table */
+            z-index: 2; /* Places the desktop above the table */
+        }
+        #scientist {
+            width: 15vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 10vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 10vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 10vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 30vw; /* Increased the size of the speech bubble */
+            position: absolute;
+            bottom: 45vh; /* Position it near the bottom */
+            right: 25vw; /* Position it to the right of the page, towards the scientist */
+            z-index: 3; /* Ensure it appears above other elements */
+            transform: translateX(10%); /* Optional: adjust for visual appeal */
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 25%; /* Adjust to lift the text closer to the top of the bubble */
+            left: 10%; /* Adjust to position the text inside the bubble */
+            width: 80%; /* Ensure the text stays within the bubble */
+            height: 60%; /* Adjust height to fit the text */
+            color: rgba(25, 66, 57, 1); /* Set text color */
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4; /* Ensure the text is above everything else */
+            font-family: 'Zen Dots', sans-serif;
+        }
+        .quiz-text {
+            font-size: 2.5vw; /* Bigger text for 'Quiz time!' */
+            font-weight: bold; /* Bold text */
+            color: rgba(25, 66, 57, 1); /* Color to match existing text */
+            font-family: 'Zen Dots', sans-serif;
+        }
+    </style>
+    <script>
+        let isQuizTime = false; // Track if the text has changed to 'Quiz time!'
+ 
+        function changeSpeechBubbleText() {
+            const speechBubbleText = document.getElementById('speech-bubble-text');
+            if (!isQuizTime) {
+                speechBubbleText.innerHTML = `<span class="quiz-text">Quiz time!</span>`; // Changes the text to 'Quiz time!' with a bigger and bold font
+                isQuizTime = true;
+            } else {
+                window.location.href = 'Quiz 1.html'; // Redirect to Quiz 1.html
+            }
+        }
+    </script>
+</head>
+<body>
+    <img id="background" src="Wallpaper.png">
+    <img id="floor" src="Floor.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="lamp" src="Lamp.png">
+    <img id="table" src="Table.png">
+    <img id="desktop" src="Desktop.png">
+    <img id="scientist" src="Scientist(Rotated).png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <a onclick="changeSpeechBubbleText()">
+        <img id="right" src="right.png">
+    </a>
+    <a href="index.html">
+        <img id="left" src="left.png">
+    </a>
+ 
+    <div id="speech-bubble">
+        <img src="Speech Bubble (Rotated).png" alt="Speech Bubble" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+ 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+ 
+    <script>
+        var initialText = " Now let's test your knowledge to see if you are ready for the journey or not."
+        var textToType = initialText; // Default text to type
+        var i = 0;
+        var isComplete = false;
+ 
+        function typeWriter() {
+            if (i < textToType.length) {
+                // Check for line break in the string
+                if (textToType.charAt(i) === "<") {
+                    let tagEnd = textToType.indexOf(">", i); // Find the end of the HTML tag
+                    document.getElementById("typing-text").innerHTML += textToType.substring(i, tagEnd + 1);
+                    i = tagEnd + 1; // Skip to the end of the tag
+                } else {
+                    document.getElementById("typing-text").innerHTML += textToType.charAt(i);
+                    i++;
+                }
+                setTimeout(typeWriter, 50); // Adjust typing speed here (in milliseconds)
+            } else {
+                isComplete = true; // Typing is complete
+            }
+        }
+ 
+        window.onload = function() {
+            typeWriter(); // Start typing effect on page load
+        };
+    </script>
+ 
+ 
+   
+</body>      
+</html>

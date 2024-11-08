@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 2</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #robot {
+            width: 10vw;
+            position: absolute;
+            bottom: 5vh;
+            left: 20vw;
+            z-index: 1;
+        }
+        #player {
+            width: 12vw;
+            position: absolute;
+            bottom: 10vh;
+            left: 9vw;
+            z-index: 1;
+        }
+        #alien {
+            width: 15vw;
+            position: absolute;
+            bottom: 5vh;
+            right: 10vw;
+            z-index: 1;
+        }
+        #task-bar {
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(24, 15, 11);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Level 2 Background.png">
+    <img id="robot" src="Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="alien" src="Alien.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="left" src="left.png">
+    <img id="speech-bubble" src="Green Speech bubble.png">
+
+    <div id="speech-bubble">
+        <img src="Green Speech bubble.png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <script>
+        var initialText = "Hello explorer!\nCongratulations for completing your mission in Future Earth!\nNow you will continue your journey in Dunaria Planet!\nThis mission will be learning about Blind Search and Heuristic Search Algorithms!";
+        var firstChangeText = "First, let's understand the meaning of an algorithm.\nAn algorithm is like a recipe that tells a computer (or even a person) exactly what steps to follow to do something.";
+        var secondChangeText = "Just like a recipe tells you how to make a cake by following steps in a specific order, an algorithm tells a computer how to solve a problem. It's a way of breaking down a big problem into smaller, easy-to-follow steps.";
+        var thirdChangeText = "There are many different types of algorithms, one of them being the search algorithm."; // Text after the second click
+        var fourthChangeText = "Imagine you have a bunch of boxes, and you're trying to find a toy hidden in one of them. A search algorithm tells the computer how to look through the boxes to find the toy as quickly as possible."; // New text after third click
+        var fifthChangeText = "In this lesson, we’ll be talking about two different types of search algorithms, which are the blind search and heuristic search algorithms."; // Text after fourth click
+        var sixthChangeText = "Let's start with the blind search algorithm. The blind search algorithm is like searching for a hidden object in a dark room. You can’t see anything, so you check every spot, one by one, until you find what you’re looking for."; // Text after fifth click
+        var seventhChangeText = "The computer does the same thing—trying every possible option until it finds the right solution."; // New text after sixth click
+        var eighthChangeText = "There are various algorithms that belong to the blind search algorithm which include the BFS algorithm."; // New text after seventh click
+        var ninthChangeText = "BFS stands for **Breadth-First Search**. It's like exploring a park level by level. You check all the nearby paths first before moving farther away, helping you find the shortest path to the playground."; // New text after eighth click
+        var tenthChangeText = "Alright, adventurers! Before we jump into a fun example to see how the BFS algorithm works, let's make sure we know some important words first."; // New text after ninth click
+        var eleventhChangeText = "Node: Imagine a node as a spot in a game. Each node can be a place you’re trying to explore.\n\nInitial State: This is where you begin."; // New text after tenth click
+        var twelfthChangeText = "Goal State: This is what you're trying to achieve or solve.\n\nVisited Node: These are the places you’ve already checked during your search."; // New text after eleventh click
+        var thirteenthChangeText = "Now, please go ahead and solve the example. Please keep in mind that Node 'A' is the initial state and Node 'K' is the goal state."; // New text for the thirteenth click
+
+        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+        var index = 0; // Start from the first character
+        var currentText = initialText; // Variable to store current text
+        var clickCount = 0; // Variable to track the number of clicks
+
+        function typeText() {
+            if (index < currentText.length) {
+                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+
+        // Start the typing effect after the page loads
+        window.onload = function() {
+            typeText();
+        };
+
+        function changeText() {
+            clickCount++; // Increment the click counter
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            index = 0; // Reset index
+
+            if (clickCount == 1) {
+                currentText = firstChangeText; // Set new text after first click
+            } else if (clickCount == 2) {
+                currentText = secondChangeText; // Set the next text after second click
+            } else if (clickCount == 3) {
+                currentText = thirdChangeText; // Set the next text after third click
+            } else if (clickCount == 4) {
+                currentText = fourthChangeText; // Set the new text after fourth click
+            } else if (clickCount == 5) {
+                currentText = fifthChangeText; // Set the new text after fifth click
+            } else if (clickCount == 6) {
+                currentText = sixthChangeText; // Set the new text after sixth click
+            } else if (clickCount == 7) {
+                currentText = seventhChangeText; // Set the new text after seventh click
+            } else if (clickCount == 8) {
+                currentText = eighthChangeText; // Set the new text after eighth click
+            } else if (clickCount == 9) {
+                currentText = ninthChangeText; // Set the new text after ninth click
+            } else if (clickCount == 10) {
+                currentText = tenthChangeText; // Set the new text after tenth click
+            } else if (clickCount == 11) {
+                currentText = eleventhChangeText; // Set the new text for Node and Initial State
+            } else if (clickCount == 12) {
+                currentText = twelfthChangeText; // Set the new text for Goal State and Visited Node
+            } else if (clickCount == 13) {
+                currentText = thirteenthChangeText; // Set the new text for solving the example
+            } else if (clickCount == 14) {
+                window.location.href = "BFS example.html"; // Redirect to the new page
+                return; // Exit the function
+            }
+
+            typeText(); // Start typing the new text
+        }
+    </script>
+
+</body>
+</html>

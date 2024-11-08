@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 2</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #alien {
+            width: 15vw;
+            position: absolute;
+            bottom: 5vh;
+            right: 10vw;
+            z-index: 1;
+        }
+        #task-bar {
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #green-box-darker {
+            width: 35vw; /* Adjust the box size */
+            height: 38vh; /* Set height to fit content */
+            position: absolute;
+            bottom: 44vh; /* Positioned near the scientist */
+            right: 25vw; /* Positioned it beside the scientist */
+            z-index: 3; /* Ensure it appears above other elements */
+        }
+        #green-box-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centers the content within the blue box */
+            text-align: center; /* Center-aligns the text */
+            font-size: 1.2vw; /* Adjust font size as needed */
+            color: rgb(24, 15, 11); /* Sets the text color */
+            font-family: 'Zen Dots', sans-serif; /* Adjust font as needed */
+            z-index: 4; /* Ensure it appears above other elements */
+            width: 92%; /* Adjust width to fit within the blue box */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Cave Background.png">
+    <img id="alien" src="Alien.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="goToNextLevel()"> 
+    <img id="left" src="left.png">
+    <!-- Green Box Darker with Content inside -->
+    <div id="green-box-darker">
+        <img src="Pink Box.png" style="width:100%; height:100%;">
+        <div id="green-box-content">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <script>
+        const contentText = "Now it's time to test your BFS skills with a fun game! The gems represent nodes: the green gem is the goal, and the blue gem is where you start. Just click on the grey gems to reveal its color. Be careful! If you make a wrong move before the timer runs out, it's game over. Ready to play and find the goal?";
+        let index = 0; // Start from the first character
+        const typingSpeed = 50; // Typing speed in milliseconds
+
+        // Function to type the text
+        function typeText() {
+            if (index < contentText.length) {
+                document.getElementById("typing-text").innerHTML += contentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+
+        // Start typing effect when the page loads
+        window.onload = function() {
+            typeText();
+        };
+
+        // Function to redirect to the next level
+        function goToNextLevel() {
+            window.location.href = "Level 2 Game 2.html"; // Redirect to the next level
+        }
+    </script>
+
+</body>
+</html>
