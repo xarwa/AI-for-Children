@@ -52,9 +52,9 @@
             overflow-y: auto;
         }
         #next-button {
-            display: none;
-            position: relative; /* Change to relative */
-            margin-top: 20px; /* Add margin to push it away from the content above */
+            display: block; /* Show the button immediately */
+            position: relative;
+            margin-top: 20px;
             padding: 1vh 2vw;
             font-size: 1.8vw;
             background-color: #4CAF50;
@@ -62,7 +62,6 @@
             border: none;
             border-radius: 0.5vw;
             cursor: pointer;
-            bottom: 0; /* Ensure it's at the bottom of the container */
         }
     </style>
 </head>
@@ -111,7 +110,7 @@
         <div class="classification-box" id="strawberry-box" data-accept="4">Strawberries</div>
     </div>
 
-    <!-- Hidden button to go to the next page -->
+    <!-- Button is now visible immediately for the user to go to the next page anytime -->
     <button id="next-button" onclick="goToNextPage()">Go to Robot Testing</button>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,17 +119,19 @@
 </div>
 
 <script>
-    const nextButton = document.getElementById("next-button");
     const fruits = document.querySelectorAll('.fruit');
     const classificationBoxes = document.querySelectorAll('.classification-box');
+    let currentFruitIndex = 0;
 
-    fruits.forEach(fruit => {
+    // Initially hide all fruits except the first one
+    fruits.forEach((fruit, index) => {
+        fruit.style.display = index === 0 ? 'block' : 'none';
         fruit.addEventListener('dragstart', dragStart);
     });
 
     function dragStart(event) {
         event.dataTransfer.setData('fruitType', event.target.getAttribute('data-tag'));
-        event.dataTransfer.setData('fruitId', event.target.getAttribute('data-tag'));
+        event.dataTransfer.setData('fruitIndex', currentFruitIndex);
     }
 
     classificationBoxes.forEach(box => {
@@ -144,18 +145,13 @@
 
     function drop(event) {
         event.preventDefault();
-        const fruitId = event.dataTransfer.getData('fruitId');
-        const fruitType = event.dataTransfer.getData('fruitType');
-        const boxType = event.target.getAttribute('data-accept');
-        const fruitElement = document.querySelector(`[data-tag="${fruitId}"]`);
+        const fruitElement = fruits[currentFruitIndex];
+        event.target.appendChild(fruitElement); // Append fruit to the dropped box
 
-        // Append the fruit to the target box regardless of correctness
-        event.target.appendChild(fruitElement);
-        fruitElement.draggable = false;
-
-        // Check if all fruits are classified
-        if (document.querySelectorAll('.fruit-container .fruit').length === 0) {
-            nextButton.style.display = 'block'; // Show the next button
+        // Move to the next fruit, whether it was the correct box or not
+        currentFruitIndex++;
+        if (currentFruitIndex < fruits.length) {
+            fruits[currentFruitIndex].style.display = 'block'; // Show the next fruit
         }
     }
 
