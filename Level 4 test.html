@@ -147,8 +147,8 @@
 
     <!-- Forest Sound (plays once) -->
     <audio id="forest-sound">
-        <source src="forest sound.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+        <!----<source src="forest sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. -->
     </audio>
 
     <!-- Fonts -->
@@ -161,8 +161,16 @@
         var initialText = "Welcome! You have made it to planet WanderWood! In this mysterious world, secrets hide among the trees, waiting to be uncovered. Here, you will explore, discover, and learn how AI finds hidden connections all on its own, with unsupervised machine learning! The journey continues, lets dive in!";
         var secondText = "Recall from level 3, unsupervised learning is like the computer being a detective! It gets a bunch of information with no answers and has to find patterns. For example, if you give it pictures of animals, it might group the cats and dogs together by what they look like.";
         var thirdText = "Imagine you are sorting jelly beans. Let us say you have a big pile of jelly beans, but you do not know their flavors. They come in many colors, and there is no one to tell you which color belongs to which flavor. Now, imagine you want to organize them somehow. This is where unsupervised learning comes in!";
-        var fourthText = "In unsupervised machine learning, computers do the same thing—they are given a lot of information (or data), but they do not have any labels or instructions about what it all means. Their job is to look for patterns and try to make sense of the information on their own.";
-        var fifthText = "How Does It Work? Just like you might start grouping your jelly beans by color (because that’s a visible pattern), a computer tries to group information that looks similar or has something in common. This process of finding groups is called clustering.";
+        var fourthText = "In unsupervised machine learning, computers do the same thing, they are given a lot of information (or data), but they do not have any labels or instructions about what it all means. Their job is to look for patterns and try to make sense of the information on their own.";
+        var fifthText = "How Does It Work? Just like you might start grouping your jelly beans by color (because that is a visible pattern), a computer tries to group information that looks similar or has something in common. This process of finding groups is called clustering.";
+        var sixthText = "Now, we will see how an algorithm called K-means clustering works and watch our robot use it to create clusters or groups. You are going to learn how AI can spot patterns and organize items in a super-smart way!";
+        var seventhText = "Let’s go back to our pile of jelly beans. You do not know the flavors, and there are many colors mixed up. This time, you are going to use a simple trick to help you organize them. This trick is similar to something called K-means clustering in machine learning.";
+        var eighthText = "Step-by-Step K-means Clustering: Choosing Groups: First, decide how many groups you want to make. Let’s say you want to make three groups of jelly beans. You do not know yet which colors will go in each group, you will figure that out next!";
+        var ninthText = "Starting Points (Centers): Next, you pick three random jelly beans to represent the 'center' of each group. Imagine picking one red, one yellow, and one green jelly bean as your starting points. These are not really groups yet, they are just the starting examples.";
+        var tenthText = "Grouping by Closeness: Now, you look at each jelly bean in the pile and ask, which color is it closest to red, yellow, or green? If a jelly bean is closest in color to red, it joins the red group. If it is closer to yellow, it goes in the yellow group, and so on.";
+        var eleventhText = "Updating the Centers: Once all the jelly beans are grouped, you check the colors in each group to find the new 'center' for each one. For example, if most of the jelly beans in the red group are a little more pink, you will shift the center to pink. This way, each group center represents its members better.";
+        var twelvthText = "Repeat Until Done: You keep repeating steps 3 and 4, rechecking which group each jelly bean belongs to and updating the centers, until the groups stop changing. This means the jelly beans have settled into their best-fitting groups, and the groups no longer change!";
+        var thirteenthText = "K-means clustering is like a game of finding the closest match. You do not know the exact flavors of the jelly beans, but by repeatedly grouping them based on similarity, you end up with clusters that make sense, like all the reds, yellows, and greens grouped together.";
         var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
         var index = 0; // Start from the first character
         var currentText = initialText; // Variable to store current text
@@ -218,6 +226,30 @@
                 clickCount++;
             } else if (clickCount === 3) {
                 currentText = fifthText;
+                clickCount++;
+            } else if (clickCount === 4) {
+                currentText = sixthText;
+                clickCount++;
+            } else if (clickCount === 5) {
+                currentText = seventhText;
+                clickCount++;
+            } else if (clickCount === 6) {
+                currentText = eighthText;
+                clickCount++;
+            } else if (clickCount === 7) {
+                currentText = ninthText;
+                clickCount++;
+            } else if (clickCount === 8) {
+                currentText = tenthText;
+                clickCount++;
+            } else if (clickCount === 9) {
+                currentText = eleventhText;
+                clickCount++;
+            } else if (clickCount === 10) {
+                currentText = twelvthText;
+                clickCount++;
+            } else if (clickCount === 11) {
+                currentText = thirteenthText;
                 clickCount++;
             }
             document.getElementById("typing-text").innerHTML = "";

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-Means Clustering Demo with Animals</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #animal-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 20px;
+    }
+    .animal {
+        width: 80px;
+        height: 80px;
+        margin: 10px;
+    }
+</style>
+</head>
+<body>
+    <h1>Group the Animals with the Robot! 🐶🐱🐦🐟</h1>
+    <p>Click "Organize" to help the robot group the animals by type!</p>
+    
+    <button onclick="organizeAnimals()">Organize</button>
+    
+    <div id="animal-container">
+        <!-- Animal images with different classes -->
+        <img src="dog 1.png" class="animal dog">
+        <img src="cat.png" class="animal cat">
+        <img src="bird3.png" class="animal bird">
+        <img src="fish.png" class="animal fish">
+        <img src="dog2.png" class="animal dog">
+        <img src="cat2.png" class="animal cat">
+        <img src="bird2.png" class="animal bird">
+        <img src="fish2.png" class="animal fish">
+        <img src="dog3.png" class="animal dog">
+        <img src="cat3.png" class="animal cat">
+    </div>
+    
+    <script>
+        function organizeAnimals() {
+            // Get the animal elements
+            const animals = document.querySelectorAll('.animal');
+    
+            // Group animals based on type class
+            const animalGroups = {
+                dog: [],
+                cat: [],
+                bird: [],
+                fish: []
+            };
+    
+            animals.forEach(animal => {
+                if (animal.classList.contains('dog')) animalGroups.dog.push(animal);
+                if (animal.classList.contains('cat')) animalGroups.cat.push(animal);
+                if (animal.classList.contains('bird')) animalGroups.bird.push(animal);
+                if (animal.classList.contains('fish')) animalGroups.fish.push(animal);
+            });
+    
+            // Clear the container and add animals in grouped order
+            const container = document.getElementById('animal-container');
+            container.innerHTML = ''; // Clear existing animals
+    
+            // Re-append animals by groups
+            Object.values(animalGroups).forEach(group => {
+                group.forEach(animal => {
+                    container.appendChild(animal);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
