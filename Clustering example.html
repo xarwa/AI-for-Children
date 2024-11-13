@@ -5,7 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>K-Means Clustering Demo with Animals</title>
 <style>
+#task-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 8vh; /* Adjusted height */
+            width: 100vw;
+            z-index: 2; /* Ensure it’s above other elements */
+}
+
+
     body {
+        padding: 15vh;
         font-family: Arial, sans-serif;
         text-align: center;
     }
@@ -20,9 +31,54 @@
         height: 80px;
         margin: 10px;
     }
+
+    #robot {
+            width: 13vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 10vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+
+       /* #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(14, 21, 59);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+
+        */
+
+        #typing-text {
+            display: inline;
+        }
+
+
 </style>
 </head>
 <body>
+
+    <img id="task-bar" src="Task bar.png">
+    <img id="robot" src="Level 4 Robot new.png">
+
+
+
+
     <h1>Group the Animals with the Robot! 🐶🐱🐦🐟</h1>
     <p>Click "Organize" to help the robot group the animals by type!</p>
     

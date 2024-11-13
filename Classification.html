@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fruit Classifier Game</title>
 <style>
+
+#task-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 8vh; /* Adjusted height */
+            width: 100vw;
+            z-index: 2; /* Ensure it’s above other elements */
+}
+
+
     * {
         margin: 0;
         padding: 0;
@@ -89,6 +100,9 @@
 </style>
 </head>
 <body>
+
+    <img id="task-bar" src="Task bar.png">
+    
 <div class="container">
     <h1>Teach the Robot to Classify Fruits!</h1>
     <p>Drag each fruit to its correct category to teach the robot.</p>
