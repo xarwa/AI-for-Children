@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planets HomePage</title> 
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here --> 
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #task-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 8vh;
+            width: 100vw;
+            z-index: 2;
+        }
+        #planet1, #planet2, #planet3, #planet4, #planet5, #Rocket {
+            position: absolute;
+            z-index: 1;
+        }
+        #planet1 {
+            top: 25%;
+            left: 5%;
+            height: 25vh;
+            width: 25vh;
+            transition: transform 0.3s ease;
+        }
+        #planet1:hover {
+            animation: rotate 2s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        #planet2 {
+            top: 60vh;
+            left: 20.44vw;
+            height: 25vh;
+            width: 25vw;
+            transition: transform 0.5s ease-in-out;
+        }
+        #planet2:hover {
+            animation: calmHeartbeat 2s ease-in-out infinite;
+        }
+        @keyframes calmHeartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.05); }
+            50% { transform: scale(0.95); }
+            75% { transform: scale(1.03); }
+        }
+        #planet3 {
+            top: 15%;
+            left: 45%;
+            height: 30vh;
+            width: 25vh;
+            transition: transform 0.3s ease-in-out;
+        }
+        #planet3:hover {
+            animation: shiver 0.3s ease-in-out infinite;
+        }
+        @keyframes shiver {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        #Rocket {
+            top: 58vh;
+            left: 63vw;
+            height: 12.3vh;
+            width: 9.8vh;
+            transition: transform 0.5s ease-in-out;
+        }
+        #planet3:hover ~ #Rocket {
+            animation: calmHeartbeat 2s ease-in-out infinite;
+        }
+        #planet4 {
+            top: 60vh;
+            left: 62vw;
+            width: 15vw;
+            transition: transform 0.2s ease;
+        }
+        #planet4:hover {
+            animation: bounce 0.5s ease infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        #planet5 {
+            top: 15%;
+            left: 80%;
+            height: 25vh;
+            width: 25vh;
+        }
+        #connection {
+            position: absolute;
+            top: 27%;
+            left: 15%;
+            height: 50vh;
+            width: 70vw;
+            z-index: 0;
+        }
+        /* Button styles */
+        #click-button {
+            position: absolute;
+            top: 80%;
+            left: 47%;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 3;
+            font-family: 'Zen Dots', sans-serif;
+            animation: pulse 1.5s infinite;
+        }
+        #click-button:hover {
+            transform: scale(1.2); /* Enlarges the button by 20% when hovered */
+            background-color: #0b529a; /* Darker blue on hover */
+            animation: none; /* Stops the animation on hover */
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Background.png">
+    <img id="task-bar" src="Task bar.png">
+    <a href="Level 1 test.html">
+        <img id="planet1" src="Planet-1.png">
+    </a>
+    <img id="connection" src="Connections.png">
+    <a href="Level 2 test.html">
+        <img id="planet2" src="Planet 2 new.png">
+    </a>
+    <img id="Rocket" src="Rocket.png"> 
+    <a href="Level 3 test.html">
+        <img id="planet3" src="planet 3 new.png">
+    </a>
+    <a href="Level 4 test.html">
+        <img id="planet4" src="planet 4.png">
+    </a>
+    <img id="planet5" src="Planet-5.png">
+
+    <!-- Bounce sound -->
+    <audio id="bounce-sound" preload="auto">
+        <source src="bounce sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Click Here button -->
+    <button id="click-button">Click Here</button>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <!-- JavaScript to handle sounds -->
+    <script>
+        // Select elements
+        var planet4 = document.getElementById("planet4");
+        var bounceSound = document.getElementById("bounce-sound");
+        var clickButton = document.getElementById("click-button");
+
+        // Play sound on button click
+        clickButton.addEventListener("click", function() {
+            bounceSound.play();
+        });
+    </script>
+</body>      
+</html>

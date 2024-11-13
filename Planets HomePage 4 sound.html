@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planets HomePage</title> 
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here --> 
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #task-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 8vh;
+            width: 100vw;
+            z-index: 2;
+        }
+        #planet1 {
+            position: absolute;
+            top: 25%;
+            left: 5%;
+            height: 25vh;
+            width: 25vh;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        #planet1:hover {
+            animation: rotate 2s linear infinite;
+        }
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        #planet2 {
+            position: absolute;
+            top: 60vh;
+            left: 20.44vw;
+            height: 25vh;
+            width: 25vw;
+            z-index: 1;
+            transition: transform 0.5s ease-in-out;
+        }
+        #planet2:hover {
+            animation: calmHeartbeat 2s ease-in-out infinite;
+        }
+        @keyframes calmHeartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.05);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+            75% {
+                transform: scale(1.03);
+            }
+        }
+        #planet3 {
+            position: absolute;
+            top: 15%;
+            left: 45%;
+            height: 30vh;
+            width: 25vh;
+            z-index: 1;
+            transition: transform 0.3s ease-in-out;
+        }
+        #planet3:hover {
+            animation: shiver 0.3s ease-in-out infinite;
+        }
+        @keyframes shiver {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+        #Rocket {
+            position: absolute;
+            top: 58vh;
+            left: 63vw;
+            height: 12.3vh;
+            width: 9.8vh;
+            z-index: 2;
+            transition: transform 0.5s ease-in-out;
+        }
+        #planet3:hover ~ #Rocket {
+            animation: calmHeartbeat 2s ease-in-out infinite;
+        }
+        #planet4 {
+            position: absolute;
+            top: 60vh;
+            left: 62vw;
+            width: 15vw;
+            z-index: 1;
+            transition: transform 0.2s ease;
+        }
+        /* Continuous bounce animation for planet4 */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        #planet4:hover {
+            animation: bounce 0.5s ease infinite;
+        }
+        #planet5 {
+            position: absolute;
+            top: 15%;
+            left: 80%;
+            height: 25vh;
+            width: 25vh;
+            z-index: 1;
+        }
+        #connection {
+            position: absolute;
+            top: 27%;
+            left: 15%;
+            height: 50vh;
+            width: 70vw;
+            z-index: 0;
+        }
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 192vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <img id="background" src="Background.png">
+    <img id="task-bar" src="Task bar.png">
+    <a href="Level 1 test.html">
+        <img id="planet1" src="Planet-1.png">
+    </a>
+    <img id="connection" src="Connections.png">
+    <a href="Level 2 test.html">
+       <img id="planet2" src="Planet 2 new.png">
+    </a>
+    <img id="Rocket" src="Rocket.png"> 
+    <a href="Level 3 test.html">
+       <img id="planet3" src="planet 3 new.png">
+    </a>
+    <!-- Link for planet 4 to Level 4 test -->
+    <a href="Level 4 test.html">
+       <img id="planet4" src="planet 4.png">
+    </a>
+    <img id="planet5" src="Planet-5.png">
+
+    <!-- Bounce sound -->
+    <audio id="bounce-sound" preload="auto">
+        <source src="bounce sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Mic Icons for Sound Control -->
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <!-- JavaScript to control bounce sound -->
+    <script>
+        // Select elements
+        var bounceSound = document.getElementById("bounce-sound");
+        var playButton = document.getElementById("play-button");
+        var pauseButton = document.getElementById("pause-button");
+
+        // Play bounce sound
+        playButton.addEventListener("click", function() {
+            bounceSound.play();
+        });
+
+        // Pause bounce sound
+        pauseButton.addEventListener("click", function() {
+            bounceSound.pause();
+            bounceSound.currentTime = 0; // Reset to the start
+        });
+    </script>
+</body>      
+</html>
