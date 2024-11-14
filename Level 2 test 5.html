@@ -100,6 +100,9 @@
     <img id="left" src="left.png">
     <img id="speech-bubble" src="Green Speech bubble.png">
 
+    <a href="Level 2 Quiz.html"><img id="right" src="right.png"> 
+    <a href="Level 2 Game 2.html"> <img id="left" src="left.png">
+
     <div id="speech-bubble">
         <img src="Green Speech bubble.png" style="width: 100%; height: 100%;">
         <div id="speech-bubble-text">
@@ -111,48 +114,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 
-    <script>
-        var initialText = "Did you know BFS is used in lots of awesome ways? Here is where you can find it:\nSocial Networks: It helps you discover friends and connections by exploring the whole network.";
-        var nextText = "GPS Maps: BFS finds the fastest route when you need directions.\nNetwork Security: It searches through networks to find every device connected, keeping things secure!";
-        var heuristicText = "Now let's dive into the Heuristic Search algorithm! This smart algorithm makes clever guesses to find answers quicker.";
-        var finalText = "Here is how it works. Instead of exploring every option, it zooms in on the most likely spots, just like hunting for treasure by checking where people usually hide it!";
-        var coolAlgorithmsText = "There are lots of cool algorithms that fall under the heuristic search family, like the Best-First Search algorithm!";
-        var treasureHuntText = "Best-First Search is like being on a treasure hunt, where you chase the best clues first. The computer uses hints to choose the most promising paths, helping it find the treasure (or solution) super fast!";
+   <!-- Script for Typing Effect and Text Changes -->
+   <script>
+    var initialText = "Let’s see if you are an algorithm expert! Take a quick quiz to see how much you have learned. Good luck!";
+    var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+    var index = 0; // Start from the first character
+    var currentText = initialText; // Variable to store current text
+    var clickCount = 0; // Variable to track the number of clicks
 
-        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
-        var index = 0; // Start from the first character
-        var currentText = initialText; // Variable to store current text
-
-        function typeText() {
-            if (index < currentText.length) {
-                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
-                index++;
-                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
-            }
+    function typeText() {
+        if (index < currentText.length) {
+            document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+            index++;
+            setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
         }
+    }
 
-        // Start the typing effect after the page loads
-        window.onload = function() {
-            typeText();
-        };
 
-        function changeText() {
-            if (currentText === initialText) {
-                currentText = nextText; // Change to the next text
-            } else if (currentText === nextText) {
-                currentText = heuristicText; // Change to the heuristic text
-            } else if (currentText === heuristicText) {
-                currentText = finalText; // Change to the final text
-            } else if (currentText === finalText) {
-                currentText = coolAlgorithmsText; // Change to the cool algorithms text
-            } else if (currentText === coolAlgorithmsText) {
-                currentText = treasureHuntText; // Change to the treasure hunt text
-            }
-            index = 0; // Reset index for new text
-            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
-            typeText(); // Start typing the new text
-        }
-    </script>
+    // Start the typing effect after the page loads
+    window.onload = function() {
+        typeText();
+    };
 
+</script>
 </body>
 </html>
