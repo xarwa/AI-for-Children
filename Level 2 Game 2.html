@@ -86,6 +86,29 @@
             color: white;
             z-index: 2;
         }
+
+ /* Button arrows */
+ #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        #right {
+            left: 190vh;
+        }
+
+        #left {
+            left: 9vh;
+        }
+
+        #right:hover, #left:hover {
+            transform: scale(1.2);
+        }
+
  
             /* Add this shake animation */
     @keyframes shake {
@@ -112,6 +135,10 @@
 <body>
     <img id="background" src="Cave Background.png">
  
+
+    <a href="Level 3 test 3.html"><img id="right" src="right.png"> <!-- this connection is wrong !!!!!!-->
+    <a href="Level 2 Game 1.html"> <img id="left" src="left.png">
+
     <!-- Gem nodes -->
     <img id="A" class="gem" src="Bright Blue Gem.png">
     <img id="B" class="gem" src="Grey Gem.png">
