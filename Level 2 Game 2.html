@@ -86,29 +86,6 @@
             color: white;
             z-index: 2;
         }
-
- /* Button arrows */
- #right, #left {
-            width: 5vw;
-            position: absolute;
-            top: 10vh;
-            z-index: 1;
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        #right {
-            left: 190vh;
-        }
-
-        #left {
-            left: 9vh;
-        }
-
-        #right:hover, #left:hover {
-            transform: scale(1.2);
-        }
-
  
             /* Add this shake animation */
     @keyframes shake {
@@ -133,20 +110,16 @@
     </style>
 </head>
 <body>
-    <img id="background" src="images/Cave Background.png">
+    <img id="background" src="Cave Background.png">
  
-
-    <a href="Level 2 test 5.html"><img id="right" src="images/right.png"> 
-    <a href="Level 2 Game 1.html"> <img id="left" src="left.png">
-
     <!-- Gem nodes -->
-    <img id="A" class="gem" src="images/Bright Blue Gem.png">
-    <img id="B" class="gem" src="images/Grey Gem.png">
-    <img id="C" class="gem" src="images/Grey Gem.png">
-    <img id="D" class="gem" src="images/Grey Gem.png">
-    <img id="E" class="gem" src="images/Grey Gem.png">
-    <img id="F" class="gem" src="images/Grey Gem.png">
-    <img id="G" class="gem" src="images/Grey Gem.png">
+    <img id="A" class="gem" src="Bright Blue Gem.png">
+    <img id="B" class="gem" src="Grey Gem.png">
+    <img id="C" class="gem" src="Grey Gem.png">
+    <img id="D" class="gem" src="Grey Gem.png">
+    <img id="E" class="gem" src="Grey Gem.png">
+    <img id="F" class="gem" src="Grey Gem.png">
+    <img id="G" class="gem" src="Grey Gem.png">
  
     <!-- Start Button and Timer -->
     <div id="start-container">
@@ -172,12 +145,12 @@
  
     // Images for each gem
     const gemImages = {
-        A: 'images/Bright Blue.png',
-        B: 'images/Pink Gem.png',
-        C: 'images/Purple Gem.png',
-        D: 'images/Dark Blue Gem.png',
-        E: 'images/Purple Gem.png',
-        F: 'images/Green Gem.png', // Green gem will be revealed on correct click
+        A: 'Bright Blue Gem.png',
+        B: 'Pink Gem.png',
+        C: 'Purple Gem.png',
+        D: 'Dark Blue Gem.png',
+        E: 'Purple Gem.png',
+        F: 'Green Gem.png', // Green gem will be revealed on correct click
     };
  
     function updateTimer() {
@@ -202,7 +175,7 @@
         // Reset grey images for all other gems
         /*for (let node of ['B', 'C', 'D', 'E', 'F', 'G']) { */
         for (let node of ['B', 'C', 'D', 'E', 'F']) {
-            document.getElementById(node).src = 'images/Grey Gem.png';
+            document.getElementById(node).src = 'Grey Gem.png';
         }
  
         updateTimer();
