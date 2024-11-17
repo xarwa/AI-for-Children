@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Level 1</title>  
     <style>
         body, html {
@@ -148,17 +149,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
  
     <script>
-         var initialText = " Do you know about those self- \ndriving cars that work without \nhuman intervention? \nThese cars use sensors and \nAI algorithms to understand the environment and make decisions accordingly."
-         var firstChangeText = "Tesla and BMW produce such cars using AI. \nClick the next arrow to see other applications";
+         var initialText = " Do you know about those self- <br>driving cars that work without <br>human intervention? <br>These cars use sensors and <br>AI algorithms to understand the environment and make decisions accordingly."
+         var firstChangeText = "Tesla and BMW produce such cars using AI. <br> Click the next arrow to see other applications";
  
         var textToType = initialText; // Default text to type
         var i = 0;
         var isComplete = false;
- 
+
         function typeWriter() {
             if (i < textToType.length) {
-                document.getElementById("typing-text").innerHTML += textToType.charAt(i);
-                i++;
+                // Handle <br> separately to ensure proper line breaks
+                if (textToType.substr(i, 4) === '<br>') {
+                    document.getElementById("typing-text").innerHTML += '<br>';
+                    i += 4;
+                } else {
+                    document.getElementById("typing-text").innerHTML += textToType.charAt(i);
+                    i++;
+                }
                 setTimeout(typeWriter, 50); // Adjust typing speed here (in milliseconds)
             } else {
                 isComplete = true; // Typing is complete
