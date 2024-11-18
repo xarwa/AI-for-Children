@@ -19,7 +19,7 @@
             left: 0;
             z-index: -1;
         }
-        #robot {
+        #robot{
             width: 10vw;
             position: absolute;
             bottom: 5vh;
@@ -100,6 +100,9 @@
     <img id="left" src="left.png">
     <img id="speech-bubble" src="Green Speech bubble.png">
 
+    <a href="Level 2 Quiz.html"><img id="right" src="images/right.png"> 
+    <a href="Level 2 Game 2.html"> <img id="left" src="left.png">
+
     <div id="speech-bubble">
         <img src="Green Speech bubble.png" style="width: 100%; height: 100%;">
         <div id="speech-bubble-text">
@@ -111,44 +114,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 
-    <script>
-        var initialText = "Here is how blind search algorithms and heuristic search algorithms differ:\nBlind Search: Imagine looking everywhere one by one without any hints, it is a bit like a wild goose chase!";
-        var heuristicText = "Heuristic Search: Instead, this approach uses clues to zoom in on the best spots first, making your treasure hunt much quicker!";
-        var levelUpText = "Great job on the lesson! Now it is time to level up and play a game! Get ready to use what you have learned and see if you can solve the challenge. Let’s go, adventure awaits!";
+   <!-- Script for Typing Effect and Text Changes -->
+   <script>
+    var initialText = "Let’s see if you are an algorithm expert! Take a quick quiz to see how much you have learned. Good luck!";
+    var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+    var index = 0; // Start from the first character
+    var currentText = initialText; // Variable to store current text
+    var clickCount = 0; // Variable to track the number of clicks
 
-        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
-        var index = 0; // Start from the first character
-        var currentText = initialText; // Variable to store current text
-
-        function typeText() {
-            if (index < currentText.length) {
-                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
-                index++;
-                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
-            }
+    function typeText() {
+        if (index < currentText.length) {
+            document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+            index++;
+            setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
         }
+    }
 
-        // Start the typing effect after the page loads
-        window.onload = function() {
-            typeText();
-        };
 
-        function changeText() {
-            if (currentText === heuristicText) {
-                currentText = levelUpText; // Change to the level up text
-                index = 0; // Reset index for new text
-                document.getElementById("typing-text").innerHTML = ""; // Clear existing text
-                typeText(); // Start typing the new text
-            } else if (currentText === initialText) {
-                currentText = heuristicText; // Change to the heuristic text
-                index = 0; // Reset index for new text
-                document.getElementById("typing-text").innerHTML = ""; // Clear existing text
-                typeText(); // Start typing the new text
-            } else if (currentText === levelUpText) {
-                window.location.href = "Level 2 Game 1.html"; // Redirect to the game page
-            }
-        }
-    </script>
+    // Start the typing effect after the page loads
+    window.onload = function() {
+        typeText();
+    };
 
+</script>
 </body>
 </html>
