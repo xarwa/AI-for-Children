@@ -3,37 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Clustering Game</title>
-    <link rel="stylesheet" href="game4 style.css">
+    <title>Clustering Challenge</title>
+    <link rel="stylesheet" href="Level 4 game style.css">
 </head>
 <body>
-    <h1>Animal Clustering Game</h1>
-    <p>Drag each baby animal to its family (cluster)!</p>
-
-<!-- Container for draggable animals -->
-    <div id="animals">
-        <img src="cub1.png" alt="Baby Lion" class="draggable" draggable="true" data-animal="lion">
-        <img src="leopard-baby1.jpg" alt="Baby Leopard" class="draggable" draggable="true" data-animal="leopard">
-        <img src="baby-black-leopard.png" alt="Baby Black Leopard" class="draggable" draggable="true" data-animal="black-leopard">
-        <img src="baby-tiger.png" alt="Baby Tiger" class="draggable" draggable="true" data-animal="tiger">
-        <!-- Add more babies as needed -->
+    <div id="game-container">
+        <div id="hint-container">
+            <p id="hint">Hint: Look for animals with manes!</p>
+        </div>
+        <div id="forest">
+            <!-- Animal images will be dynamically added here -->
+        </div>
+        <div id="clusters">
+            <div class="cluster" id="cluster1">Group 1</div>
+            <div class="cluster" id="cluster2">Group 2</div>
+            <div class="cluster" id="cluster3">Group 3</div>
+        </div>
+        <button id="check-btn">Check Clusters</button>
+        <div id="feedback"></div>
     </div>
-
-    
-    <!-- Container for the clusters -->
-    <div id="game-area">
-        <!-- Clustering containers only -->
-        <div class="cluster" data-cluster="lion">Lion Cluster</div>
-        <div class="cluster" data-cluster="leopard">Leopard Cluster</div>
-        <div class="cluster" data-cluster="black-leopard">Black Leopard Cluster</div>
-        <div class="cluster" data-cluster="tiger">Tiger Cluster</div>
-    </div>
-
-    
-    
-    
-
-
-    <script src="level 4 game.js"></script>
+    <script src="Level 4 game.js"></script>
 </body>
 </html>

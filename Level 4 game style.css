@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f8ff;
+}
+
+#game-container {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+#hint-container {
+    margin-bottom: 20px;
+}
+
+#forest {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    position: relative;
+    height: 300px;
+    border: 2px dashed #ccc;
+    background-color: #e7f6e7;
+}
+
+img.animal {
+    width: 70px;
+    height: 70px;
+    position: absolute;
+    cursor: grab;
+}
+
+#clusters {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.cluster {
+    width: 150px;
+    height: 150px;
+    border: 2px solid #0073e6;
+    background-color: #f4f9fc;
+    text-align: center;
+    line-height: 150px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cluster:hover {
+    background-color: #d9f0ff;
+}
+
+#feedback {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}

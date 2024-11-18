@@ -61,48 +61,98 @@ function dragStart(event) {
 }
 
 // Allow drop functionality only on clusters
-const clusters = document.querySelectorAll('.cluster');
-clusters.forEach(cluster => {
-    cluster.addEventListener('dragover', allowDrop);
-    cluster.addEventListener('drop', drop);
-});
+// Game Data
+const animalTypes = ["lion", "elephant", "giraffe", "zebra"];
+const hints = [
+    "Hint: Look for animals with manes!",
+    "Hint: Look for animals with trunks!",
+    "Hint: Look for animals with long necks!",
+    "Hint: Look for animals with stripes!"
+];
+const correctClusters = {
+    lion: "cluster1",
+    elephant: "cluster2",
+    giraffe: "cluster3",
+    zebra: "cluster1",
+};
 
-function allowDrop(event) {
-    event.preventDefault();
-}
+// DOM Elements
+const forest = document.getElementById("forest");
+const hintElement = document.getElementById("hint");
+const feedbackElement = document.getElementById("feedback");
+const checkBtn = document.getElementById("check-btn");
 
-// Drop event
-function drop(event) {
-    event.preventDefault();
+// Generate Random Animals
+function createAnimals() {
+    forest.innerHTML = ""; // Clear previous round
 
-    const animalType = event.dataTransfer.getData('animalType');
-    const clusterType = event.currentTarget.dataset.cluster;
-    const imageSrc = event.dataTransfer.getData('imageSrc');
+    for (let i = 0; i < 10; i++) {
+        const type = animalTypes[Math.floor(Math.random() * animalTypes.length)];
+        const animal = document.createElement("img");
+        animal.src = `images/${type}.png`; // Use your image paths
+        animal.classList.add("animal");
+        animal.setAttribute("data-family", type);
 
-    // Debugging logs
-    console.log("Dropped:", animalType);
-    console.log("Cluster Type:", clusterType);
+        // Random Positioning
+        animal.style.top = `${Math.random() * 80}%`;
+        animal.style.left = `${Math.random() * 80}%`;
 
-    // Check if the dropped animal matches the cluster type
-    if (animalType === clusterType) {
-        const draggedElement = document.querySelector(`.draggable.dragging[src="${imageSrc}"]`);
-        if (draggedElement) {
-            // Remove the 'dragging' class and append to the correct cluster
-            draggedElement.classList.remove('dragging');
-            event.currentTarget.appendChild(draggedElement);
-            draggedElement.style.position = 'static'; // Reset positioning within the container
-            draggedElement.style.top = ''; // Remove inline positioning
-            draggedElement.style.left = ''; // Remove inline positioning
+        // Make Draggable
+        animal.draggable = true;
+        animal.addEventListener("dragstart", dragStart);
 
-            // Provide feedback
-            setTimeout(() => {
-                alert(`Good job! You helped the ${animalType} family.`);
-            }, 300);
-        }
-    } else {
-        alert("Oops! This animal doesn't belong here. Try again.");
+        forest.appendChild(animal);
     }
 }
 
-// Initialize the game by scattering animals
-scatterAnimals();
+// Drag-and-Drop Handlers
+function dragStart(event) {
+    event.dataTransfer.setData("animalType", event.target.getAttribute("data-family"));
+    event.dataTransfer.setData("animalID", event.target.id);
+}
+
+const clusters = document.querySelectorAll(".cluster");
+clusters.forEach(cluster => {
+    cluster.addEventListener("dragover", event => event.preventDefault());
+    cluster.addEventListener("drop", dropAnimal);
+});
+
+function dropAnimal(event) {
+    const animalType = event.dataTransfer.getData("animalType");
+    const animal = document.querySelector(`[data-family='${animalType}']`);
+    event.target.appendChild(animal);
+}
+
+// Show Hint
+function showHint() {
+    const randomHint = hints[Math.floor(Math.random() * hints.length)];
+    hintElement.textContent = randomHint;
+}
+
+// Check Clusters
+function checkClusters() {
+    const cluster1 = document.querySelectorAll("#cluster1 img");
+    const cluster2 = document.querySelectorAll("#cluster2 img");
+    const cluster3 = document.querySelectorAll("#cluster3 img");
+
+    const clusters = { cluster1, cluster2, cluster3 };
+
+    let correct = true;
+
+    for (const [type, clusterID] of Object.entries(correctClusters)) {
+        const cluster = clusters[clusterID];
+        const inCluster = Array.from(cluster).some(animal => animal.getAttribute("data-family") === type);
+        if (!inCluster) correct = false;
+    }
+
+    feedbackElement.textContent = correct
+        ? "Great job! All families are correctly grouped!"
+        : "Oops! Some animals are in the wrong groups.";
+}
+
+// Event Listeners
+checkBtn.addEventListener("click", checkClusters);
+
+// Initialize Game
+createAnimals();
+showHint();
