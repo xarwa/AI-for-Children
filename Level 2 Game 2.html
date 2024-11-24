@@ -86,6 +86,24 @@
             color: white;
             z-index: 2;
         }
+
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
  
             /* Add this shake animation */
     @keyframes shake {
@@ -120,6 +138,9 @@
     <img id="E" class="gem" src="Grey Gem.png">
     <img id="F" class="gem" src="Grey Gem.png">
     <img id="G" class="gem" src="Grey Gem.png">
+    <a href="Level 2 Quiz.html"><img id="right" src="images/right.png"></a>
+    <a href="Level 2 Game 1.html"><img id="left" src="left.png"></a>
+ 
  
     <!-- Start Button and Timer -->
     <div id="start-container">
