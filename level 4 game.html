@@ -3,24 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clustering Challenge</title>
+    <title>Unsupervised ML Game</title>
     <link rel="stylesheet" href="Level 4 game style.css">
 </head>
 <body>
-    <div id="game-container">
-        <div id="hint-container">
-            <p id="hint">Hint: Look for animals with manes!</p>
+    <h1>Unsupervised Machine Learning Game</h1>
+    <div class="container">
+        <div class="drag-area">
+            <h3>Drag and Drop Animal Images Here</h3>
+            <div id="dropBox" class="drop-box"></div>
         </div>
-        <div id="forest">
-            <!-- Animal images will be dynamically added here -->
+        <div class="feature-table">
+            <h3>Animal Features</h3> 
+            <table border="1" id="featureTable">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Tail</th>
+                        <th>Whiskers</th>
+                        <th>Trunk</th>
+                        <th>Large Ears</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added dynamically -->
+                </tbody>
+            </table>
         </div>
-        <div id="clusters">
-            <div class="cluster" id="cluster1">Group 1</div>
-            <div class="cluster" id="cluster2">Group 2</div>
-            <div class="cluster" id="cluster3">Group 3</div>
+        <div class="graph-area">
+            <h3>Feature Graph</h3>
+            <canvas id="featureGraph" width="400" height="400"></canvas>
         </div>
-        <button id="check-btn">Check Clusters</button>
-        <div id="feedback"></div>
     </div>
     <script src="Level 4 game.js"></script>
 </body>

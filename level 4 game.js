@@ -1,158 +1,92 @@
-// Select the container to hold scattered animals
-const animalsContainer = document.getElementById('animals');
+// List of animal images
+const animalImages = [
+   
+"leopard.jpg",
+"elephant1.jpg",
+"dog.jpg",
+"mouse.jpg",
+"Robot.png"
+];
 
-// Array of animal images for each type
-const animalImages = {
-    lion: ['cub1.png', 'cub2.png', 'cub3.png', 'cub4.png', 'cub5.png', 'cub6.png'],
-    leopard: ['leopard-baby1.jpg', 'leopard-baby2.jpg', 'leopard-baby3.jpg', 'leopard-baby4.jpg', 'leopard-baby5.jpg', 'leopard-baby6.jpg', 'leopard-baby7.jpg', 'leopard-baby8.jpg'],
-    blackLeopard: ['black-leopard-baby1.jpg', 'black-leopard-baby2.jpg'],
-    tiger: ['tiger-baby1.jpg', 'tiger-baby2.jpg']
+// Define feature data for each image
+const animalFeatures = {
+    "leopard.jpg": { tail: 1, whiskers: 0, trunk: 0, largeEars: 0 },
+    "elephant1.jpg": { tail: 1, whiskers: 0, trunk: 1, largeEars: 1 },
+    "dog.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 1 },
+    "mouse.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 0 },
+    "Robot.png": { tail: 0, whiskers: 0, trunk: 0, largeEars: 0 } // Robot as outlier
 };
 
-// Generate unique random positions for initial layout
-function getRandomPosition(existingPositions, maxWidth, maxHeight) {
-    let position;
-    do {
-        position = {
-            top: Math.floor(Math.random() * (maxHeight - 80)),
-            left: Math.floor(Math.random() * (maxWidth - 80))
-        };
-    } while (existingPositions.some(pos => Math.abs(pos.top - position.top) < 60 && Math.abs(pos.left - position.left) < 60));
-    existingPositions.push(position);
-    return position;
+// Initialize the graph data
+let graphData = [];
+
+// Drag and Drop Functionality
+const dropBox = document.getElementById("dropBox");
+dropBox.addEventListener("dragover", (e) => e.preventDefault());
+dropBox.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const imageId = e.dataTransfer.getData("imageId");
+    const imageElement = document.getElementById(imageId);
+
+    if (imageElement) {
+        dropBox.appendChild(imageElement.cloneNode(true));
+        updateTable(imageId);
+        updateGraph(animalFeatures[imageId]);
+    }
+});
+
+// Update Table
+function updateTable(imageId) {
+    const table = document.getElementById("featureTable").querySelector("tbody");
+    const { tail, whiskers, trunk, largeEars } = animalFeatures[imageId];
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${imageId}</td>
+        <td>${tail}</td>
+        <td>${whiskers}</td>
+        <td>${trunk}</td>
+        <td>${largeEars}</td>
+    `;
+    table.appendChild(row);
 }
 
-// Function to initialize and scatter animals without overlap
-function scatterAnimals() {
-    const existingPositions = [];
-    const maxWidth = window.innerWidth;
-    const maxHeight = window.innerHeight;
+// Update Graph
+function updateGraph(features) {
+    const canvas = document.getElementById("featureGraph");
+    const ctx = canvas.getContext("2d");
 
-    Object.keys(animalImages).forEach(animalType => {
-        animalImages[animalType].forEach(image => {
-            const imgElement = document.createElement('img');
-            imgElement.src = image;
-            imgElement.alt = `${animalType} baby`;
-            imgElement.classList.add('draggable');
-            imgElement.draggable = true;
-            imgElement.dataset.animal = animalType;
+    // Add the new point
+    const x = features.tail * 100 + features.whiskers * 50;
+    const y = features.trunk * 100 + features.largeEars * 50;
+    graphData.push({ x, y });
 
-            // Generate non-overlapping random position
-            const position = getRandomPosition(existingPositions, maxWidth, maxHeight);
-            imgElement.style.top = `${position.top}px`;
-            imgElement.style.left = `${position.left}px`;
-            imgElement.style.position = 'absolute';
-
-            // Add event listeners for dragging
-            imgElement.addEventListener('dragstart', dragStart);
-
-            // Append to the main document body (not in a container)
-            document.body.appendChild(imgElement);
-        });
+    // Clear and redraw the graph
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    graphData.forEach(point => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "blue";
+        ctx.fill();
+        ctx.closePath();
     });
 }
 
-// Drag start event
-function dragStart(event) {
-    event.dataTransfer.setData('animalType', event.target.dataset.animal);
-    event.dataTransfer.setData('imageSrc', event.target.src); // Store image source for identification
-    event.target.classList.add('dragging'); // Add a class for identifying dragged element
-    console.log("Dragging:", event.target.alt); // Debugging log
-}
+// Make Animal Images Draggable
+animalImages.forEach((imageName, index) => {
+    const img = document.createElement("img");
+    img.src = `images/${imageName}`; // Set the image source
+    img.id = imageName; // Use filename as ID
+    img.draggable = true;
 
-// Allow drop functionality only on clusters
-// Game Data
-const animalTypes = ["lion", "elephant", "giraffe", "zebra"];
-const hints = [
-    "Hint: Look for animals with manes!",
-    "Hint: Look for animals with trunks!",
-    "Hint: Look for animals with long necks!",
-    "Hint: Look for animals with stripes!"
-];
-const correctClusters = {
-    lion: "cluster1",
-    elephant: "cluster2",
-    giraffe: "cluster3",
-    zebra: "cluster1",
-};
+    // Apply inline styles
+    img.style.width = "100px"; // Adjust size
+    img.style.height = "auto"; // Maintain aspect ratio
+    img.style.margin = "10px"; // Add spacing between images
+    img.style.cursor = "grab"; // Change cursor to indicate draggable
 
-// DOM Elements
-const forest = document.getElementById("forest");
-const hintElement = document.getElementById("hint");
-const feedbackElement = document.getElementById("feedback");
-const checkBtn = document.getElementById("check-btn");
-
-// Generate Random Animals
-function createAnimals() {
-    forest.innerHTML = ""; // Clear previous round
-
-    for (let i = 0; i < 10; i++) {
-        const type = animalTypes[Math.floor(Math.random() * animalTypes.length)];
-        const animal = document.createElement("img");
-        animal.src = `images/${type}.png`; // Use your image paths
-        animal.classList.add("animal");
-        animal.setAttribute("data-family", type);
-
-        // Random Positioning
-        animal.style.top = `${Math.random() * 80}%`;
-        animal.style.left = `${Math.random() * 80}%`;
-
-        // Make Draggable
-        animal.draggable = true;
-        animal.addEventListener("dragstart", dragStart);
-
-        forest.appendChild(animal);
-    }
-}
-
-// Drag-and-Drop Handlers
-function dragStart(event) {
-    event.dataTransfer.setData("animalType", event.target.getAttribute("data-family"));
-    event.dataTransfer.setData("animalID", event.target.id);
-}
-
-const clusters = document.querySelectorAll(".cluster");
-clusters.forEach(cluster => {
-    cluster.addEventListener("dragover", event => event.preventDefault());
-    cluster.addEventListener("drop", dropAnimal);
+    img.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("imageId", imageName);
+    });
+    dropBox.parentNode.insertBefore(img, dropBox);
 });
-
-function dropAnimal(event) {
-    const animalType = event.dataTransfer.getData("animalType");
-    const animal = document.querySelector(`[data-family='${animalType}']`);
-    event.target.appendChild(animal);
-}
-
-// Show Hint
-function showHint() {
-    const randomHint = hints[Math.floor(Math.random() * hints.length)];
-    hintElement.textContent = randomHint;
-}
-
-// Check Clusters
-function checkClusters() {
-    const cluster1 = document.querySelectorAll("#cluster1 img");
-    const cluster2 = document.querySelectorAll("#cluster2 img");
-    const cluster3 = document.querySelectorAll("#cluster3 img");
-
-    const clusters = { cluster1, cluster2, cluster3 };
-
-    let correct = true;
-
-    for (const [type, clusterID] of Object.entries(correctClusters)) {
-        const cluster = clusters[clusterID];
-        const inCluster = Array.from(cluster).some(animal => animal.getAttribute("data-family") === type);
-        if (!inCluster) correct = false;
-    }
-
-    feedbackElement.textContent = correct
-        ? "Great job! All families are correctly grouped!"
-        : "Oops! Some animals are in the wrong groups.";
-}
-
-// Event Listeners
-checkBtn.addEventListener("click", checkClusters);
-
-// Initialize Game
-createAnimals();
-showHint();

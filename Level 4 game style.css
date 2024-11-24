@@ -1,62 +1,53 @@
 body {
     font-family: Arial, sans-serif;
+    text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #f0f8ff;
 }
 
-#game-container {
-    text-align: center;
-    margin: 20px auto;
-    max-width: 800px;
-}
-
-#hint-container {
-    margin-bottom: 20px;
-}
-
-#forest {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    position: relative;
-    height: 300px;
-    border: 2px dashed #ccc;
-    background-color: #e7f6e7;
-}
-
-img.animal {
-    width: 70px;
-    height: 70px;
-    position: absolute;
-    cursor: grab;
-}
-
-#clusters {
+.container {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin: 20px;
+    gap: 20px;
 }
 
-.cluster {
-    width: 150px;
-    height: 150px;
-    border: 2px solid #0073e6;
-    background-color: #f4f9fc;
-    text-align: center;
-    line-height: 150px;
-    font-weight: bold;
+.drag-area, .feature-table, .graph-area {
+    border: 2px solid #ccc;
     border-radius: 10px;
+    padding: 20px;
+    width: 30%;
+}
+
+.drop-box {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.drop-box img {
+    max-width: 100px;
     cursor: pointer;
 }
 
-.cluster:hover {
-    background-color: #d9f0ff;
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
 }
 
-#feedback {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+canvas {
+    border: 1px solid #ccc;
+    background-color: #fff;
 }
