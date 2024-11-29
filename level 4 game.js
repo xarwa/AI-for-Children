@@ -1,16 +1,18 @@
-// List of animal images
-/*const animalImages = [
-"leopard.jpg",
-"elephant.jpg",
-"Dog1.jpg",
-"Dog2.jpg",
-"bear2.jpg",
-"kangaroo.jpg",
-"owl.jpg",
-"turtle.jpg",
-"Robot.png"
+// List of animal images (commented out in your original code)
+/*
+const animalImages = [
+    "leopard.jpg",
+    "elephant.jpg",
+    "Dog1.jpg",
+    "Dog2.jpg",
+    "bear2.jpg",
+    "kangaroo.jpg",
+    "owl.jpg",
+    "turtle.jpg",
+    "Robot.png"
 ];
 */
+
 // Define feature data for each image
 const animalFeatures = {
     "leopard.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 0, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 1, feathers: 0, shell: 0 },
@@ -39,6 +41,7 @@ const clusterColors = {
 
 // Initialize the graph data
 let graphData = [];
+let imageCounter = 1; // Start numbering images from 1
 
 // Normalizing function
 function normalizeFeature(featureValue, minValue, maxValue) {
@@ -53,7 +56,6 @@ function calculatePosition(features) {
 
     const normalizedFeatures = featureValues.map(f => normalizeFeature(f, minFeature, maxFeature));
 
-    // For simplicity, we sum the normalized values to determine the x and y positions.
     const x = 50 + normalizedFeatures[0] * 200;  // Tail
     const y = 50 + normalizedFeatures[1] * 200;  // Whiskers
 
@@ -98,14 +100,16 @@ dropBox.addEventListener("drop", (e) => {
     }
 });
 
-// Update Table
+// Update Table with Numbered Image
 function updateTable(imageId) {
     const table = document.getElementById("featureTable").querySelector("tbody");
     const features = animalFeatures[imageId];
 
     const row = document.createElement("tr");
+
+    // Assign image number in the first column instead of image name
     row.innerHTML = `
-        <td>${imageId}</td>
+        <td>${imageCounter++}</td>
         <td>${features.tail}</td>
         <td>${features.whiskers}</td>
         <td>${features.trunk}</td>
@@ -118,6 +122,7 @@ function updateTable(imageId) {
         <td>${features.feathers}</td>
         <td>${features.shell}</td>
     `;
+
     table.appendChild(row);
 }
 
@@ -129,7 +134,7 @@ animalImages.forEach((imageName) => {
     img.id = imageName; // Use filename as ID
     img.draggable = true;
 
-    img.style.width = "100px"; // Adjust size
+    img.style.width = "200px"; // Adjust size
     img.style.height = "auto"; // Maintain aspect ratio
     img.style.margin = "10px"; // Add spacing between images
     img.style.cursor = "grab"; // Change cursor to indicate draggable
