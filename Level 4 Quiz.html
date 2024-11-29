@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 4</title>
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here -->
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #robot, #player, #alien {
+            z-index: 1;
+            position: absolute;
+        }
+        #robot {
+            width: 13vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+        #player {
+            width: 12vw;
+            bottom: 10vh;
+            left: 9vw;
+        }
+        #bear {
+            width: 18vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        #right {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            left: 190vh;
+            cursor: pointer;
+            display: none; /* Start as hidden */
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        
+        #right:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+
+        #green-box-darker {
+            width: 35vw;
+            height: 45vh;
+            position: absolute;
+            bottom: 40vh;
+            right: 22vw;
+            z-index: 3;
+        }
+        #green-box-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 1.2vw;
+            color: rgb(24, 15, 11);
+            font-family: 'Zen Dots', sans-serif;
+            z-index: 4;
+            width: 92%;
+            box-sizing: border-box;
+        }
+        #message {
+            font-size: 1.5vw;
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+            position: absolute;
+            bottom: 2%; /* Placed under the submit button */
+            left: 55%; /* Align with submit button */
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+        label {
+            font-size: 1.1vw;
+        }
+        input[type="radio"] {
+            margin: 0 5px;
+        }
+        #submit-button {
+            width: 9vw;
+            position: absolute;
+            bottom: 30%;
+            left: 57%;
+            z-index: 4;
+            cursor: pointer;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <img id="background" src="Level 4 Background.png">
+    <img id="robot" src="Level 4 Robot new.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="bear" src="Bear.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="right.png" onclick="goToNextLevel()">
+    
+    <!-- Green Box with Content inside -->
+    <div id="green-box-darker">
+        <img src="yellow box.png" style="width:100%; height:100%;">
+        <div id="green-box-content">
+            <p id="question-text">Loading first question...</p>
+            <div id="options"></div>
+        </div>
+        <div id="message"></div>
+    </div>
+
+    <!-- Submit Button -->
+    <img id="submit-button" src="yellow submit box.png" onclick="checkAnswer()">
+
+    <!-- Audio files for correct and wrong answers -->
+    <audio id="correct-sound">
+        <source src="claps.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="buzzer.mp3" type="audio/mpeg">
+    </audio>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <script>
+        
+
+     let questions = {
+            easy: [
+                { q: "In unsupervised learning, what is missing that makes it different from other types of learning?", options: ["Colors", "Labels or instructions", "Computers", "Patterns"], answer: 1 },
+                { q: "What is clustering?", options: ["Grouping items by patterns", "Playing a game", "Writing code", "Finding mistakes"], answer: 0 },
+                { q: "What do we call the points that represent the start of each group in K-means?", options: ["Players", "Centers", "Teams", "Groups"], answer: 1 },
+                { q: "If a jellybean is closest to red, it goes to which group?", options: ["Yellow", "Green", "Red", "Blue"], answer: 2 },
+                { q: "What is unsupervised learning?", options: ["Teaching a computer with answers", "A computer finding patterns on its own", "Sorting jelly beans by flavor with help", "A teacher guiding a computer"], answer: 1 },
+                { q: "What is the first step in K-means clustering?", options: ["Grouping all data at once", "Picking random starting points", "Counting the data points", "Sorting by size"], answer: 1 },
+                { q: "Why is K-means clustering called 'unsupervised", options: ["It doesn't need human help to find patterns", "It relies on a teacher for learning", "It organizes labeled data", "It skips learning altogether"], answer: 0 },
+                { q: "What is the computer’s job in unsupervised learning?", options: ["Grouping data into meaningful clusters", "Guessing without any patterns", "Matching labels to data", "Making random guesses"], answer: 0 },
+                { q: "Why do the groups stop changing at the end of clustering?", options: ["The data is deleted", "The groups fit the data perfectly", "The centers disappear", "The process gets stuck"], answer: 1 },
+                { q: "What is the main idea of K-means clustering?", options: ["Guessing labels", "Finding the closest match", "Sorting by size", "Mixing groups randomly"], answer: 1 }
+                // Add more easy questions here
+            ],
+            medium: [
+                { q: "In clustering, what happens when a data point is 'closer' to a center?", options: ["It joins that cluster", "It moves to another group", "It is deleted", "It changes its value"], answer: 0 },
+                { q: "How does a computer 'know' the groups are good?", options: ["By measuring similarity within groups", "By following human instructions", "By guessing", "By checking for labels"], answer: 0 }
+                // Add more medium questions here
+            ],
+            hard: [
+                { q: "Why does unsupervised learning NOT need labels?", options: ["The computer finds patterns independently", "Labels are already known", "Labels are irrelevant to clustering", "Labels are guessed later"], answer: 0 },
+                { q: "What does it mean to 'update centers' in K-means clustering?", options: ["Move the center to better represent the group", "Delete the old center", "Label the center", "Add more groups"], answer: 0 },
+                { q: "What might happen if K-means clustering stops too early?", options: ["The groups may not be accurate", "The centers will disappear", "The patterns will reset", "The data will be lost"], answer: 0 },
+                { q: "What is the biggest challenge in unsupervised learning?", options: ["No labels or instructions", "Too much labeled data", "Groups are always inaccurate", "Centers cannot be updated"], answer: 0 },
+                { q: "What kind of patterns does K-means clustering look for?", options: ["Similarities in data", "Differences in size", "Random patterns", "Labels in data"], answer: 0 },
+                { q: "What happens to the centers in each iteration of K-means clustering?", options: ["They move closer to the average of the group", "They stay the same", "They move away randomly", "They disappear"], answer: 0 },
+                { q: "How do you decide the number of clusters in K-means?", options: ["It is fixed at three", "Based on the data and problem", "By guessing", "By using all data points"], answer: 1 },
+                { q: "What is an example of a 'pattern' in unsupervised learning?", options: ["Labels on the data", "Similarities in data, like color", "Instructions given to the computer", "Randomly assigned groups"], answer: 1 },
+                { q: "In a real-world scenario, which application is an example of K-means clustering?", options: ["Grouping customers based on purchasing habits", "Assigning students to classrooms", "Labeling images of objects", "Training a self-driving car"], answer: 0 }
+                // Add more hard questions here
+            ]
+        };
+
+        let currentQuestionIndex = 0;
+    let score = 0;
+    let totalQuestions = 10;
+    let currentDifficulty = 'medium'; // Start with a medium question
+
+     // Start the typing effect after the page loads
+     window.onload = function() {
+            typeText();
+            createSnowflakes(); // Start snowflakes after the page loads
+        };
+
+    function getRandomQuestion(difficulty) {
+        let questionSet = questions[difficulty];
+        let randomIndex = Math.floor(Math.random() * questionSet.length);
+        return questionSet[randomIndex];
+    }
+
+    function loadQuestion() {
+        let question = getRandomQuestion(currentDifficulty);
+        document.getElementById('question-text').innerHTML = question.q;
+        
+        let optionsHTML = '';
+        question.options.forEach((option, index) => {
+            optionsHTML += `<label><input type="radio" name="answer" value="${index}"> ${option}</label><br>`;
+        });
+        document.getElementById('options').innerHTML = optionsHTML;
+        
+        // Clear any previous message when a new question is loaded
+        document.getElementById('message').innerHTML = "";
+        currentQuestion = question;
+    }
+
+    function checkAnswer() {
+        var selectedAnswer = document.querySelector('input[name="answer"]:checked');
+        var messageDiv = document.getElementById('message');
+        var correctSound = document.getElementById('correct-sound');
+        var wrongSound = document.getElementById('wrong-sound');
+
+        if (!selectedAnswer) {
+            messageDiv.innerHTML = "Please select an answer!";
+            return;
+        }
+
+        if (parseInt(selectedAnswer.value) === currentQuestion.answer) {
+            score++;
+            messageDiv.innerHTML = "Good job, your answer is correct!";
+            messageDiv.style.color = "green";
+            correctSound.play();  // Play the correct answer sound
+
+            // Set difficulty and proceed to next question
+            if (currentDifficulty === 'hard' || currentQuestionIndex >= totalQuestions - 1) {
+                currentDifficulty = 'hard';
+            } else {
+                currentDifficulty = 'hard';
+            }
+        } else {
+            messageDiv.innerHTML = "Sorry, your answer is wrong!";
+            messageDiv.style.color = "red";
+            wrongSound.play();  // Play the wrong answer sound
+
+            currentDifficulty = 'easy'; // Adjust difficulty
+        }
+        currentQuestionIndex++;
+
+        setTimeout(() => {
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();  // Load the next question after a delay
+            } else {
+                displayFinalScore();  // Show the final score if no more questions
+            }
+        }, 2000); // Adjust delay to 2 seconds before loading the next question
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < totalQuestions) {
+            document.getElementById('message').innerHTML = "Please answer before proceeding.";
+        } else {
+            displayFinalScore();
+        }
+    }
+
+        // Replace the old displayFinalScore function with this updated one
+    function displayFinalScore() {
+        document.getElementById('question-text').innerHTML = `You answered ${score} out of ${totalQuestions} questions correctly!`;
+        document.getElementById('options').innerHTML = "";
+        document.getElementById('message').innerHTML = "";
+
+        // Hide the submit button when the final score is displayed
+        document.getElementById('submit-button').style.display = 'none';
+        document.getElementById('right').style.display = 'block'; // Show the right arrow
+    }
+
+    function goToNextLevel() {
+            window.location.href = "Level 4 test 2.html"; // Redirect to Level 4 test
+        }
+
+
+    window.onload = function () {
+        loadQuestion();
+    }
+
+    
+    
+    
+    
+    </script>
+</body>
+</html>
