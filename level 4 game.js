@@ -150,3 +150,7 @@ Object.keys(animalFeatures).forEach((imageName) => {
 
     dropBox.parentNode.insertBefore(img, dropBox);
 });
+
+document.getElementById('nextPageButton').addEventListener('click', function() {
+    window.location.href = 'Level 4 test 2 sound.html'; // Replace 'nextPage.html' with the URL of the next page
+});

@@ -102,7 +102,6 @@
         .sound-icon {
             width: 5vw;
             position: absolute;
-           
             cursor: pointer;
             transition: transform 0.3s ease;
             z-index: 10;
@@ -118,12 +117,6 @@
         .sound-icon:hover {
             transform: scale(1.2);
         }
-
-
-
-
-
-        
     </style>
 </head>
 <body>
@@ -133,10 +126,8 @@
     <img id="player" src="Player(Rotated).png">
     <img id="Bear" src="Bear.png">
     <img id="task-bar" src="Task bar.png">
-    <!-- <img id="right" src="images/right.png" onclick="changeText()">  -->
-   <!-- <img id="left" src="left.png" onclick="previousText()">  -->
-   <a href="Planets HomePage 5.html"><img id="right" src="images/right.png"></a>
-   <a href="index.html"><img id="left" src="left.png"></a>
+    <a href="Level 4 game.html"><img id="right" src="images/right.png"></a>
+    <a href="Clustering example.html"><img id="left" src="left.png"></a>
 
     <a href="Planets HomePage 4 sound.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
     </a>
@@ -147,32 +138,20 @@
         <div id="speech-bubble-text">
             <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
         </div>
-    </div>
-
-    <!-- Mic Icons for Sound Control -->
-    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
-    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
-
-    <!-- Forest Sound (plays once) -->
-    <audio id="forest-sound">
-        <source src="forest sound.mp3" type="audio/mpeg">
-        Your browser does not support the audio element. 
-    </audio>
+    </div> 
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 
-    <!-- Script for Typing Effect and Text Changes -->
     <script>
-        var initialText = "Great job, Space Explorer! You’ve explored the magical forests of Planet Wanderwood and discovered the wonders of unsupervised machine learning. Your knowledge of AI is growing every day! Are you ready to embark on your next adventure? The stars are calling!";
-        
-        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
-        var index = 0; // Start from the first character
-        var currentText = initialText; // Variable to store current text
-        var clickCount = 0; // Variable to track the number of clicks
-    
+        // Define the text and typing speed
+        const currentText = "Get ready to play a fun game where you will see how different features of animals affect how they are grouped. You will explore how traits like tails, ears, and fur help determine which animals belong together. Let's dive in and discover clustering in action!";
+        const typingSpeed = 50; // Speed of typing (milliseconds per character)
+        let index = 0; // To keep track of the position of the character being typed
+
+        // Function to simulate typing
         function typeText() {
             if (index < currentText.length) {
                 document.getElementById("typing-text").innerHTML += currentText.charAt(index);
@@ -181,97 +160,8 @@
             }
         }
 
-    // Function to handle left arrow clicks (move backward)
-    function previousText() {
-        if (clickCount > 0) {
-            clickCount--; // Decrement the click counter
-            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
-            index = 0; // Reset index
-
-            if (clickCount == 0) {
-                currentText = initialText; // Go back to the initial text
-            } else if (clickCount == 1) {
-                currentText = secondText; // Second text
-            } else if (clickCount == 2) {
-                currentText = thirdText; // Third text
-            } else if (clickCount == 3) {
-                currentText = fourthText; // Fourth text
-            } else if (clickCount == 4) {
-                currentText = fifthText; // Fifth text
-            }
-
-            typeText(); // Re-run typing effect for new text
-        }
-    }
-
-    // Function to handle right arrow clicks (move forward)
-    // Start the typing effect after the page loads
-        window.onload = function() {
-            typeText(); // Start typing as soon as the page is loaded
-        }
-
-        // Function to handle right arrow clicks (move forward)
-        function changeText() {
-            if (clickCount === 0) {
-                currentText = secondText;
-                clickCount++;
-            } else if (clickCount === 1) {
-                currentText = thirdText;
-                clickCount++;
-            } else if (clickCount === 2) {
-                currentText = fourthText;
-                clickCount++;
-            } else if (clickCount === 3) {
-                currentText = fifthText;
-                clickCount++;
-            } else if (clickCount === 4) {
-                currentText = sixthText;
-                clickCount++;
-            } else if (clickCount === 5) {
-                currentText = seventhText;
-                clickCount++;
-            } else if (clickCount === 6) {
-                currentText = eighthText;
-                clickCount++;
-            } else if (clickCount === 7) {
-                currentText = ninthText;
-                clickCount++;
-            } else if (clickCount === 8) {
-                currentText = tenthText;
-                clickCount++;
-            } else if (clickCount === 9) {
-                currentText = eleventhText;
-                clickCount++;
-            } else if (clickCount === 10) {
-                currentText = twelvthText;
-                clickCount++;
-            } else if (clickCount === 11) {
-                currentText = thirteenthText;
-                clickCount++;
-            } else if (clickCount === 12) {
-                currentText = fourteenthText;
-                clickCount++;
-            } else if (clickCount === 13) {
-                // Redirect to the next level page
-                window.location.href = "Clustering example.html";
-                return; // Stop further text changes
-            }
-            document.getElementById("typing-text").innerHTML = "";
-            index = 0;
-            typeText();
-        }
-
-
-
-        function playSound() {
-            document.getElementById("forest-sound").play();
-        }
-
-        // Function to pause sound
-        function pauseSound() {
-            document.getElementById("forest-sound").pause();
-        }
-
+        // Call the function when the page loads
+        window.onload = typeText;
     </script>
 </body>
 </html>
