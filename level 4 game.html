@@ -3,37 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Clustering Game</title>
-    <link rel="stylesheet" href="game4 style.css">
+    <title>Unsupervised ML Game</title>
+    <link rel="stylesheet" href="Level 4 game style.css">
 </head>
 <body>
-    <h1>Animal Clustering Game</h1>
-    <p>Drag each baby animal to its family (cluster)!</p>
-
-<!-- Container for draggable animals -->
-    <div id="animals">
-        <img src="cub1.png" alt="Baby Lion" class="draggable" draggable="true" data-animal="lion">
-        <img src="leopard-baby1.jpg" alt="Baby Leopard" class="draggable" draggable="true" data-animal="leopard">
-        <img src="baby-black-leopard.png" alt="Baby Black Leopard" class="draggable" draggable="true" data-animal="black-leopard">
-        <img src="baby-tiger.png" alt="Baby Tiger" class="draggable" draggable="true" data-animal="tiger">
-        <!-- Add more babies as needed -->
+    <h1>Unsupervised Machine Learning Game</h1>
+    <div class="container">
+        <div class="drag-area">
+            <h3>Drag and Drop Animal Images Here</h3>
+            <div id="dropBox" class="drop-box"></div>
+        </div>
     </div>
 
-    
-    <!-- Container for the clusters -->
-    <div id="game-area">
-        <!-- Clustering containers only -->
-        <div class="cluster" data-cluster="lion">Lion Cluster</div>
-        <div class="cluster" data-cluster="leopard">Leopard Cluster</div>
-        <div class="cluster" data-cluster="black-leopard">Black Leopard Cluster</div>
-        <div class="cluster" data-cluster="tiger">Tiger Cluster</div>
+    <div class="info-container">
+        <div class="feature-table">
+            <h3>Animal Features</h3> 
+            <table border="1" id="featureTable">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Tail</th>
+                        <th>Whiskers</th>
+                        <th>Trunk</th>
+                        <th>Large Ears</th>
+                        <th>Pouch</th>
+                        <th>Talons</th>
+                        <th>Wings</th>
+                        <th>Beak</th>
+                        <th>Fur</th>
+                        <th>Feathers</th>
+                        <th>Shell</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be added dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="graph-area">
+            <h3>Feature Graph</h3>
+            <canvas id="featureGraph" width="400" height="400"></canvas>
+        </div>
     </div>
 
-    
-    
-    
-
-
-    <script src="level 4 game.js"></script>
+    <script src="Level 4 game.js"></script>
 </body>
 </html>

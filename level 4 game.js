@@ -1,108 +1,146 @@
-// Select the container to hold scattered animals
-const animalsContainer = document.getElementById('animals');
+// List of animal images (commented out in your original code)
+/*
+const animalImages = [
+    "leopard.jpg",
+    "elephant.jpg",
+    "Dog1.jpg",
+    "Dog2.jpg",
+    "bear2.jpg",
+    "kangaroo.jpg",
+    "owl.jpg",
+    "turtle.jpg",
+    "Robot.png"
+];
+*/
 
-// Array of animal images for each type
-const animalImages = {
-    lion: ['cub1.png', 'cub2.png', 'cub3.png', 'cub4.png', 'cub5.png', 'cub6.png'],
-    leopard: ['leopard-baby1.jpg', 'leopard-baby2.jpg', 'leopard-baby3.jpg', 'leopard-baby4.jpg', 'leopard-baby5.jpg', 'leopard-baby6.jpg', 'leopard-baby7.jpg', 'leopard-baby8.jpg'],
-    blackLeopard: ['black-leopard-baby1.jpg', 'black-leopard-baby2.jpg'],
-    tiger: ['tiger-baby1.jpg', 'tiger-baby2.jpg']
+// Define feature data for each image
+const animalFeatures = {
+    "leopard.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 0, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 1, feathers: 0, shell: 0 },
+    "elephant.jpg": { tail: 1, whiskers: 0, trunk: 1, largeEars: 1, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 0, feathers: 0, shell: 0 },
+    "Dog1.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 1, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 1, feathers: 0, shell: 0 },
+    "Dog2.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 1, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 1, feathers: 0, shell: 0 },
+    "Robot.png": { tail: 0, whiskers: 0, trunk: 0, largeEars: 0, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 0, feathers: 0, shell: 0 }, // Outlier
+    "bear2.jpg": { tail: 1, whiskers: 1, trunk: 0, largeEars: 0, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 1, feathers: 0, shell: 0 },
+    "kangaroo.jpg": { tail: 1, whiskers: 0, trunk: 0, largeEars: 0, pouch: 1, talons: 0, wings: 0, beak: 0, fur: 1, feathers: 0, shell: 0 },
+    "owl.jpg": { tail: 0, whiskers: 0, trunk: 0, largeEars: 0, pouch: 0, talons: 1, wings: 1, beak: 1, fur: 0, feathers: 1, shell: 0 },
+    "turtle.jpg": { tail: 1, whiskers: 0, trunk: 0, largeEars: 0, pouch: 0, talons: 0, wings: 0, beak: 0, fur: 0, feathers: 0, shell: 1 }
 };
 
-// Generate unique random positions for initial layout
-function getRandomPosition(existingPositions, maxWidth, maxHeight) {
-    let position;
-    do {
-        position = {
-            top: Math.floor(Math.random() * (maxHeight - 80)),
-            left: Math.floor(Math.random() * (maxWidth - 80))
-        };
-    } while (existingPositions.some(pos => Math.abs(pos.top - position.top) < 60 && Math.abs(pos.left - position.left) < 60));
-    existingPositions.push(position);
-    return position;
+// Cluster colors for dots
+const clusterColors = {
+    "leopard.jpg": "red",
+    "elephant.jpg": "blue",
+    "Dog1.jpg": "green",
+    "Dog2.jpg": "green",
+    "Robot.png": "gray",
+    "bear2.jpg": "brown",
+    "kangaroo.jpg": "orange",
+    "owl.jpg": "purple",
+    "turtle.jpg": "teal"
+};
+
+// Initialize the graph data
+let graphData = [];
+let imageCounter = 1; // Start numbering images from 1
+
+// Normalizing function
+function normalizeFeature(featureValue, minValue, maxValue) {
+    return (featureValue - minValue) / (maxValue - minValue);
 }
 
-// Function to initialize and scatter animals without overlap
-function scatterAnimals() {
-    const existingPositions = [];
-    const maxWidth = window.innerWidth;
-    const maxHeight = window.innerHeight;
+// Mapping the features to a 2D position (canvas x, y)
+function calculatePosition(features) {
+    const featureValues = Object.values(features);
+    const minFeature = Math.min(...featureValues);
+    const maxFeature = Math.max(...featureValues);
 
-    Object.keys(animalImages).forEach(animalType => {
-        animalImages[animalType].forEach(image => {
-            const imgElement = document.createElement('img');
-            imgElement.src = image;
-            imgElement.alt = `${animalType} baby`;
-            imgElement.classList.add('draggable');
-            imgElement.draggable = true;
-            imgElement.dataset.animal = animalType;
+    const normalizedFeatures = featureValues.map(f => normalizeFeature(f, minFeature, maxFeature));
 
-            // Generate non-overlapping random position
-            const position = getRandomPosition(existingPositions, maxWidth, maxHeight);
-            imgElement.style.top = `${position.top}px`;
-            imgElement.style.left = `${position.left}px`;
-            imgElement.style.position = 'absolute';
+    const x = 50 + normalizedFeatures[0] * 200;  // Tail
+    const y = 50 + normalizedFeatures[1] * 200;  // Whiskers
 
-            // Add event listeners for dragging
-            imgElement.addEventListener('dragstart', dragStart);
+    return { x, y };
+}
 
-            // Append to the main document body (not in a container)
-            document.body.appendChild(imgElement);
-        });
+// Update Graph
+function updateGraph(imageId, features) {
+    const canvas = document.getElementById("featureGraph");
+    const ctx = canvas.getContext("2d");
+
+    // Calculate dot position based on normalized features
+    const { x, y } = calculatePosition(features);
+
+    // Add the new point to graphData
+    graphData.push({ x, y, color: clusterColors[imageId] });
+
+    // Clear and redraw the graph
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    graphData.forEach((point) => {
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 10, 0, Math.PI * 2); // Draw a circle with radius 10
+        ctx.fillStyle = point.color; // Assign color based on cluster
+        ctx.fill();
+        ctx.closePath();
     });
 }
 
-// Drag start event
-function dragStart(event) {
-    event.dataTransfer.setData('animalType', event.target.dataset.animal);
-    event.dataTransfer.setData('imageSrc', event.target.src); // Store image source for identification
-    event.target.classList.add('dragging'); // Add a class for identifying dragged element
-    console.log("Dragging:", event.target.alt); // Debugging log
-}
+// Make Animal Images Draggable
+const dropBox = document.getElementById("dropBox");
 
-// Allow drop functionality only on clusters
-const clusters = document.querySelectorAll('.cluster');
-clusters.forEach(cluster => {
-    cluster.addEventListener('dragover', allowDrop);
-    cluster.addEventListener('drop', drop);
+dropBox.addEventListener("dragover", (e) => e.preventDefault());
+dropBox.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const imageId = e.dataTransfer.getData("imageId");
+    const imageElement = document.getElementById(imageId);
+
+    if (imageElement) {
+        dropBox.appendChild(imageElement.cloneNode(true));
+        updateTable(imageId);
+        updateGraph(imageId, animalFeatures[imageId]);
+    }
 });
 
-function allowDrop(event) {
-    event.preventDefault();
+// Update Table with Numbered Image
+function updateTable(imageId) {
+    const table = document.getElementById("featureTable").querySelector("tbody");
+    const features = animalFeatures[imageId];
+
+    const row = document.createElement("tr");
+
+    // Assign image number in the first column instead of image name
+    row.innerHTML = `
+        <td>${imageCounter++}</td>
+        <td>${features.tail}</td>
+        <td>${features.whiskers}</td>
+        <td>${features.trunk}</td>
+        <td>${features.largeEars}</td>
+        <td>${features.pouch}</td>
+        <td>${features.talons}</td>
+        <td>${features.wings}</td>
+        <td>${features.beak}</td>
+        <td>${features.fur}</td>
+        <td>${features.feathers}</td>
+        <td>${features.shell}</td>
+    `;
+
+    table.appendChild(row);
 }
 
-// Drop event
-function drop(event) {
-    event.preventDefault();
+// Make animal images draggable
+const animalImages = Object.keys(animalFeatures);
+animalImages.forEach((imageName) => {
+    const img = document.createElement("img");
+    img.src = `images/${imageName}`; // Set the image source
+    img.id = imageName; // Use filename as ID
+    img.draggable = true;
 
-    const animalType = event.dataTransfer.getData('animalType');
-    const clusterType = event.currentTarget.dataset.cluster;
-    const imageSrc = event.dataTransfer.getData('imageSrc');
+    img.style.width = "200px"; // Adjust size
+    img.style.height = "auto"; // Maintain aspect ratio
+    img.style.margin = "10px"; // Add spacing between images
+    img.style.cursor = "grab"; // Change cursor to indicate draggable
 
-    // Debugging logs
-    console.log("Dropped:", animalType);
-    console.log("Cluster Type:", clusterType);
-
-    // Check if the dropped animal matches the cluster type
-    if (animalType === clusterType) {
-        const draggedElement = document.querySelector(`.draggable.dragging[src="${imageSrc}"]`);
-        if (draggedElement) {
-            // Remove the 'dragging' class and append to the correct cluster
-            draggedElement.classList.remove('dragging');
-            event.currentTarget.appendChild(draggedElement);
-            draggedElement.style.position = 'static'; // Reset positioning within the container
-            draggedElement.style.top = ''; // Remove inline positioning
-            draggedElement.style.left = ''; // Remove inline positioning
-
-            // Provide feedback
-            setTimeout(() => {
-                alert(`Good job! You helped the ${animalType} family.`);
-            }, 300);
-        }
-    } else {
-        alert("Oops! This animal doesn't belong here. Try again.");
-    }
-}
-
-// Initialize the game by scattering animals
-scatterAnimals();
+    img.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("imageId", imageName);
+    });
+    dropBox.parentNode.insertBefore(img, dropBox);
+});
