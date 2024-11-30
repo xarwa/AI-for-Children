@@ -1,0 +1,230 @@
+<html><head><base href="." /><meta charset="UTF-8" />
+  <title>Treasure Hunt with BFS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #1a1a2e;
+      color: white;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 80px);
+      gap: 4px;
+      padding: 20px;
+      background: #16213e;
+      border-radius: 10px;
+    }
+    .cell {
+      width: 80px;
+      height: 80px;
+      background: #0f3460;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .cell.visited {
+      background: #533483;
+    }
+    .cell.current {
+      background: #e94560;
+    }
+    .cell.treasure {
+      background: #ffd700;
+    }
+    .cell.path {
+      background: #4caf50;
+    }
+    .controls {
+      margin: 20px;
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background: #e94560;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #c73e54;
+    }
+    .message {
+      margin: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      background: #533483;
+    }
+  </style>
+</head>
+<body>
+  <h1>Treasure Hunt with BFS</h1>
+  <div class="message" id="message">Start exploring! Find the treasure using BFS logic.</div>
+  <div class="grid" id="grid"></div>
+  <div class="controls">
+    <button onclick="reset()">Reset Game</button>
+  </div>
+
+  <script>
+    const GRID_SIZE = 5;
+    let currentPosition;
+    let treasurePosition;
+    let visitedCells;
+    let grid;
+
+    function createGrid() {
+      const gridElement = document.getElementById('grid');
+      gridElement.innerHTML = '';
+      grid = [];
+      
+      for (let i = 0; i < GRID_SIZE; i++) {
+        grid[i] = [];
+        for (let j = 0; j < GRID_SIZE; j++) {
+          const cell = document.createElement('div');
+          cell.className = 'cell';
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+          cell.addEventListener('click', () => movePlayer(i, j));
+          gridElement.appendChild(cell);
+          grid[i][j] = cell;
+        }
+      }
+    }
+
+    function initGame() {
+      visitedCells = new Set();
+      currentPosition = { row: 0, col: 0 };
+      treasurePosition = {
+        row: Math.floor(Math.random() * GRID_SIZE),
+        col: Math.floor(Math.random() * GRID_SIZE)
+      };
+      
+      while (treasurePosition.row === 0 && treasurePosition.col === 0) {
+        treasurePosition = {
+          row: Math.floor(Math.random() * GRID_SIZE),
+          col: Math.floor(Math.random() * GRID_SIZE)
+        };
+      }
+
+      updateGrid();
+    }
+
+    function updateGrid() {
+      for (let i = 0; i < GRID_SIZE; i++) {
+        for (let j = 0; j < GRID_SIZE; j++) {
+          grid[i][j].className = 'cell';
+          if (i === currentPosition.row && j === currentPosition.col) {
+            grid[i][j].classList.add('current');
+          }
+          if (i === treasurePosition.row && j === treasurePosition.col) {
+            grid[i][j].classList.add('treasure');
+          }
+          if (visitedCells.has(`${i},${j}`)) {
+            grid[i][j].classList.add('visited');
+          }
+        }
+      }
+    }
+
+    function movePlayer(row, col) {
+      // Check if move is valid (adjacent cell)
+      const rowDiff = Math.abs(row - currentPosition.row);
+      const colDiff = Math.abs(col - currentPosition.col);
+      
+      if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
+        visitedCells.add(`${currentPosition.row},${currentPosition.col}`);
+        currentPosition = { row, col };
+        updateGrid();
+        
+        if (row === treasurePosition.row && col === treasurePosition.col) {
+          document.getElementById('message').textContent = 'Congratulations! You found the treasure!';
+          showShortestPath();
+        } else {
+          simulateBFS();
+        }
+      }
+    }
+
+    function simulateBFS() {
+      const queue = [[currentPosition]];
+      const visited = new Set();
+      
+      while (queue.length > 0) {
+        const path = queue.shift();
+        const { row, col } = path[path.length - 1];
+        
+        if (row === treasurePosition.row && col === treasurePosition.col) {
+          document.getElementById('message').textContent = 
+            `BFS would find the treasure in ${path.length - 1} moves from your current position`;
+          return;
+        }
+        
+        const directions = [
+          { row: row - 1, col }, // up
+          { row: row + 1, col }, // down
+          { row, col: col - 1 }, // left
+          { row, col: col + 1 }  // right
+        ];
+        
+        for (const direction of directions) {
+          if (isValidMove(direction) && !visited.has(`${direction.row},${direction.col}`)) {
+            visited.add(`${direction.row},${direction.col}`);
+            queue.push([...path, direction]);
+          }
+        }
+      }
+    }
+
+    function isValidMove({ row, col }) {
+      return row >= 0 && row < GRID_SIZE && col >= 0 && col < GRID_SIZE;
+    }
+
+    function showShortestPath() {
+      const queue = [[currentPosition]];
+      const visited = new Set();
+      
+      while (queue.length > 0) {
+        const path = queue.shift();
+        const { row, col } = path[path.length - 1];
+        
+        if (row === treasurePosition.row && col === treasurePosition.col) {
+          path.forEach(pos => {
+            grid[pos.row][pos.col].classList.add('path');
+          });
+          return;
+        }
+        
+        const directions = [
+          { row: row - 1, col },
+          { row: row + 1, col },
+          { row, col: col - 1 },
+          { row, col: col + 1 }
+        ];
+        
+        for (const direction of directions) {
+          if (isValidMove(direction) && !visited.has(`${direction.row},${direction.col}`)) {
+            visited.add(`${direction.row},${direction.col}`);
+            queue.push([...path, direction]);
+          }
+        }
+      }
+    }
+
+    function reset() {
+      createGrid();
+      initGame();
+      document.getElementById('message').textContent = 'Start exploring! Find the treasure using BFS logic.';
+    }
+
+    // Initialize the game
+    reset();
+  </script>
+</body></html>
