@@ -29,7 +29,6 @@
         }
         #task-bar {
             width: 100vw; /* Ensures the task bar spans the entire width of the page */
-            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
             position: absolute;
             top: 0; /* Aligns the task bar at the top of the page */
             left: 0;
@@ -45,7 +44,7 @@
         #AR {
             width: 50vw; /* Adjust the size of the AR.png */
             position: absolute;
-            bottom: 18vh; /* Adjust as needed to place it properly on the page */
+            bottom: 15vh; /* Adjust as needed to place it properly on the page */
             left: 15vw; /* Positions it on the left side of the page */
             z-index: 1; /* Ensures the AR.png appears above the floor but below other elements */
             border-radius: 50px; /* Adds curved edges to the AR.png */
@@ -63,6 +62,13 @@
         #left {
             left: 9vh;
         }
+        #homeIcon{
+            width: 3vw;
+            position: absolute;
+            top: 2vh;
+            left: 2.4vh;
+            z-index: 3;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +77,9 @@
     <img id="task-bar" src="Task bar.png">
     <img id="scientist" src="Scientist(Rotated).png">
     <img id="AR" src="ARvsVR.png">
+    <img id="homeIcon" src="images/homeIcon.jpg">
+
+    <a href="index.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
 
     <a href="Level 1 Quiz intro.html"><img id="right" src="images/right.png"></a> <!-- Updated to direct to Applications 6 text.html -->
     <a href="index.html"><img id="left" src="left.png"></a>
