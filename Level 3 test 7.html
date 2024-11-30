@@ -65,6 +65,7 @@
         #right:hover, #left:hover {
             transform: scale(1.2); /* Enlarges the image by 20% when hovered */
         }
+
         #homeIcon{
             width: 3vw;
             position: absolute;
@@ -127,7 +128,6 @@
     <img id="homeIcon" src="images/homeIcon.jpg">
 
     <a href="Planets HomePage 3.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
-
    
     <!-- Speech Bubble -->
     <div id="speech-bubble">
@@ -145,7 +145,9 @@
  
     <!-- Script for Typing Effect and Text Changes -->
     <script>
-        var initialText = "Congratulations, Space Adventurer! You have conquered the icy trails of Planet Glacia and learned the secrets of Supervised Machine Learning! Your understanding of AI has grown stronger. Are you ready for the next adventure? The stars await!";
+        var initialText = "Are you ready to help our friendly robot become a fruit classification expert? In this exciting game, you will embark on a two-part journey to train and test your robot!";
+        var secondText = "Part 1: Training Time! Your mission is to help the robot learn about different fruits! You will see various fruits pop up on the screen, and your job is to drag and drop them into the right classification boxes. The better you do, the smarter your robot will become!";
+        var thirdText = "Part 2: Testing the Robot's Skills! Once the robot is all trained up, it is time to put its skills to the test! Watch as the robot tries to classify the fruits all by itself. Are you ready to dive into this fruity adventure? Lets get started and show the robot how to be the best fruit classifier ever!";
         var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
         var index = 0; // Start from the first character
         var currentText = initialText; // Variable to store current text
@@ -173,10 +175,14 @@
             index = 0; // Reset index
  
             if (clickCount == 1) {
+                currentText = secondText; // Change to second text
+            } else if (clickCount == 2) {
+                currentText = thirdText; // Change to third text
+            } else if (clickCount == 3) {
                 // Redirect to the next level page
-                window.location.href = "Planets HomePage 4.html";
+                window.location.href = "Classification game.html";
                 return; // Stop further text changes
-            } 
+            }
  
             typeText(); // Start typing the next text
         }
