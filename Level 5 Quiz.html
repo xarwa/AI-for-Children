@@ -25,23 +25,26 @@
             position: absolute;
         }
         #robot {
-            width: 13vw;
+            width: 11vw; /* Adjust the width of the robot image */
             position: absolute;
-            bottom: 5vh;
-            left: 20vw;
-            z-index: 1;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
         }
+
         #player {
-            width: 12vw;
-            bottom: 10vh;
-            left: 9vw;
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 7vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
         }
         #character {
-            width: 18vw;
+            width: 15vw; /* Adjust the width of the scientist image */
             position: absolute;
-            bottom: 5vh;
-            right: 5vw;
-            z-index: 1;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
         }
         #task-bar {
             width: 100vw;
@@ -115,8 +118,8 @@
     </style>
 </head>
 <body>
-    <img id="background" src="Level 5 Background 2.png">
-    <img id="robot" src="Level 4 Robot new.png">
+    <img id="background" src="Level 5 Background new..png">
+    <img id="robot" src="images/Robot.png">
     <img id="player" src="Player(Rotated).png">
     <img id="character" src="Level 5 character.png">
     <img id="task-bar" src="Task bar.png">
