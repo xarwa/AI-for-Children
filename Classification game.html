@@ -4,21 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Level 3</title>
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here -->
     <style>
-#task-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 8vh; /* Adjusted height */
-            width: 100vw;
-            z-index: 2; /* Ensure it’s above other elements */
-}
-
-
         body {
             font-family: 'Zen Dots', sans-serif;
             text-align: center;
-            background-color: #f0f8ff;
+            background-color: #C2EAE0;
         }
         h1 {
             color: #333;
@@ -72,13 +63,13 @@
             border: none;
             border-radius: 0.5vw;
             cursor: pointer;
-        }
+            font-family: 'Zen Dots', sans-serif;
+        }    
+
+        
     </style>
 </head>
 <body>
-
-    <img id="task-bar" src="Task bar.png">
-
 <h1>Help the Robot Classify Fruits!</h1>
 
 <div class="game-container">
@@ -86,34 +77,34 @@
     <div class="instructions">Drag each fruit into the correct box below.</div>
 
     <div class="fruit-container" id="fruit-container">
-        <img src="images/apple1.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/apple2.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/apple3.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/apple4.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/apple5.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/apple6.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/apple7.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
-        <img src="images/orange 1.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/orange 2.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/orange 3.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/orange 4.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/orange 5.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/orange 6.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/orange 7.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
-        <img src="images/banana 1.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/banana 2.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/banana 3.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/banana 4.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/banana 5.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/banana 6.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/banana 7.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
-        <img src="images/strawberry1.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
-        <img src="images/strawberry2.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
-        <img src="images/strawberry3.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
-        <img src="images/strawberry4.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
-        <img src="images/strawberry5.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
-        <img src="images/strawberry6.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
-        <img src="images/strawberry7.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/apple1 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/apple2 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/apple3 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/apple4 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/apple5 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/apple6 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/apple7 new.png" alt="Apple" class="fruit" data-tag="1" draggable="true">
+        <img src="images/orange1 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/orange2 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/orange3 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/orange4 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/orange5 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/orange6 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/orange7 new.png" alt="Orange" class="fruit" data-tag="2" draggable="true">
+        <img src="images/banana1 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/banana2 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/banana3 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/banana4 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/banana5 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/banana6 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/banana7 new.png" alt="Banana" class="fruit" data-tag="3" draggable="true">
+        <img src="images/strawberry1 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/strawberry2 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/strawberry3 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/strawberry4 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/strawberry5 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/strawberry6 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
+        <img src="images/strawberry7 new.png" alt="Strawberry" class="fruit" data-tag="4" draggable="true">
     </div>
 
     <div class="classification-area">
@@ -155,7 +146,6 @@
     function dragOver(event) {
         event.preventDefault();
     }
-
 
     function drop(event) {
         event.preventDefault();

@@ -122,7 +122,7 @@
     <img id="player" src="Player(Rotated).png">
     <img id="bear" src="Bear.png">
     <img id="task-bar" src="Task bar.png">
-    <img id="right" src="right.png" onclick="goToNextLevel()">
+    <img id="right" src="images/right.png" onclick="goToNextLevel()">
     
     <!-- Green Box with Content inside -->
     <div id="green-box-darker">
@@ -156,31 +156,33 @@
             easy: [
                 { q: "In unsupervised learning, what is missing that makes it different from other types of learning?", options: ["Colors", "Labels or instructions", "Computers", "Patterns"], answer: 1 },
                 { q: "What is clustering?", options: ["Grouping items by patterns", "Playing a game", "Writing code", "Finding mistakes"], answer: 0 },
-                { q: "What do we call the points that represent the start of each group in K-means?", options: ["Players", "Centers", "Teams", "Groups"], answer: 1 },
+                { q: "In the jelly bean example, what is the goal of sorting them?", options: ["To eat them faster", "To find patterns in their colors or flavors", "To throw them away", "To count them"], answer: 1 },
                 { q: "If a jellybean is closest to red, it goes to which group?", options: ["Yellow", "Green", "Red", "Blue"], answer: 2 },
                 { q: "What is unsupervised learning?", options: ["Teaching a computer with answers", "A computer finding patterns on its own", "Sorting jelly beans by flavor with help", "A teacher guiding a computer"], answer: 1 },
-                { q: "What is the first step in K-means clustering?", options: ["Grouping all data at once", "Picking random starting points", "Counting the data points", "Sorting by size"], answer: 1 },
-                { q: "Why is K-means clustering called 'unsupervised", options: ["It doesn't need human help to find patterns", "It relies on a teacher for learning", "It organizes labeled data", "It skips learning altogether"], answer: 0 },
+                { q: "What is an example of clustering in science?", options: ["Grouping animals by their features", "Painting pictures of animals", "Writing stories about animals", "Naming animals"], answer: 0 },
+                { q: "What does 'data' mean in this context?", options: ["Information given to a computer", "A type of candy", "A detective tool", "A music playlist"], answer: 0 },
                 { q: "What is the computer’s job in unsupervised learning?", options: ["Grouping data into meaningful clusters", "Guessing without any patterns", "Matching labels to data", "Making random guesses"], answer: 0 },
-                { q: "Why do the groups stop changing at the end of clustering?", options: ["The data is deleted", "The groups fit the data perfectly", "The centers disappear", "The process gets stuck"], answer: 1 },
-                { q: "What is the main idea of K-means clustering?", options: ["Guessing labels", "Finding the closest match", "Sorting by size", "Mixing groups randomly"], answer: 1 }
+                { q: "What does the computer do if it cannot find patterns?", options: ["It creates random groups", "It cannot group anything", "It asks for help", "It shuts down"], answer: 1 },
+                { q: "Why might clustering help doctors?", options: ["By finding patterns in medical data", "By solving diseases directly", "By designing hospitals", "By writing prescriptions"], answer: 0 },
+                { q: "What is the first step in clustering?", options: ["Find patterns in data", "Delete unnecessary data", "Count all the data", "Group data randomly"], answer: 0 }
                 // Add more easy questions here
             ],
             medium: [
-                { q: "In clustering, what happens when a data point is 'closer' to a center?", options: ["It joins that cluster", "It moves to another group", "It is deleted", "It changes its value"], answer: 0 },
-                { q: "How does a computer 'know' the groups are good?", options: ["By measuring similarity within groups", "By following human instructions", "By guessing", "By checking for labels"], answer: 0 }
+                { q: "What might happen if a dataset has no visible patterns?", options: ["The computer can still cluster it accurately", "The computer cannot group the data effectively", "The computer creates incorrect groups", "The computer adds fake patterns"], answer: 1 },
+                { q: "How might clustering help a shop organize its products?", options: ["By grouping similar items like snacks, drinks, and fruits together", "By selling only one type of product", "By randomly placing products on shelves", "By removing unnecessary items"], answer: 0 }
                 // Add more medium questions here
             ],
             hard: [
                 { q: "Why does unsupervised learning NOT need labels?", options: ["The computer finds patterns independently", "Labels are already known", "Labels are irrelevant to clustering", "Labels are guessed later"], answer: 0 },
-                { q: "What does it mean to 'update centers' in K-means clustering?", options: ["Move the center to better represent the group", "Delete the old center", "Label the center", "Add more groups"], answer: 0 },
-                { q: "What might happen if K-means clustering stops too early?", options: ["The groups may not be accurate", "The centers will disappear", "The patterns will reset", "The data will be lost"], answer: 0 },
-                { q: "What is the biggest challenge in unsupervised learning?", options: ["No labels or instructions", "Too much labeled data", "Groups are always inaccurate", "Centers cannot be updated"], answer: 0 },
-                { q: "What kind of patterns does K-means clustering look for?", options: ["Similarities in data", "Differences in size", "Random patterns", "Labels in data"], answer: 0 },
-                { q: "What happens to the centers in each iteration of K-means clustering?", options: ["They move closer to the average of the group", "They stay the same", "They move away randomly", "They disappear"], answer: 0 },
-                { q: "How do you decide the number of clusters in K-means?", options: ["It is fixed at three", "Based on the data and problem", "By guessing", "By using all data points"], answer: 1 },
+                { q: "What does it mean when an item is in between two clusters?", options: ["The computer cannot decide where it belongs", "The item might share similarities with both clusters", "The item does not belong to any group", "The item is removed from the dataset"], answer: 1 },
+                { q: "How does clustering help in music apps?", options: ["By creating playlists of songs with similar characteristics", "By recording new songs", "By writing lyrics for songs", "By adjusting the volume of the songs"], answer: 0 },
+                { q: "Why might a computer group jelly beans based on size instead of color?", options: ["Size could be an easier pattern to detect in the data", "The computer does not like colors", "Size patterns are always better than color patterns", "Size is a random choice"], answer: 0 },
+                { q: "How do clustering algorithms decide which items belong together?", options: ["By comparing similarities between items", "By guessing randomly", "By asking for human guidance", "By using a pre-written set of rules"], answer: 0 },
+                { q: "Why is clustering important in medicine?", options: ["It finds patterns that help diagnose diseases", "It replaces doctors with robots", "It teaches patients how to stay healthy", "It creates new medicines"], answer: 0 },
+                { q: "What does a computer need to start clustering?", options: ["A set of labeled data", "A pile of information without labels or instructions", "Pre-written answers to match", "A keyboard and mouse"], answer: 1 },
                 { q: "What is an example of a 'pattern' in unsupervised learning?", options: ["Labels on the data", "Similarities in data, like color", "Instructions given to the computer", "Randomly assigned groups"], answer: 1 },
-                { q: "In a real-world scenario, which application is an example of K-means clustering?", options: ["Grouping customers based on purchasing habits", "Assigning students to classrooms", "Labeling images of objects", "Training a self-driving car"], answer: 0 }
+                { q: "If a jelly bean is reddish-orange, what might the computer do?", options: ["Put it in the red group", "Put it in the orange group", "Create a new group", "Any of the above, depending on the details of the jelly bean"], answer: 3 },
+                { q: "Why does clustering work without labels or instructions?", options: ["It uses predefined rules", "It analyzes data and identifies patterns independently", "It guesses randomly", "It doesn’t actually work"], answer: 1 }
                 // Add more hard questions here
             ]
         };
@@ -278,7 +280,7 @@
     }
 
     function goToNextLevel() {
-            window.location.href = "Level 4 test 2.html"; // Redirect to Level 4 test
+            window.location.href = "Level 4 test 2 sound.html"; // Redirect to Level 4 test
         }
 
 

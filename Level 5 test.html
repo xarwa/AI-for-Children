@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Level 5</title>  
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Prevents scrollbars from appearing */
+        }
+        #background {
+            height: 100vh;
+            width: 100vw;
+            object-fit: cover; /* Ensures the image covers the entire page */
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        #character {
+            width: 15vw; /* Adjust the width of the scientist image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the scientist image near the bottom of the page */
+            right: 5vw; /* Places the scientist image from the right edge */
+            z-index: 1; /* Ensures the scientist appears above the floor but below the task bar */
+        }
+        #robot {
+            width: 11vw; /* Adjust the width of the robot image */
+            position: absolute;
+            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
+            left: 20vw; /* Places the robot image from the left edge */
+            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
+        }
+
+        #player {
+            width: 12vw; /* Adjust the width of the player image */
+            position: absolute;
+            bottom: 7vh; /* Example positioning near the bottom */
+            left: 9vw; /* Example positioning from the left edge */
+            z-index: 1; /* Ensures the player appears above the floor but below the task bar */
+        }
+        #task-bar {
+            width: 100vw; /* Ensures the task bar spans the entire width of the page */
+            position: absolute;
+            top: 0; /* Aligns the task bar at the top of the page */
+            left: 0;
+            z-index: 2; /* Places it above the lamp */
+        }
+        #right, #left {
+            width: 5vw;
+            position: absolute;
+            top: 10vh;
+            z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
+        }
+        #left {
+            left: 9vh;
+        }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        #speech-bubble {
+            width: 35vw;
+            position: absolute;
+            bottom: 45vh;
+            right: 25vw;
+            z-index: 3;
+            transform: translateX(10%);
+        }
+        #speech-bubble-text {
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 85%;
+            height: 60%;
+            color: rgb(255, 255, 255);
+            font-size: 1.2vw;
+            text-align: center;
+            line-height: 1.5;
+            z-index: 4;
+            font-family: 'Zen Dots', sans-serif;
+        }
+        #typing-text {
+            display: inline;
+        }
+
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 192vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
+
+
+
+
+
+        
+    </style>
+</head>
+<body>
+    <!-- Background and Images -->
+    <img id="background" src="Level 5 Background new..png">
+    <img id="robot" src="images/Robot.png">
+    <img id="player" src="Player(Rotated).png">
+    <img id="character" src="Level 5 character.png">
+    <img id="task-bar" src="Task bar.png">
+    <img id="right" src="images/right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="left" src="left.png" onclick="previousText()"> <!-- Adding onclick event to the left arrow -->
+    
+    <!-- Speech Bubble -->
+    <div id="speech-bubble">
+        <img src="Level 5 speech bubble 4.png" style="width: 100%; height: 100%;">
+        <div id="speech-bubble-text">
+            <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
+        </div>
+    </div>
+
+    <!-- Mic Icons for Sound Control -->
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+
+    <!-- Forest Sound (plays once) -->
+    <audio id="forest-sound">
+        <source src="forest sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. -->
+    </audio>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <!-- Script for Typing Effect and Text Changes -->
+    <script>
+        var initialText = "Welcome to Lavaland, explorer! You have journeyed across galaxies, icy plains, forests, and futuristic worlds, uncovering the wonders of artificial intelligence. Let’s take a moment to revisit your incredible journey and celebrate everything you have discovered: ";
+        var secondText = "Your journey began with an introduction to AI, where you learned that artificial intelligence is like a newborn, starting with no knowledge but gaining skills through interaction and data.";
+        var thirdText = "AI powers amazing technologies like self-driving cars, virtual assistants, and even systems that help doctors diagnose diseases. You explored definitions from famous scientists and realized how important AI is in understanding and solving real-world problems.";
+        var fourthText = "On the planet Dunaria, you discovered how AI finds solutions to problems through search algorithms. The blind search method explores every possibility, while the heuristic search makes clever guesses to save time.";
+        var fifthText = "You learned how algorithms like Breadth-First Search (BFS) help AI find the shortest paths in maps or social networks, and Best-First Search uses smart clues to solve puzzles faster. These tools are vital for everything from GPS navigation to robot planning.";
+        var sixthText = "In the icy landscapes of Glacia, you unlocked the power of machine learning. AI can learn from examples, just like a student learns from a teacher. You focused on supervised learning, where labeled data helps AI recognize patterns and make decisions.";
+        var seventhText = "Using techniques like Decision Trees, you saw how AI sorts data step by step, answering questions to classify objects like “cat” or “dog.” You even explored concepts like training datasets (the practice material) and testing datasets (the quiz to check learning).";
+        var eighthText = "On the mysterious planet WanderWood, AI became a detective! With unsupervised learning, AI does not rely on labeled data. Instead, it searches for hidden patterns in the information it is given.";
+        var ninthText = "You learned about clustering, a method that organizes data into groups, much like sorting jelly beans by color when you don’t know their flavors. This technique is essential in tasks like customer segmentation or image grouping.";
+        var tenthText = "Your mission across the stars has revealed how AI can learn, adapt, and solve problems in incredible ways. From exploring algorithms to diving into machine learning, you have seen the inner workings of AI and its many real-world applications. AI helps us navigate our world, predict the future, and even uncover secrets hidden in data.";
+        var eleventhText = "From exploring algorithms to diving into machine learning, you have seen the inner workings of AI and its many real-world applications. AI helps us navigate our world, predict the future, and even uncover secrets hidden in data.";
+        var twelvthText = "Now, its time for your final test of knowledge. Keep in mind, this will test your understanding of everything you learned so far. Good luck explorer!";
+        
+        
+        var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
+        var index = 0; // Start from the first character
+        var currentText = initialText; // Variable to store current text
+        var clickCount = 0; // Variable to track the number of clicks
+    
+        function typeText() {
+            if (index < currentText.length) {
+                document.getElementById("typing-text").innerHTML += currentText.charAt(index);
+                index++;
+                setTimeout(typeText, typingSpeed); // Call the function again to simulate typing
+            }
+        }
+
+    // Function to handle left arrow clicks (move backward)
+    function previousText() {
+        if (clickCount > 0) {
+            clickCount--; // Decrement the click counter
+            document.getElementById("typing-text").innerHTML = ""; // Clear existing text
+            index = 0; // Reset index
+
+            if (clickCount == 0) {
+                currentText = initialText; // Go back to the initial text
+            } else if (clickCount == 1) {
+                currentText = secondText; // Second text
+            } else if (clickCount == 2) {
+                currentText = thirdText; // Third text
+            } else if (clickCount == 3) {
+                currentText = fourthText; // Fourth text
+            } else if (clickCount == 4) {
+                currentText = fifthText; // Fifth text
+            } else if (clickCount == 5) {
+                currentText = sixthText; // Fifth text
+            } else if (clickCount == 6) {
+                currentText = seventhText; // Fifth text
+            } else if (clickCount == 7) {
+                currentText = eighthText; // Fifth text
+            } else if (clickCount == 8) {
+                currentText = ninthText; // Fifth text
+            } else if (clickCount == 9) {
+                currentText = tenthText; // Fifth text
+            } else if (clickCount == 10) {
+                currentText = eleventhText; // Fifth text
+            }
+
+            typeText(); // Re-run typing effect for new text
+        }
+    }
+
+    // Function to handle right arrow clicks (move forward)
+    // Start the typing effect after the page loads
+        window.onload = function() {
+            typeText(); // Start typing as soon as the page is loaded
+        }
+
+        // Function to handle right arrow clicks (move forward)
+        function changeText() {
+            if (clickCount === 0) {
+                currentText = secondText;
+                clickCount++;
+            } else if (clickCount === 1) {
+                currentText = thirdText;
+                clickCount++;
+            } else if (clickCount === 2) {
+                currentText = fourthText;
+                clickCount++;
+            } else if (clickCount === 3) {
+                currentText = fifthText;
+                clickCount++;
+            } else if (clickCount === 4) {
+                currentText = sixthText;
+                clickCount++;
+            } else if (clickCount === 5) {
+                currentText = seventhText;
+                clickCount++;
+            } else if (clickCount === 6) {
+                currentText = eighthText;
+                clickCount++;
+            } else if (clickCount === 7) {
+                currentText = ninthText;
+                clickCount++;
+            } else if (clickCount === 8) {
+                currentText = tenthText;
+                clickCount++;
+            } else if (clickCount === 9) {
+                currentText = eleventhText;
+                clickCount++;
+            } else if (clickCount === 10) {
+                currentText = twelvthText;
+                clickCount++;
+            } else if (clickCount === 11) {
+                // Redirect to the next level page
+                window.location.href = "Level 5 Quiz.html";
+                return; // Stop further text changes
+            }
+            document.getElementById("typing-text").innerHTML = "";
+            index = 0;
+            typeText();
+        }
+
+
+
+        function playSound() {
+            document.getElementById("forest-sound").play();
+        }
+
+        // Function to pause sound
+        function pauseSound() {
+            document.getElementById("forest-sound").pause();
+        }
+
+    </script>
+</body>
+</html>
