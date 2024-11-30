@@ -3,81 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>K-Means Clustering Demo with Animals</title>
+<title>Level 4</title>
+<link rel="icon" href="robot icon.png" type="image/png">
 <style>
-#task-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 8vh; /* Adjusted height */
-            width: 100vw;
-            z-index: 2; /* Ensure it’s above other elements */
-}
-
-
     body {
         padding: 15vh;
-        font-family: Arial, sans-serif;
+        font-family: 'Zen Dots', sans-serif;
         text-align: center;
+        background-color: #C2EAE0;
     }
+
+    #task-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 8vh;
+        width: 100vw;
+        z-index: 2;
+    }
+
+    #right, #left {
+        width: 5vw;
+        position: absolute;
+        top: 10vh;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    #right {
+        left: 190vh;
+        cursor: pointer;
+    }
+
+    #left {
+        left: 9vh;
+    }
+
+    #right:hover, #left:hover {
+        transform: scale(1.2);
+    }
+
+    h1, p {
+        margin: 0 0 20px 0;
+    }
+
     #animal-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         margin-top: 20px;
+        position: relative;
     }
+
     .animal {
         width: 80px;
         height: 80px;
         margin: 10px;
+        transition: all 1s ease;
+        position: absolute; /* Allow precise positioning */
     }
 
-    #robot {
-            width: 13vw; /* Adjust the width of the robot image */
-            position: absolute;
-            bottom: 5vh; /* Aligns the robot image near the bottom of the page */
-            left: 10vw; /* Places the robot image from the left edge */
-            z-index: 1; /* Ensures the robot appears above the floor but below the task bar */
-        }
+    .circles-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 40px;
+        gap: 30px; /* Added space between the circles */
+        visibility: hidden; /* Hide circles initially */
+    }
 
-       /* #speech-bubble {
-            width: 35vw;
-            position: absolute;
-            bottom: 45vh;
-            right: 25vw;
-            z-index: 3;
-            transform: translateX(10%);
-        }
-        #speech-bubble-text {
-            position: absolute;
-            top: 10%;
-            left: 5%;
-            width: 85%;
-            height: 60%;
-            color: rgb(14, 21, 59);
-            font-size: 1.2vw;
-            text-align: center;
-            line-height: 1.5;
-            z-index: 4;
-            font-family: 'Zen Dots', sans-serif;
-        }
+    .circle {
+        width: 300px;
+        height: 300px;
+        border: 3px dashed #333;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+    }
 
-        */
+    button {
+        font-family: 'Zen Dots', sans-serif;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        background-color: #ffd700;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
 
-        #typing-text {
-            display: inline;
-        }
-
-
+    button:hover {
+        transform: scale(1.1);
+        box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+    }
 </style>
 </head>
 <body>
 
     <img id="task-bar" src="Task bar.png">
-    <img id="robot" src="Level 4 Robot new.png">
 
+    <a href="Level 4 Quiz.html"><img id="right" src="images/right.png"></a>
+    <a href="Level 4 test sound.html"><img id="left" src="left.png"></a>
 
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
 
     <h1>Group the Animals with the Robot! 🐶🐱🐦🐟</h1>
     <p>Click "Organize" to help the robot group the animals by type!</p>
@@ -85,48 +119,75 @@
     <button onclick="organizeAnimals()">Organize</button>
     
     <div id="animal-container">
-        <!-- Animal images with different classes -->
-        <img src="dog 1.png" class="animal dog">
-        <img src="cat.png" class="animal cat">
-        <img src="bird3.png" class="animal bird">
-        <img src="fish.png" class="animal fish">
-        <img src="dog2.png" class="animal dog">
-        <img src="cat2.png" class="animal cat">
-        <img src="bird2.png" class="animal bird">
-        <img src="fish2.png" class="animal fish">
-        <img src="dog3.png" class="animal dog">
-        <img src="cat3.png" class="animal cat">
+        <img src="dog 1 new.png" class="animal dog" style="position: relative;">
+        <img src="cat new.png" class="animal cat" style="position: relative;">
+        <img src="bird3 new.png" class="animal bird" style="position: relative;">
+        <img src="fish new.png" class="animal fish" style="position: relative;">
+        <img src="dog 2 new.png" class="animal dog" style="position: relative;">
+        <img src="cat2 new.png" class="animal cat" style="position: relative;">
+        <img src="bird2.png" class="animal bird" style="position: relative;">
+        <img src="fish2.png" class="animal fish" style="position: relative;">
+        <img src="dog3 new.png" class="animal dog" style="position: relative;">
+        <img src="cat3 new.png" class="animal cat" style="position: relative;">
+    </div>
+    
+
+    <div class="circles-container">
+        <div id="dog-circle" class="circle"></div>
+        <div id="cat-circle" class="circle"></div>
+        <div id="bird-circle" class="circle"></div>
+        <div id="fish-circle" class="circle"></div>
     </div>
     
     <script>
         function organizeAnimals() {
-            // Get the animal elements
+            // Make circles visible when the button is clicked
+            const circlesContainer = document.querySelector('.circles-container');
+            circlesContainer.style.visibility = 'visible';
+
             const animals = document.querySelectorAll('.animal');
-    
-            // Group animals based on type class
-            const animalGroups = {
-                dog: [],
-                cat: [],
-                bird: [],
-                fish: []
+            const circles = {
+                dog: document.getElementById('dog-circle'),
+                cat: document.getElementById('cat-circle'),
+                bird: document.getElementById('bird-circle'),
+                fish: document.getElementById('fish-circle')
             };
-    
+
+            const spacing = 90; // Spacing between animals inside a circle
+            const radius = 100; // Circle radius for positioning animals
+
+            // Counters to keep track of placement
+            const placement = {
+                dog: 0,
+                cat: 0,
+                bird: 0,
+                fish: 0
+            };
+
             animals.forEach(animal => {
-                if (animal.classList.contains('dog')) animalGroups.dog.push(animal);
-                if (animal.classList.contains('cat')) animalGroups.cat.push(animal);
-                if (animal.classList.contains('bird')) animalGroups.bird.push(animal);
-                if (animal.classList.contains('fish')) animalGroups.fish.push(animal);
-            });
-    
-            // Clear the container and add animals in grouped order
-            const container = document.getElementById('animal-container');
-            container.innerHTML = ''; // Clear existing animals
-    
-            // Re-append animals by groups
-            Object.values(animalGroups).forEach(group => {
-                group.forEach(animal => {
-                    container.appendChild(animal);
-                });
+                let type;
+
+                // Determine the type of animal
+                if (animal.classList.contains('dog')) type = 'dog';
+                if (animal.classList.contains('cat')) type = 'cat';
+                if (animal.classList.contains('bird')) type = 'bird';
+                if (animal.classList.contains('fish')) type = 'fish';
+
+                const circle = circles[type];
+                const count = placement[type];
+
+                // Calculate position in a grid layout
+                const angle = (Math.PI / 4) * count; // Adjust angle for even placement
+                const x = radius + radius * Math.cos(angle) - spacing;
+                const y = radius + radius * Math.sin(angle) - spacing;
+
+                placement[type]++;
+
+                // Append animal and set position
+                circle.appendChild(animal);
+                animal.style.position = 'absolute';
+                animal.style.left = `${x}px`;
+                animal.style.top = `${y}px`;
             });
         }
     </script>

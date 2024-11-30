@@ -133,11 +133,14 @@
     <img id="player" src="Player(Rotated).png">
     <img id="Bear" src="Bear.png">
     <img id="task-bar" src="Task bar.png">
-    <img id="right" src="right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
+    <img id="right" src="images/right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
     <img id="left" src="left.png" onclick="previousText()"> <!-- Adding onclick event to the left arrow -->
-    <img id="homeIcon" src="images/homeIcon.jpg">
-
-    <a href="Planets HomePage 4 sound.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
+    
+    <a href="Planets HomePage 4 sound.html">
+        <img id="homeIcon" src="images/homeIcon.jpg">
+    </a>
+    
+    
     
     <!-- Speech Bubble -->
     <div id="speech-bubble">
@@ -169,15 +172,13 @@
         var thirdText = "Imagine you are sorting jelly beans. Let us say you have a big pile of jelly beans, but you do not know their flavors. They come in many colors, and there is no one to tell you which color belongs to which flavor. Now, imagine you want to organize them somehow. This is where unsupervised learning comes in!";
         var fourthText = "In unsupervised machine learning, computers do the same thing, they are given a lot of information (or data), but they do not have any labels or instructions about what it all means. Their job is to look for patterns and try to make sense of the information on their own.";
         var fifthText = "How Does It Work? Just like you might start grouping your jelly beans by color (because that is a visible pattern), a computer tries to group information that looks similar or has something in common. This process of finding groups is called clustering.";
-        var sixthText = "Now, we will see how an algorithm called K-means clustering works and watch our robot use it to create clusters or groups. You are going to learn how AI can spot patterns and organize items in a super-smart way!";
-        var seventhText = "Let’s go back to our pile of jelly beans. You do not know the flavors, and there are many colors mixed up. This time, you are going to use a simple trick to help you organize them. This trick is similar to something called K-means clustering in machine learning.";
-        var eighthText = "Step-by-Step K-means Clustering: Choosing Groups: First, decide how many groups you want to make. Let’s say you want to make three groups of jelly beans. You do not know yet which colors will go in each group, you will figure that out next!";
-        var ninthText = "Starting Points (Centers): Next, you pick three random jelly beans to represent the 'center' of each group. Imagine picking one red, one yellow, and one green jelly bean as your starting points. These are not really groups yet, they are just the starting examples.";
-        var tenthText = "Grouping by Closeness: Now, you look at each jelly bean in the pile and ask, which color is it closest to red, yellow, or green? If a jelly bean is closest in color to red, it joins the red group. If it is closer to yellow, it goes in the yellow group, and so on.";
-        var eleventhText = "Updating the Centers: Once all the jelly beans are grouped, you check the colors in each group to find the new 'center' for each one. For example, if most of the jelly beans in the red group are a little more pink, you will shift the center to pink. This way, each group center represents its members better.";
-        var twelvthText = "Repeat Until Done: You keep repeating steps 3 and 4, rechecking which group each jelly bean belongs to and updating the centers, until the groups stop changing. This means the jelly beans have settled into their best-fitting groups, and the groups no longer change!";
-        var thirteenthText = "K-means clustering is like a game of finding the closest match. You do not know the exact flavors of the jelly beans, but by repeatedly grouping them based on similarity, you end up with clusters that make sense, like all the reds, yellows, and greens grouped together.";
-        var fourteenthText = "Now, let’s look at how we can group the animals. Your task is to sort them by their type, which means putting animals that are the same kind together. For example, all the dogs in one group, all the cats in another, and so on. Let’s get started!";
+        var sixthText = "Now imagine you have grouped your jelly beans by color. You might have a red pile, a green pile, a yellow pile, and so on. But wait! What if some jelly beans look like they are in between two colors? For example, a jelly bean might be orange, but it looks a little reddish too. Where would you put it?";
+        var seventhText = "Computers, look at all the details, such as the exact shade of color, size, or even shape, to decide where a jelly bean belongs. Sometimes, they might decide that orange jelly beans should go in a completely new group, or they might say they are close enough to the red group.";
+        var eighthText = "Clustering works by finding these groups or 'clusters' without telling the computer what the groups should be. The computer looks for patterns in the data and tries to organize it as best as it can. It’s like the computer saying, ‘Hey, I think these things look alike, so I will put them together.";
+        var ninthText = "Why Is Clustering Useful? Let’s say you don’t know what flavor each jelly bean is, but after grouping them by color, you decide to taste one from each pile. You notice all the red ones are strawberry, the green ones are lime, and the yellow ones are lemon.";
+        var tenthText = "Even though no one told you, you figured it out by organizing the jelly beans first. That’s how clustering can help us find hidden patterns and make sense of things.";
+        var eleventhText = "Clustering isn’t just for jelly beans! Scientists use clustering to group animals based on their features, like size and habitat. Doctors use it to find patterns in medical data to understand diseases. Even in your music app, clustering helps group songs into playlists that match your taste!";
+        var twelvthText = "Now, let’s look at how we can group the animals. Your task is to sort them by their type, which means putting animals that are the same kind together. For example, all the dogs in one group, all the cats in another, and so on. Let’s get started!";
         var typingSpeed = 50; // Adjust the typing speed (in milliseconds)
         var index = 0; // Start from the first character
         var currentText = initialText; // Variable to store current text
@@ -256,12 +257,6 @@
                 currentText = twelvthText;
                 clickCount++;
             } else if (clickCount === 11) {
-                currentText = thirteenthText;
-                clickCount++;
-            } else if (clickCount === 12) {
-                currentText = fourteenthText;
-                clickCount++;
-            } else if (clickCount === 13) {
                 // Redirect to the next level page
                 window.location.href = "Clustering example.html";
                 return; // Stop further text changes
