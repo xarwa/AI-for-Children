@@ -27,6 +27,27 @@
         right: 12vw;
         z-index: 1;
         }
+        #right, #left {
+        width: 5vw;
+        position: absolute;
+        top: 10vh;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+
+    #right {
+        left: 190vh;
+        cursor: pointer;
+    }
+
+    #left {
+        left: 9vh;
+    }
+
+    #right:hover, #left:hover {
+        transform: scale(1.2);
+    }
+
     .robot {
         font-size: 2.4vw;
         margin-bottom: 1vh;
@@ -47,6 +68,8 @@
     <img id="current-fruit" class="fruit-image" src="" alt="Fruit to classify">  
 </div>
 <img id="robot1" src="Level 3 robot rotated 2.png">
+<a href="Level 3 test 9.html"><img id="right" src="images/right.png"></a>
+<a href="Classification game.html"><img id="left" src="left.png"></a>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
