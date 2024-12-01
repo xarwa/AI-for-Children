@@ -168,7 +168,6 @@
  
         var textToType = initialText; // Default text to type
         var i = 0;
-        var isComplete = false;
 
         function typeWriter() {
             if (i < textToType.length) {
@@ -181,30 +180,26 @@
                     i++;
                 }
                 setTimeout(typeWriter, 50); // Adjust typing speed here (in milliseconds)
-            } else {
-                isComplete = true; // Typing is complete
-            }
+            } 
         }
  
- function changeText() {
-            if (isComplete) { // If typing is complete, allow for text change
-                document.getElementById("typing-text").innerHTML = ""; // Clear the text
-                i = 0; // Reset the typing index
-                if (textToType === initialText) {
-                    textToType = firstChangeText;
-                } else if (textToType === firstChangeText) {
-                    window.location.href = "Applications 2.html"; // Redirect to new page
-                    return; // Exit the function
-                }
-               
-                isComplete = false; // Reset completion flag
-                typeWriter(); // Start typing the new text
- 
-            }
+        function changeText() {
+        document.getElementById("typing-text").innerHTML = ""; // Clear the text
+        i = 0; // Reset the typing index
+        if (textToType === initialText) {
+            textToType = firstChangeText;
+        } else if (textToType === firstChangeText) {
+            window.location.href = "Applications 2.html"; // Redirect to new page
+            return; // Exit the function
         }
+        typeWriter(); // Start typing the new text
+    }
+
         window.onload = function() {
             typeWriter(); // Start typing effect on page load
         };
+
+
     </script>
  
 </body>      

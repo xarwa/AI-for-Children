@@ -167,47 +167,40 @@
  
         var textToType = initialText; // Default text to type
         var i = 0;
-        var isComplete = false;
  
-        function typeWriter() {
-            if (i < textToType.length) {
-                // Check for line break in the string
-                if (textToType.charAt(i) === "<") {
-                    let tagEnd = textToType.indexOf(">", i); // Find the end of the HTML tag
-                    document.getElementById("typing-text").innerHTML += textToType.substring(i, tagEnd + 1);
-                    i = tagEnd + 1; // Skip to the end of the tag
-                } else {
-                    document.getElementById("typing-text").innerHTML += textToType.charAt(i);
-                    i++;
-                }
-                setTimeout(typeWriter, 50); // Adjust typing speed here (in milliseconds)
-            } else {
-                isComplete = true; // Typing is complete
-            }
+ function typeWriter() {
+     if (i < textToType.length) {
+         // Check for line break in the string
+         if (textToType.charAt(i) === "<") {
+             let tagEnd = textToType.indexOf(">", i); // Find the end of the HTML tag
+             document.getElementById("typing-text").innerHTML += textToType.substring(i, tagEnd + 1);
+             i = tagEnd + 1; // Skip to the end of the tag
+         } else {
+             document.getElementById("typing-text").innerHTML += textToType.charAt(i);
+             i++;
+         }
+         setTimeout(typeWriter, 50); // Adjust typing speed here (in milliseconds)
+     } 
+ }
+
+ function changeText() {
+        document.getElementById("typing-text").innerHTML = ""; // Clear the text
+        i = 0; // Reset the typing index
+        if (textToType === initialText) {
+            textToType = firstChangeText;
+        } else if (textToType === firstChangeText) {
+            textToType = secondChangeText;
+        } else if (textToType === secondChangeText) {
+            textToType = thirdChangeText;
+        } else if (textToType === thirdChangeText) {
+            textToType = fourthChangeText;
+        } else if (textToType === fourthChangeText) {
+            window.location.href = "Applications 3.html"; // Redirect to new page
+            return; // Exit the function
         }
- 
-        function changeText() {
-            if (isComplete) { // If typing is complete, allow for text change
-                document.getElementById("typing-text").innerHTML = ""; // Clear the text
-                i = 0; // Reset the typing index
-                if (textToType === initialText) {
-                    textToType = firstChangeText;
-                } else if (textToType === firstChangeText) {
-                    textToType = secondChangeText;
-                } else if (textToType === secondChangeText) {
-                    textToType = thirdChangeText;
-                } else if (textToType === thirdChangeText) {
-                    textToType = fourthChangeText;
-                } else if (textToType === fourthChangeText) {
-                    window.location.href = "Applications 3.html"; // Redirect to new page
-                    return; // Exit the function
-                }
-               
-                isComplete = false; // Reset completion flag
-                typeWriter(); // Start typing the new text
- 
-            }
-        }
+        typeWriter(); // Start typing the new text
+    }
+
         window.onload = function() {
             typeWriter(); // Start typing effect on page load
         };
