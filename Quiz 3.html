@@ -79,20 +79,24 @@
             left: 9vw; /* Example positioning from the left edge */
             z-index: 1; /* Ensures the player appears above the floor but below the task bar */
         }
-        #right {
+        #right, #left {
             width: 5vw;
             position: absolute;
             top: 10vh;
-            left: 190vh;
             z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
         }
         #left {
-            width: 5vw;
-            position: absolute;
-            top: 10vh;
             left: 9vh;
-            z-index: 1;
         }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        
         #blue-box-darker {
             width: 27vw; /* Adjust the box size */
             height: 38vh; /* Set height to fit content */
