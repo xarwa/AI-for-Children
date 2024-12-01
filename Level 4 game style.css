@@ -1,5 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Zen Dots', sans-serif;
+   /* font-family: Arial, sans-serif;*/
     text-align: center;
     margin: 0;
     padding: 0;
@@ -79,6 +80,10 @@ th, td {
     padding: 10px;
     text-align: center;
 }
+th{
+    background-color: #38943b;
+}
+
 
 canvas {
     border: 1px solid #ccc;
