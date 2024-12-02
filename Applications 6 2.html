@@ -55,13 +55,19 @@
             position: absolute;
             top: 10vh;
             z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
         }
         #right {
             left: 190vh;
+            cursor: pointer;
         }
         #left {
             left: 9vh;
         }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        
         #homeIcon{
             width: 3vw;
             position: absolute;
@@ -77,9 +83,9 @@
     <img id="task-bar" src="Task bar.png">
     <img id="scientist" src="Scientist(Rotated).png">
     <img id="AR" src="ARvsVR.png">
-    <img id="homeIcon" src="images/homeIcon.jpg">
 
     <a href="index.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
+    </a>
 
     <a href="Level 1 Quiz intro.html"><img id="right" src="images/right.png"></a> <!-- Updated to direct to Applications 6 text.html -->
     <a href="index.html"><img id="left" src="left.png"></a>

@@ -29,16 +29,16 @@
         }
         #task-bar {
             width: 100vw; /* Ensures the task bar spans the entire width of the page */
-            height: 5vh; /* Adjusts the height of the task bar to make it smaller */
             position: absolute;
             top: 0; /* Aligns the task bar at the top of the page */
             left: 0;
             z-index: 2; /* Places it above the lamp */
         }
+
         #lamp {
-            width: 20vw; /* Keeps the lamp image at the same size */
+            width: 14vw; /* Keeps the lamp image at the same size */
             position: absolute;
-            top: 20px; /* Moves the lamp down slightly to make space for the task bar */
+            top: 7.5vh; /* Moves the lamp down slightly to make space for the task bar */
             left: 50%; /* Starts positioning from the center of the viewport */
             transform: translateX(-50%); /* Centers the lamp horizontally */
             z-index: 1; /* Ensures the lamp is below the task bar but above the background */
@@ -79,20 +79,24 @@
             left: 9vw; /* Example positioning from the left edge */
             z-index: 1; /* Ensures the player appears above the floor but below the task bar */
         }
-        #right {
+        #right, #left {
             width: 5vw;
             position: absolute;
             top: 10vh;
-            left: 190vh;
             z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
         }
         #left {
-            width: 5vw;
-            position: absolute;
-            top: 10vh;
             left: 9vh;
-            z-index: 1;
         }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        
         #blue-box-darker {
             width: 27vw; /* Adjust the box size */
             height: 38vh; /* Set height to fit content */
@@ -142,9 +146,9 @@
     <img id="task-bar" src="Task bar.png">
     <img id="lamp" src="Lamp.png">
     <img id="table" src="Table.png">
-    <img id="desktop" src="Images/Desktop.png">
+    <img id="desktop" src="images/Desktop.png">
     <img id="scientist" src="Scientist(Rotated).png">
-    <img id="robot" src="Images/Robot.png">
+    <img id="robot" src="images/Robot.png">
     <img id="player" src="Player(Rotated).png">
     <!--
     <a href="Quiz 3.html"><img id="right" src="images/right.png"> 

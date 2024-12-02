@@ -79,20 +79,24 @@
             left: 9vw; /* Example positioning from the left edge */
             z-index: 1; /* Ensures the player appears above the floor but below the task bar */
         }
-        #right {
+        #right, #left {
             width: 5vw;
             position: absolute;
             top: 10vh;
-            left: 90vw; /* Adjusted to be within the viewport */
             z-index: 1;
+            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
+        }
+        #right {
+            left: 190vh;
+            cursor: pointer;
         }
         #left {
-            width: 5vw;
-            position: absolute;
-            top: 10vh;
-            left: 5vw; /* Adjusted to be within the viewport */
-            z-index: 1;
+            left: 9vh;
         }
+        #right:hover, #left:hover {
+            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
+        }
+        
         #homeIcon{
             width: 3vw;
             position: absolute;
@@ -153,9 +157,9 @@
     <img id="scientist" src="Scientist(Rotated).png">
     <img id="robot" src="images/Robot.png">
     <img id="player" src="Player(Rotated).png">
-    <img id="homeIcon" src="images/homeIcon.jpg">
 
     <a href="index.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
+    </a>
         
     <a href="Applications 1 text.html"><img id="right" src="images/right.png"></a> <!-- Right click directs to Applications 1 text.html -->
     <a href="index.html"><img id="left" src="left.png"></a> <!-- Left click directs to index.html -->

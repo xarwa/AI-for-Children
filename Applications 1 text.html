@@ -80,7 +80,7 @@
             left: 9vw; /* Example positioning from the left edge */
             z-index: 1; /* Ensures the player appears above the floor but below the task bar */
         }
-
+        
         #right, #left {
             width: 5vw;
             position: absolute;
@@ -90,6 +90,7 @@
         }
         #right {
             left: 190vh;
+            cursor: pointer;
         }
         #left {
             left: 9vh;
@@ -97,6 +98,7 @@
         #right:hover, #left:hover {
             transform: scale(1.2); /* Enlarges the image by 20% when hovered */
         }
+
         #homeIcon{
             width: 3vw;
             position: absolute;
@@ -144,9 +146,9 @@
     <img id="scientist" src="Scientist(Rotated).png">
     <img id="robot" src="images/Robot.png">
     <img id="player" src="Player(Rotated).png">
-    <img id="homeIcon" src="images/homeIcon.jpg">
 
     <a href="index.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
+    </a>
 
     <img id="right" src="images/right.png" onclick="changeText()"> <!-- Adding onclick event to the right arrow -->
     <a href="index.html"><img id="left" src="left.png"></a>
@@ -168,7 +170,6 @@
  
         var textToType = initialText; // Default text to type
         var i = 0;
-        var isComplete = false;
 
         function typeWriter() {
             if (i < textToType.length) {
@@ -181,30 +182,26 @@
                     i++;
                 }
                 setTimeout(typeWriter, 50); // Adjust typing speed here (in milliseconds)
-            } else {
-                isComplete = true; // Typing is complete
-            }
+            } 
         }
  
- function changeText() {
-            if (isComplete) { // If typing is complete, allow for text change
-                document.getElementById("typing-text").innerHTML = ""; // Clear the text
-                i = 0; // Reset the typing index
-                if (textToType === initialText) {
-                    textToType = firstChangeText;
-                } else if (textToType === firstChangeText) {
-                    window.location.href = "Applications 2.html"; // Redirect to new page
-                    return; // Exit the function
-                }
-               
-                isComplete = false; // Reset completion flag
-                typeWriter(); // Start typing the new text
- 
-            }
+        function changeText() {
+        document.getElementById("typing-text").innerHTML = ""; // Clear the text
+        i = 0; // Reset the typing index
+        if (textToType === initialText) {
+            textToType = firstChangeText;
+        } else if (textToType === firstChangeText) {
+            window.location.href = "Applications 2.html"; // Redirect to new page
+            return; // Exit the function
         }
+        typeWriter(); // Start typing the new text
+    }
+
         window.onload = function() {
             typeWriter(); // Start typing effect on page load
         };
+
+
     </script>
  
 </body>      
