@@ -133,6 +133,26 @@
             color: rgba(25, 66, 57, 1); /* Color to match existing text */
             font-family: 'Zen Dots', sans-serif;
         }
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 192vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
+
     </style>
     <!--
     <script>
@@ -182,6 +202,17 @@
             <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
         </div>
     </div>
+
+    <!-- Mic Icons for Sound Control -->
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+
+ <!-- Forest Sound (plays once) -->
+    <audio id="computer-sound">
+        <source src="computer sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. -->
+    </audio>
+
  
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -213,6 +244,16 @@
         window.onload = function() {
             typeWriter(); // Start typing effect on page load
         };
+
+        
+ function playSound() {
+            document.getElementById("computer-sound").play();
+        }
+
+        // Function to pause sound
+        function pauseSound() {
+            document.getElementById("computer-sound").pause();
+        }
     </script>
  
  

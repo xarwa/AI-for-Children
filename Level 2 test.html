@@ -98,6 +98,25 @@
         #typing-text {
             display: inline;
         }
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 4vh;
+            bottom: 1vh;
+        }
+        #mic-muted {
+            left: 194vh;
+            bottom: 1vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
@@ -119,6 +138,19 @@
             <span id="typing-text"></span> <!-- Placeholder for the typing effect -->
         </div>
     </div>
+
+    <!-- Mic Icons for Sound Control -->
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+
+ <!-- Forest Sound (plays once) -->
+    <audio id="desert-sound">
+        <source src="desert sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. -->
+    </audio>
+
+
+
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,6 +228,14 @@
             }
 
             typeText(); // Start typing the new text
+        }
+        function playSound() {
+            document.getElementById("desert-sound").play();
+        }
+
+        // Function to pause sound
+        function pauseSound() {
+            document.getElementById("desert-sound").pause();
         }
     </script>
 
