@@ -159,6 +159,25 @@
             width: 70vw;
             z-index: 0;
         }
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 192vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
@@ -189,17 +208,26 @@
         Your browser does not support the audio element.
     </audio>
 
+    <!-- Mic Icons for Sound Control -->
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+
     <!-- JavaScript to play sound on hover -->
     <script>
-        // Select planet4 element
-        var planet4 = document.getElementById("planet4");
+       // Select elements
+       var bounceSound = document.getElementById("bounce-sound");
+        var playButton = document.getElementById("mic-unmuted");
+        var pauseButton = document.getElementById("mic-muted");
 
-        // Get the bounce sound element
-        var bounceSound = document.getElementById("bounce-sound");
-
-        // Play the bounce sound when hovering over planet4
-        planet4.addEventListener("mouseenter", function() {
+        // Play bounce sound
+        playButton.addEventListener("click", function() {
             bounceSound.play();
+        });
+
+        // Pause bounce sound
+        pauseButton.addEventListener("click", function() {
+            bounceSound.pause();
+            bounceSound.currentTime = 0; // Reset to the start
         });
     </script>
 </body>      

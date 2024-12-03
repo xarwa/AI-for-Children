@@ -155,8 +155,8 @@
     <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
 
     <!-- Forest Sound (plays once) -->
-    <audio id="forest-sound">
-        <source src="forest sound.mp3" type="audio/mpeg">
+    <audio id="lava-sound">
+        <source src="lava flow sound.mp3" type="audio/mpeg">
         Your browser does not support the audio element. -->
     </audio>
 
@@ -286,12 +286,12 @@
 
 
         function playSound() {
-            document.getElementById("forest-sound").play();
+            document.getElementById("lava-sound").play();
         }
 
         // Function to pause sound
         function pauseSound() {
-            document.getElementById("forest-sound").pause();
+            document.getElementById("lava-sound").pause();
         }
 
     </script>
