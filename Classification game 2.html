@@ -123,7 +123,7 @@
             classification = "unknown"; // Robot misclassifies if the user did
         }
 
-        robotResults.innerText = `${classification}`;
+        robotResults.innerText = ${classification};
         currentFruitIndex++;
         setTimeout(displayNextFruit, 1500); // Show next fruit after 1.5s
     }

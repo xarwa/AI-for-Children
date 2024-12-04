@@ -39,504 +39,114 @@
             color: white;
             z-index: 2;
         }
-
         #right, #left {
-            width: 5vw;
-            position: absolute;
-            top: 10vh;
-            z-index: 1;
-            transition: transform 0.3s ease; /* Smooth transition for the hover effect */
-        }
-        #right {
-            left: 190vh;
-            cursor: pointer;
-        }
-        #left {
-            left: 9vh;
-        }
-        #right:hover, #left:hover {
-            transform: scale(1.2); /* Enlarges the image by 20% when hovered */
-        }
-
-
-        body{
-            margin: 0;
-            padding: 0;
-        }
-        #container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            border: 0.1vw solid #000;
-            background-image: url('images/tunnels.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .node {
-            position: absolute;
-            width: 5vw;
-            height: 5vw;
-            background-color: lightblue;
-            border: 0.2vw solid #000;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 4vw;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        #node1{
-            background-color: yellow;
-            color: black;
-        }
-        .visited {
-            background-color: yellow;
-            color: black;
-        }
-        .completed {
-            background-color: red !important;
-            color: white !important;
-        }
-        #dot {
-            position: absolute;
-            width: 20vw;
-            height: 15vh;
-            background-image: url('images/rabbit.png');
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat; /* Prevent tiling */
-            z-index: 10;
-            transform: rotate(135deg);
-            transition: transform 0.3s ease;
-        }
-        /* Optional: Styling edges */
-        .edge {
-            position: absolute;
-            width: 0.2vw;
-            background-color: #000;
-            transform-origin: top left;
-        }
-        #node7 {
-            background-image: url('images/carrot.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            width: 5vw; /* Adjust this value to change the width */
-            height: 5vw; /* Adjust this value to change the height */
-            color: transparent;  /* This hides the number 7 */
-        }
-
-        .button-container {
-            position: fixed;
-            left: 2vw;
-            top: 30vh;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 2vh;
-            z-index: 100;
-        }
-
-        .control-button {
-            width: 3.5vw;
-            height:  3.5vw;
-            border-radius: 50%;
-            border: 0.2vw solid #000;
-            background-color: #f0f0f0;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .control-button:hover {
-            background-color: #ddd;
-        }
-
-        .control-button:active {
-            background-color: #ccc;
-        }
-        #background {
-            height: 100vh; 
-            width: 100vw;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        #robotskeleton {
-
-            height: 15vh; 
-            width: 9vw;
-            position: absolute;
-            top: 70vh;
-            left: 89vw;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat; /* Prevent tiling */
-            z-index: 1;
-            transform: rotate(38deg);
-        }
-
-/*
-        #skeleton {
-
-height: 13vh; 
-width: 7vw;
-position: absolute;
-top: 55vh;
-left: 40vw;
-background-size: contain;
-background-position: center;
-background-repeat: no-repeat; 
-z-index: 1;
-transform: rotate(-30deg);
-}
-*/
-
-#fish {
-height: 8vh; 
-width: 6vw;
-position: absolute;
-top: 50vh;
-left: 85vw;
-background-size: contain;
-background-position: center;
-background-repeat: no-repeat; /* Prevent tiling */
-z-index: 1;
-
-}
-
-#fishflip {
-    height: 8vh; 
-width: 5vw;
-position: absolute;
-top: 50vh;
-left: 32vw;
-background-size: contain;
-background-position: center;
-background-repeat: no-repeat; /* Prevent tiling */
-z-index: 1;
-}
-
-#bone {
-    height: 6vh; 
-width: 5vw;
-position: absolute;
-top: 50vh;
-left: 7vw;
-background-size: contain;
-background-position: center;
-background-repeat: no-repeat; /* Prevent tiling */
-z-index: 1;
-}
-
-#bone {
-    height: 6vh; 
-width: 5vw;
-position: absolute;
-top: 40vh;
-left: 7vw;
-background-size: contain;
-background-position: center;
-background-repeat: no-repeat; /* Prevent tiling */
-z-index: 1;
-}
-
-
-        .message-box {
-            position: fixed;
-            right: 2vw;
-            top: 25vh;
-            transform: translateY(-50%);
-            background-color: #fff;
-            border: 0.2vw solid #000;
-            padding: 2vh 2vw;
-            border-radius: 1vw;
-            z-index: 100;
-            min-width: 20vw;
-        }
-
-        #messageText {
-            margin: 0;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-    
-    <div id="container">
-
-        <a href="Level 2 Quiz.html"><img id="right" src="images/right.png"></a>
-        <a href="Level 2 Game 1.html"><img id="left" src="left.png"></a>
-     
-     
-        <!-- Start Button and Timer -->
-        <div id="start-container">
-            <button id="start">Start Game</button>
-        </div>
-        <div id="timer">Time: 2:00</div>
-        <div id="message"></div>
-
-
-       <!--  <img id="background" src="tunnels.jpg"> -->
-        <img id="robotskeleton" src="images/robotskeleton.png">
-       <!-- <img id="skeleton" src="skeleton2.png"> -->
-        <img id="fish" src="images/fishskeleton.png">
-        <img id="fishflip" src="images/fishflip.png">
-        <img id="bone" src="images/bone.png">
-        <img id="bone" src="bone.png">
-
-
-        <!-- Tree Nodes -->
-        <div class="node" id="node1" style="left: 40vw; top: 5vh;">1</div>
-        <div class="node" id="node2" style="left: 20vw; top: 40vh;">2</div>
-        <div class="node" id="node3" style="left: 61vw; top: 40vh;">3</div>
-        <div class="node" id="node4" style="left: 10vw; top: 75vh;">4</div>
-        <div class="node" id="node5" style="left: 30vw; top: 75vh;">5</div>
-        <div class="node" id="node6" style="left: 52vw; top: 75vh;">6</div>
-        <div class="node" id="node7" style="left: 72vw; top: 75vh;">7</div>
-        <div id="dot"></div>
-    </div>
-
-   
-
-    <!-- Replace the existing button div with this -->
-    <div class="button-container">
-        <button class="control-button" id="nextStepBtn" onclick="nextStep()">Next</button>
-        <button class="control-button" id="rotateBtn" onclick="rotate()">↻</button>
-    </div>
-
-    <!-- Add this to your HTML, right after the button container -->
-    <div class="message-box" id="messageBox">
-        <p id="messageText"></p>
-    </div>
-
-    <script>
-        // Node Definitions with Parent References
-        const node1 = {
-            id: 1,
-            x: 40,
-            y: 5,
-            left: null,
-            right: null,
-            parent: null
-        };
-
-        const node2 = {
-            id: 2,
-            x: 20,
-            y: 40,
-            left: null,
-            right: null,
-            parent: node1
-        };
-
-        const node3 = {
-            id: 3,
-            x: 60,
-            y: 40,
-            left: null,
-            right: null,
-            parent: node1
-        };
-
-        const node4 = {
-            id: 4,
-            x: 10,
-            y: 75,
-            left: null,
-            right: null,
-            parent: node2
-        };
-
-        const node5 = {
-            id: 5,
-            x: 30,
-            y: 75,
-            left: null,
-            right: null,
-            parent: node2
-        };
-
-        const node6 = {
-            id: 6,
-            x: 50,
-            y: 75,
-            left: null,
-            right: null,
-            parent: node3
-        };
-
-        const node7 = {
-            id: 7,
-            x: 70,
-            y: 75,
-            left: null,
-            right: null,
-            parent: node3
-        };
-
-        // Establish Relationships
-        node1.left = node2;
-        node1.right = node3;
-        node2.left = node4;
-        node2.right = node5;
-        node3.left = node6;
-        node3.right = node7;
-
-        // Define the Traversal Steps Based on Required Sequence
-        const traversalSteps = [
-            node1, node2, node1, node3, node1,
-            node2, node4, node2, node5, node2,
-            node1, node3, node6, node3, node7
-        ];
-
-        let currentStepIndex = 1;
-        let currentRotation = 135;
-
-        const visitedNodes = new Set();  // Keep track of visited nodes
-        
-        // Add this helper function to calculate the required angle between nodes
-        function calculateRequiredAngle(currentNode, targetNode) {
-            const deltaX = targetNode.x - currentNode.x;
-            const deltaY = targetNode.y - currentNode.y;
-            let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-            // Convert to positive angles (0-360)
-            if (angle < 0) angle += 360;
-            return angle;
-        }
-
-        // Add this function to check if the rectangle is facing the right direction
-        function isRectangleFacingTarget(currentNode, targetNode) {
-            const requiredAngle = calculateRequiredAngle(currentNode, targetNode);
-            
-            // Define the acceptable range for each rotation position
-            const angleRanges = {
-                45: [0, 90],      // Facing right/down
-                135: [90, 180],   // Facing down/left
-                225: [180, 270],  // Facing left/up
-                315: [270, 360]   // Facing up/right
-            };
-
-            // Get the range for current rotation
-            const range = angleRanges[currentRotation];
-            
-            // Check if required angle falls within the current range
-            return requiredAngle >= range[0] && requiredAngle <= range[1];
-        }
-
-        // Update the showMessage function to be more descriptive
-        function showMessage(message) {
-            const messageText = document.getElementById('messageText');
-            messageText.textContent = message;
-        }
-
-        // Helper function to get direction hint
-        function getDirectionHint(currentNode, targetNode) {
-            if (targetNode.y > currentNode.y) {
-                return "downward";
-            } else if (targetNode.y < currentNode.y) {
-                return "upward";
-            }
-            
-            if (targetNode.x > currentNode.x) {
-                return "to the right";
-            } else if (targetNode.x < currentNode.x) {
-                return "to the left";
-            }
-            
-            return "somewhere";
-        }
-
-        // Update the nextStep function with better hints
-        async function nextStep() {
-            if (currentStepIndex < traversalSteps.length) {
-                const currentNode = traversalSteps[currentStepIndex - 1];
-                const targetNode = traversalSteps[currentStepIndex];
-
-                if (!isRectangleFacingTarget(currentNode, targetNode)) {
-                    const direction = getDirectionHint(currentNode, targetNode);
-                    showMessage(`The next node is ${direction}. Rotate the rabbit to face it!`);
-                    return;
-                }
-
-                await moveDotTo(targetNode);
-                
-                visitedNodes.add(targetNode.id);
-                document.getElementById(`node${targetNode.id}`).classList.add('visited');
-                
-                const remainingSteps = traversalSteps.slice(currentStepIndex + 1);
-                const willBeVisitedAgain = remainingSteps.some(n => n.id === targetNode.id);
-                
-                if (!willBeVisitedAgain) {
-                    document.getElementById(`node${targetNode.id}`).classList.remove('visited');
-                    document.getElementById(`node${targetNode.id}`).classList.add('completed');
-                }
-                
-                showMessage(`Successfully moved to node ${targetNode.id}`);
-                currentStepIndex++;
-            } else {
-                document.getElementById('nextStepBtn').disabled = true;
-                showMessage("Traversal complete!");
-            }
-        }
-
-        // Initialize the dot at the root node with rotation
-    window.onload = () => {
-        const dot = document.getElementById('dot');
- // Adjust the rabbit's initial position to align with node1
- dot.style.left = `${node1.x - 6.5}vw`; // Adjusted for centering
-        dot.style.top = `${node1.y - 2.5}vh`;  // Adjusted for centering
-        dot.style.transform = `rotate(${currentRotation}deg)`;
-
-        showMessage("Welcome! Click 'Next' to start the traversal.");
-    };
-
-    // Move the Dot to a Specific Node with Smooth Animation
-    function moveDotTo(node) {
-        return new Promise((resolve) => {
-            const dot = document.getElementById('dot');
-            const targetLeft = node.x - 5.5; // Adjusted for centering
-            const targetTop = node.y - 5.5;  // Adjusted for centering
-
-            const currentLeft = parseFloat(dot.style.left) || node1.x - 2.5;
-            const currentTop = parseFloat(dot.style.top) || node1.y - 2.5;
-
-            const deltaX = targetLeft - currentLeft;
-            const deltaY = targetTop - currentTop;
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const stepsCount = Math.max(Math.floor(distance * 6), 2);
-            let step = 0;
-
-            function moveStep() {
-                if (step < stepsCount) {
-                    const progress = step / stepsCount;
-                    const newX = currentLeft + deltaX * progress;
-                    const newY = currentTop + deltaY * progress;
-                    dot.style.left = `${newX}vw`;
-                    dot.style.top = `${newY}vh`;
-                    step++;
-                    setTimeout(() => requestAnimationFrame(moveStep), 2);
-                } else {
-                    dot.style.left = `${targetLeft}vw`; // Snap to the node's exact position
-                    dot.style.top = `${targetTop}vh`;  // Snap to the node's exact position
-                    resolve();
-                }
-            }
-
-            moveStep();
-        });
+        width: 5vw;
+        position: absolute;
+        top: 10vh;
+        z-index: 1;
+        transition: transform 0.3s ease;
     }
 
+    #right {
+        left: 190vh;
+        cursor: pointer;
+    }
 
-        function rotate() {
-            const dot = document.getElementById('dot');
-            currentRotation = (currentRotation + 90) % 360;  // Increment by 90 degrees, wrap around at 360
-            dot.style.transform = `rotate(${currentRotation}deg)`;
+    #left {
+        left: 9vh;
+    }
+
+    #right:hover, #left:hover {
+        transform: scale(1.2);
+    }
+
+    .robot {
+        font-size: 2.4vw;
+        margin-bottom: 1vh;
+    }
+    .fruit-image {
+    width: 13vw;
+    height: 13vw;
+    margin: 2vh;
+    margin-top: 5vh; /* Adjust this value to move the images down */
+    cursor: pointer;
+    }
+</style>
+</head>
+<body>
+<h1>Robot's Turn to Classify Fruits!</h1>
+<div class="game-container">
+    <div class="robot" id="robot">Let's start classifying the fruits!</div>
+    <img id="current-fruit" class="fruit-image" src="" alt="Fruit to classify">  
+</div>
+<img id="robot1" src="Level 3 robot rotated 2.png">
+<a href="Level 3 test 8.html"><img id="right" src="images/right.png"></a>
+<a href="Classification game.html"><img id="left" src="left.png"></a>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap" rel="stylesheet">
+
+<script>
+    const misclassifications = JSON.parse(localStorage.getItem('misclassifications')) || {};
+    const robotClassifications = {
+        1: "Apple",
+        2: "Orange",
+        3: "Banana",
+        4: "Strawberry"
+    };
+
+    const fruitImages = [
+        {src: "images/apple8 new.png", tag: 1},
+        {src: "images/apple9 new.png", tag: 1},
+        {src: "images/apple10 new.png", tag: 1},
+        {src: "images/orange8 new.png", tag: 2},
+        {src: "images/orange9 new.png", tag: 2},
+        {src: "images/orange10 new.png", tag: 2},
+        {src: "images/banana8 new.png", tag: 3},
+        {src: "images/banana9 new.png", tag: 3},
+        {src: "images/banana10 new.png", tag: 3},
+        {src: "images/strawberry8 new.png", tag: 4},
+        {src: "images/strawberry9 new.png", tag: 4},
+        {src: "images/strawberry10 new.png", tag: 4}
+    ];
+
+    let currentFruitIndex = 0;
+    const robotResults = document.getElementById("robot");
+    const currentFruit = document.getElementById("current-fruit");
+
+    function displayNextFruit() {
+        if (currentFruitIndex < fruitImages.length) {
+            const fruit = fruitImages[currentFruitIndex];
+            currentFruit.src = fruit.src;
+            currentFruit.setAttribute("data-tag", fruit.tag);
+            robotResults.innerText = "What is this fruit?";
+        } else {
+            robotResults.innerText = "Classification done!";
+            currentFruit.style.display = "none";
         }
-    </script>
+    }
+
+    function classifyFruit() {
+        const fruitTag = currentFruit.getAttribute("data-tag");
+        let classification = robotClassifications[fruitTag];
+
+        // Determine if the robot misclassifies based on user’s misclassification data
+        if (misclassifications[fruitTag]) {
+            classification = "unknown"; // Robot misclassifies if the user did
+        }
+
+        robotResults.innerText = `${classification}`;
+        currentFruitIndex++;
+        setTimeout(displayNextFruit, 1500); // Show next fruit after 1.5s
+    }
+
+    currentFruit.addEventListener("click", classifyFruit);
+
+    // Start game
+    displayNextFruit();
+</script>
+
+
 </body>
 </html>
+
