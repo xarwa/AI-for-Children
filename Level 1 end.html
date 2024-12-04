@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Level 1</title>  
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here -->
     <style>
         body, html {
             margin: 0;
@@ -128,6 +129,26 @@
             font-family: 'Zen Dots', sans-serif;
         }
 
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 192vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
+
         
     </style>
     <script>
@@ -154,6 +175,16 @@
 
     <a href="index.html"><img id="homeIcon" src="images/homeIcon.jpg"> 
     </a>
+
+    <!-- Mic Icons for Sound Control -->
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+
+ <!-- Forest Sound (plays once) -->
+    <audio id="computer-sound">
+        <source src="computer sound.mp3" type="audio/mpeg">
+        Your browser does not support the audio element. -->
+    </audio>
  
  
     <div id="speech-bubble">
@@ -193,6 +224,15 @@
         window.onload = function() {
             typeWriter(); // Start typing effect on page load
         };
+
+        function playSound() {
+            document.getElementById("computer-sound").play();
+        }
+
+        // Function to pause sound
+        function pauseSound() {
+            document.getElementById("computer-sound").pause();
+        }
     </script>
 </body>      
 </html>

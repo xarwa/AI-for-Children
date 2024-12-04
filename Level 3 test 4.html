@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Level 3</title>  
+    <link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here -->
     <style>
         body, html {
             margin: 0;
@@ -135,6 +136,25 @@
             to {
                 transform: translateY(100vh); /* Move from top to bottom of the screen */
             }
+        }
+        .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 195vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
         }
     </style>
 </head>
