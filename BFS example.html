@@ -127,17 +127,6 @@
             font-family: 'Zen Dots', sans-serif;
         }
 
-        #pause {
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-family: 'Zen Dots', sans-serif;
-            margin-left: 10px;
-        }
 
         
         #visited-nodes {
@@ -249,8 +238,6 @@
     <!-- Start BFS button and visited node log -->
     <div id="start-container">
         <button id="start">Start BFS</button>
-        <button id="pause">Pause</button>
-        <button id="resume" style="padding: 10px 20px; font-size: 18px; cursor: pointer; background-color: #ffc107; color: white; border: none; border-radius: 5px; font-family: 'Zen Dots', sans-serif; margin-left: 10px;">Resume</button>
         <div id="visited-nodes">Visited Nodes: </div>
     </div>
 
@@ -400,18 +387,6 @@ function bfs() {
         resumeIndex = index; // Update resume index
     }, 5000); // Interval of 5 seconds between each step
 }
-
-
-        // Pause button event listener
-       document.getElementById('pause').addEventListener('click', () => {
-            paused = true; // Set paused to true
-        });
-
-       // Resume button event listener
-        document.getElementById('resume').addEventListener('click', () => {
-            paused = false; // Set paused to false
-            bfs(); // Restart the BFS from the last visited node
-        });
 
 
         

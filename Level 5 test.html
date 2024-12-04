@@ -151,12 +151,12 @@
     </div>
 
     <!-- Mic Icons for Sound Control -->
-    <img id="mic-unmuted" class="sound-icon" src="mic unmuted.png" alt="Play Sound" onclick="playSound()">
-    <img id="mic-muted" class="sound-icon" src="mic muted.png" alt="Pause Sound" onclick="pauseSound()">
+    <img id="mic-unmuted" class="sound-icon" src="mic unmuted 2.png" alt="Play Sound" onclick="playSound()">
+    <img id="mic-muted" class="sound-icon" src="level 5 mic muted.png" alt="Pause Sound" onclick="pauseSound()">
 
     <!-- Forest Sound (plays once) -->
-    <audio id="forest-sound">
-        <source src="forest sound.mp3" type="audio/mpeg">
+    <audio id="lava-sound">
+        <source src="lava flow sound.mp3" type="audio/mpeg">
         Your browser does not support the audio element. -->
     </audio>
 
@@ -224,6 +224,9 @@
             } else if (clickCount == 10) {
                 currentText = eleventhText; // Fifth text
             }
+            else if (clickCount == 11) {
+                currentText = twelvthText; // Fifth text
+            }
 
             typeText(); // Re-run typing effect for new text
         }
@@ -283,12 +286,12 @@
 
 
         function playSound() {
-            document.getElementById("forest-sound").play();
+            document.getElementById("lava-sound").play();
         }
 
         // Function to pause sound
         function pauseSound() {
-            document.getElementById("forest-sound").pause();
+            document.getElementById("lava-sound").pause();
         }
 
     </script>
