@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Planets HomePage</title>  
+<title>Posterus</title>  
+<link rel="icon" href="robot icon.png" type="image/png"> <!-- Add your robot icon here -->
 <style>
     body, html {
         margin: 0;
@@ -94,6 +95,26 @@
         width: 70vw;
         z-index: 0; /* Ensures it appears behind the planets */
     }
+
+    .sound-icon {
+            width: 5vw;
+            position: absolute;
+           
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+        #mic-unmuted {
+            left: 6vh;
+            bottom: 3vh;
+        }
+        #mic-muted {
+            left: 192vh;
+            bottom: 3vh;
+        }
+        .sound-icon:hover {
+            transform: scale(1.2);
+        }
 </style>
 </head>
 <body>
@@ -108,6 +129,36 @@
 <img id="planet3" src="Planet-3.png">
 <img id="planet4" src="Planet-4.png">
 <img id="planet5" src="Planet-5.png">
+
+<!-- Bounce sound -->
+<audio id="rotate-sound" preload="auto">
+    <source src="rotate sound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<!-- Mic Icons for Sound Control -->
+<img id="mic-unmuted" class="sound-icon" src="mic unmuted 2.png" alt="Play Sound" onclick="playSound()">
+<img id="mic-muted" class="sound-icon" src="mic muted 2.png" alt="Pause Sound" onclick="pauseSound()">
+
+
+<!-- JavaScript to control bounce sound -->
+<script>
+    // Select elements
+    var bounceSound = document.getElementById("rotate-sound");
+    var playButton = document.getElementById("mic-unmuted");
+    var pauseButton = document.getElementById("mic-muted");
+
+    // Play bounce sound
+    playButton.addEventListener("click", function() {
+        bounceSound.play();
+    });
+
+    // Pause bounce sound
+    pauseButton.addEventListener("click", function() {
+        bounceSound.pause();
+        bounceSound.currentTime = 0; // Reset to the start
+    });
+</script>
 
 </body>      
 </html>
