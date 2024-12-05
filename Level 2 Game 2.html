@@ -194,7 +194,7 @@
             background-color: #f0f0f0;
             cursor: pointer;
             font-weight: bold;
-            font-size: 1.1vw;
+            font-size: 1vw;
             font-family: 'Zen Dots', sans-serif;
             transition: background-color 0.3s ease;
         }
@@ -354,7 +354,7 @@ z-index: 1;
 
         
      
-        <div id="timer">Time: 2:00</div>
+     <!--   <div id="timer">Time: 2:00</div> --> 
         <div id="message"></div>
 
 
@@ -399,11 +399,12 @@ z-index: 1;
 
 // Timer setup
 
-        let timer = 120; // 2 minutes in seconds
-        let timerInterval;
-        let gameOver = false;
+    //    let timer = 120; // 2 minutes in seconds
+     //   let timerInterval;
+  //      let gameOver = false;
 
         // Initialize Timer Function
+        /*
         function startTimer() {
             timerInterval = setInterval(function() {
                 if (timer > 0) {
@@ -419,9 +420,10 @@ z-index: 1;
                 }
             }, 1000);
         }
+            */
 
         // Start the timer only when "Next" is clicked for the first time
-        let timerStarted = false;
+       /* let timerStarted = false;
         function nextStep() {
             if (!timerStarted) {
                 startTimer();
@@ -430,6 +432,7 @@ z-index: 1;
             // Simulate BFS traversal logic here...
             moveRabbit();
         }
+            */
 
         function moveRabbit() {
             // Simulate the rabbit's movement across the nodes. You can modify this part based on your BFS traversal logic.
